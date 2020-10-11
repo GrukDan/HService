@@ -8,13 +8,15 @@ import { HomeComponent } from './components/home/home.component';
 import { MaterialModule } from './modules/material/material.module';
 import { HeaderComponent } from './components/navigation/header/header.component';
 import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
+import { ProjectPageComponent } from './components/projects/project-page/project-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     HeaderComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    ProjectPageComponent
   ],
   imports: [
     BrowserModule,

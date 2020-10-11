@@ -2,18 +2,26 @@
   <a mat-list-item routerLink="/home" (click)="onSidenavClose()">
     <mat-icon>home</mat-icon> <span class="nav-caption">Home</span>
   </a>
+  <mat-divider></mat-divider>
+  <span>Мои проекты</span>
   <a mat-list-item routerLink="/owner" (click)="onSidenavClose()">
-    <mat-icon>assignment_ind</mat-icon> <span class="nav-caption">Owner Actions</span>
+    <mat-icon>work_outline</mat-icon> <span class="nav-caption">Project 1</span>
   </a>
-  <a mat-list-item routerLink="#" (click)="onSidenavClose()">
-    <mat-icon>account_balance</mat-icon><span class="nav-caption">Account Actions</span>
+  <a mat-list-item routerLink="/owner" (click)="onSidenavClose()">
+    <mat-icon>work_outline</mat-icon> <span class="nav-caption">Project 1</span>
   </a>
-  <mat-list-item [matMenuTriggerFor]="menu">
-    <mat-icon>unfold_more</mat-icon>
-    <a matline>Example</a>
-  </mat-list-item>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="onSidenavClose()">View profile</button>
-    <button mat-menu-item (click)="onSidenavClose()">Add contact</button>
-  </mat-menu>
+  <a mat-list-item routerLink="/owner" (click)="onSidenavClose()">
+    <mat-icon>work_outline</mat-icon> <span class="nav-caption">Project 1</span>
+  </a>
+  <mat-divider></mat-divider>
+  <span>Мои задачи</span>
+  <a mat-list-item routerLink="/owner" (click)="onSidenavClose()">
+    <mat-icon>content_paste</mat-icon> <span class="nav-caption">Task 1</span>
+  </a>
+  <a mat-list-item routerLink="/owner" (click)="onSidenavClose()">
+    <mat-icon>content_paste</mat-icon> <span class="nav-caption">Task 1</span>
+  </a>
+  <a mat-list-item routerLink="/owner" (click)="onSidenavClose()">
+    <mat-icon>content_paste</mat-icon> <span class="nav-caption">Task 1</span>
+  </a>
 </mat-nav-list>
