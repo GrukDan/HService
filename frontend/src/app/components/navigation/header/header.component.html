@@ -1,0 +1,76 @@
+<mat-toolbar color="primary">
+  <div>
+    <button mat-icon-button (click)="onToggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <span class="toolbar-title"><b>H</b>Service</span>
+  <div class="toolbar-menu-buttons">
+    <div class="menu-buttons">
+      <button mat-flat-button color="primary">
+        Моя работа
+        <mat-icon>work_outline</mat-icon>
+      </button>
+      <button mat-flat-button color="primary" [matMenuTriggerFor]="projectsMenu">
+        Проекты
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-menu #projectsMenu="matMenu">
+        <button mat-menu-item>Item 1</button>
+        <button mat-menu-item>Item 2</button>
+        <button mat-menu-item>Просмотреть все проекты</button>
+        <button mat-menu-item>
+          <mat-icon>add_circle</mat-icon>
+          Создать новый проект
+        </button>
+      </mat-menu>
+      <button mat-flat-button color="primary" [matMenuTriggerFor]="usersMenu">
+        Пользователи
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-menu #usersMenu="matMenu">
+        <span class="menu-users-span">Команды</span>
+        <button mat-menu-item>Item 1</button>
+        <button mat-menu-item>Item 2</button>
+        <button mat-menu-item>
+          <mat-icon>people</mat-icon>
+          Просмотреть пользователей
+        </button>
+        <button mat-menu-item>
+          <mat-icon>group_add</mat-icon>
+          Создать команду
+        </button>
+      </mat-menu>
+      <button mat-flat-button color="primary">
+        Статистика
+        <mat-icon>pie_chart</mat-icon>
+      </button>
+      <button mat-flat-button color="primary">
+        Создать задачу
+        <mat-icon>add_circle</mat-icon>
+      </button>
+    </div>
+    <p class="toolbar-search">
+      <mat-form-field appearance="legacy">
+        <mat-label>Поиск</mat-label>
+        <input matInput placeholder="Имя задачи">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </p>
+    <button mat-icon-button [matMenuTriggerFor]="menu"
+            class="toolbar-right-element"
+            aria-label="Example icon-button with a menu">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>contact_mail</mat-icon>
+        <span>Мои данные</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Выйти</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
