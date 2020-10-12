@@ -47,7 +47,8 @@
         Статистика
         <mat-icon>pie_chart</mat-icon>
       </button>
-      <button mat-flat-button color="primary">
+      <button mat-flat-button color="primary"
+      (click)="dialogService.openCreateTaskDialog()">
         Создать задачу
         <mat-icon>add_circle</mat-icon>
       </button>

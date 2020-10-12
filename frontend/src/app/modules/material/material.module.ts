@@ -23,6 +23,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatNativeDateModule} from "@angular/material/core";
 
 
 
@@ -53,7 +54,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatStepperModule,
     MatTableModule,
     MatTabsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatNativeDateModule,
   ],
   exports: [
     MatTabsModule,
@@ -79,7 +81,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatStepperModule,
     MatTableModule,
     MatTabsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatNativeDateModule
   ],
 })
 export class MaterialModule { }

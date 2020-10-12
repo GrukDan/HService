@@ -1,14 +1,19 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RoutingModule } from './modules/routing/routing.module';
-import { HomeComponent } from './components/home/home.component';
-import { MaterialModule } from './modules/material/material.module';
-import { HeaderComponent } from './components/navigation/header/header.component';
-import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
-import { ProjectPageComponent } from './components/projects/project-page/project-page.component';
+import {AppComponent} from './app.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {RoutingModule} from './modules/routing/routing.module';
+import {HomeComponent} from './components/home/home.component';
+import {MaterialModule} from './modules/material/material.module';
+import {HeaderComponent} from './components/navigation/header/header.component';
+import {SidenavListComponent} from './components/navigation/sidenav-list/sidenav-list.component';
+import {ProjectPageComponent} from './components/projects/project-page/project-page.component';
+import {TasksTableComponent} from './components/projects/tasks-table/tasks-table.component';
+import {  CreateTaskDialogComponent} from './components/dialogs/create-task-dialog/create-task-dialog.component';
+import {DialogService} from "./services/view-services/dialog.service";
+import { InfoTaskDialogComponent } from './components/dialogs/info-task-dialog/info-task-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -16,7 +21,11 @@ import { ProjectPageComponent } from './components/projects/project-page/project
     HomeComponent,
     HeaderComponent,
     SidenavListComponent,
-    ProjectPageComponent
+    ProjectPageComponent,
+    TasksTableComponent,
+    CreateTaskDialogComponent,
+    InfoTaskDialogComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -24,7 +33,8 @@ import { ProjectPageComponent } from './components/projects/project-page/project
     RoutingModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [DialogService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
