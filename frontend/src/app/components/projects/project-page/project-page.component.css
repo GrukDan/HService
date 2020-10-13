@@ -1,0 +1,13 @@
+.mat-form-field{
+  width:380px !important;
+}
+
+.project-buttons-container{
+  display: flex;
+  justify-content: space-around;
+}
+
+.div-with-table{
+  width: 100%;
+  height: 100%;
+}

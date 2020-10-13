@@ -1,0 +1,127 @@
+<div class="container">
+  <div class="personal-data-container">
+    <ng-container *ngTemplateOutlet="personalData"></ng-container>
+    <mat-divider></mat-divider>
+    <ng-container *ngTemplateOutlet="commandsData"></ng-container>
+  </div>
+  <div class="projects-data-container">
+    <ng-container *ngTemplateOutlet="projectsData"></ng-container>
+    <mat-divider></mat-divider>
+    <ng-container *ngTemplateOutlet="taskCards"></ng-container>
+  </div>
+</div>
+
+<ng-template #personalData>
+  <div>
+    <p class="mat-h2">Сведения</p>
+    <form>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label>Имя пользователя</mat-label>
+          <input matInput #inputUserName maxlength="40" placeholder="Введите имя пользователя">
+          <mat-hint align="end">{{inputUserName.value?.length || 0}}/40</mat-hint>
+          <mat-error *ngIf="false"></mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label>Полное имя пользователя</mat-label>
+          <input matInput #inputFirstName maxlength="40" placeholder="Введите полное имя пользователя">
+          <mat-hint align="end">{{inputFirstName.value?.length || 0}}/40</mat-hint>
+          <mat-error *ngIf="false"></mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label>Фамилия пользователя</mat-label>
+          <input matInput #inputLastName maxlength="40" placeholder="Введите фамилию пользователя">
+          <mat-hint align="end">{{inputLastName.value?.length || 0}}/40</mat-hint>
+          <mat-error *ngIf="false"></mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label>Адрес электронной почты</mat-label>
+          <input matInput #inputLastName maxlength="40" placeholder="Введите email">
+          <mat-hint align="end">{{inputLastName.value?.length || 0}}/45</mat-hint>
+          <mat-error *ngIf="false"></mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label>Должность</mat-label>
+          <input matInput #inputPosition maxlength="40" placeholder="Введите Вашу должность">
+          <mat-hint align="end">{{inputPosition.value?.length || 0}}/40</mat-hint>
+          <mat-error *ngIf="false"></mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label>Название отдела</mat-label>
+          <input matInput #inputDepartment maxlength="40" placeholder="Введите название Вашего отдела">
+          <mat-hint align="end">{{inputDepartment.value?.length || 0}}/40</mat-hint>
+          <mat-error *ngIf="false"></mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label>Местоположение</mat-label>
+          <input matInput #inputPlace maxlength="40" placeholder="Введите Ваше местоположение">
+          <mat-hint align="end">{{inputPlace.value?.length || 0}}/40</mat-hint>
+          <mat-error *ngIf="false"></mat-error>
+        </mat-form-field>
+      </p>
+    </form>
+    <div class="buttons-container">
+    <button mat-raised-button>Отменить</button>
+    <button mat-raised-button color="primary">Сохранить изменения</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #projectsData>
+  <div>
+    <p class="mat-h2">Проекты</p>
+    <mat-selection-list #shoes [multiple]="false">
+      <mat-list-option *ngFor="let shoe of typesOfShoes" [value]="shoe" (click)="true">
+        {{shoe}}
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+</ng-template>
+
+<ng-template #taskCards>
+  <p class="mat-h2">Задачи</p>
+  <div class="container">
+    <div class="content" fxLayout="row wrap" fxLayoutGap="16px grid">
+      <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let num of [1,2,3,4,5,6,7]">
+        <mat-card class="mat-elevation-z4">
+          <mat-card-header>
+            <mat-card-title>Mountains {{num}}</mat-card-title>
+          </mat-card-header>
+          <img mat-card-image src="assets/images/task-types-svg/rocket-svgrepo-com.svg">
+          <mat-card-content>
+            <p>
+              The Himalayas is a mountain range in Asia.
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary">Подробнее</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #commandsData>
+  <div>
+    <p class="mat-h2">Команды</p>
+    <mat-selection-list #shoes [multiple]="false">
+      <mat-list-option *ngFor="let shoe of typesOfShoes" [value]="shoe" (click)="true">
+        {{shoe}}
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+</ng-template>

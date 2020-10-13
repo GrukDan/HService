@@ -1,0 +1,37 @@
+.container{
+  display: flex;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-top: 4%;
+}
+
+.personal-data-container{
+  width: 40%;
+  margin-right: 3%;
+}
+.projects-data-container{
+  width: 60%;
+  padding: 2%;
+  border: 1px groove rgba(0, 0, 0, 0.12);
+}
+
+.content {
+  padding: 16px;
+}
+
+.content > mat-card {
+  width: 200px;
+}
+mat-form-field{
+  width: 100%;
+}
+
+mat-divider{
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.buttons-container{
+  display: flex;
+  justify-content: space-around;
+}

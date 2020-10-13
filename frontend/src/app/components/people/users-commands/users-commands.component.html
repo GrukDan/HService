@@ -1,0 +1,71 @@
+<mat-grid-list cols="5" rowHeight="1:10">
+  <mat-grid-tile></mat-grid-tile>
+  <mat-grid-tile [colspan]="3">
+    <div class="container">
+      <div >
+        <mat-form-field appearance="legacy">
+          <mat-label>Поиск</mat-label>
+          <input matInput placeholder="Имя задачи">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+      <p class="mat-h2">
+        Люди
+      </p>
+      <p class="card-container">
+        <ng-container *ngTemplateOutlet="newUserCard"></ng-container>
+        <ng-container *ngTemplateOutlet="userCards"></ng-container>
+      </p>
+      <mat-divider></mat-divider>
+      <p class="mat-h2">
+        Команды
+      </p>
+      <p class="card-container">
+        <ng-container *ngTemplateOutlet="commandCards"></ng-container>
+      </p>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile></mat-grid-tile>
+</mat-grid-list>
+
+<ng-template #userCards>
+  <div class="content" fxLayout="row wrap" fxLayoutGap="16px grid">
+  <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let user of users;let i = index">
+    <mat-card class="user-card">
+      <mat-card-header>
+        <div mat-card-avatar [ngStyle]="{'background-image': backgroundUrlClass[i]}" class="header-image"></div>
+        <mat-card-title>{{user}}</mat-card-title>
+        <mat-card-subtitle>Developer</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-actions>
+        <button mat-raised-button color="primary">Подробнее</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  </div>
+</ng-template>
+
+<ng-template #newUserCard>
+  <mat-card class="user-card">
+    <mat-card-header>
+      <div mat-card-avatar class="new-user-header-image"></div>
+      <mat-card-title>Новый пользователь</mat-card-title>
+    </mat-card-header>
+    <mat-card-actions>
+      <button mat-raised-button color="accent">Добавить пользователя</button>
+    </mat-card-actions>
+  </mat-card>
+</ng-template>
+
+<ng-template #commandCards>
+  <div *ngFor="let user of users;let i = index">
+    <mat-card class="command-card">
+      <mat-card-header>
+        <mat-card-title>{{user}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-actions>
+        <button mat-raised-button color="primary">Подробнее</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</ng-template>

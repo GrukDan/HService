@@ -34,16 +34,16 @@
         <button mat-menu-item>Item 1</button>
         <button mat-menu-item>Item 2</button>
         <mat-divider></mat-divider>
-        <button mat-menu-item>
+        <button mat-menu-item routerLink="/people">
           <mat-icon>people</mat-icon>
-          Просмотреть пользователей
+          Все пользователи и команды
         </button>
         <button mat-menu-item>
           <mat-icon>group_add</mat-icon>
           Создать команду
         </button>
       </mat-menu>
-      <button mat-flat-button color="primary">
+      <button mat-flat-button color="primary" routerLink="/owner">
         Статистика
         <mat-icon>pie_chart</mat-icon>
       </button>
@@ -66,7 +66,7 @@
       <mat-icon>account_circle</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
+      <button mat-menu-item routerLink="/people/test">
         <mat-icon>contact_mail</mat-icon>
         <span>Мои данные</span>
       </button>

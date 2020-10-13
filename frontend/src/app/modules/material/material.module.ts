@@ -56,6 +56,7 @@ import {MatNativeDateModule} from "@angular/material/core";
     MatTabsModule,
     MatTooltipModule,
     MatNativeDateModule,
+
   ],
   exports: [
     MatTabsModule,

@@ -13,6 +13,9 @@ import {TasksTableComponent} from './components/projects/tasks-table/tasks-table
 import {  CreateTaskDialogComponent} from './components/dialogs/create-task-dialog/create-task-dialog.component';
 import {DialogService} from "./services/view-services/dialog.service";
 import { InfoTaskDialogComponent } from './components/dialogs/info-task-dialog/info-task-dialog.component';
+import { UsersCommandsComponent } from './components/people/users-commands/users-commands.component';
+import { UserPageComponent } from './components/people/user-page/user-page.component';
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 
 @NgModule({
@@ -25,13 +28,16 @@ import { InfoTaskDialogComponent } from './components/dialogs/info-task-dialog/i
     TasksTableComponent,
     CreateTaskDialogComponent,
     InfoTaskDialogComponent,
+    UsersCommandsComponent,
+    UserPageComponent,
 
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     RoutingModule,
-    MaterialModule
+    MaterialModule,
+    FlexLayoutModule
   ],
   providers: [DialogService],
   bootstrap: [AppComponent]
