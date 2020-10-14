@@ -52,7 +52,7 @@
       <mat-card-title>Новый пользователь</mat-card-title>
     </mat-card-header>
     <mat-card-actions>
-      <button mat-raised-button color="accent">Добавить пользователя</button>
+      <button mat-raised-button color="accent" (click)="dialogService.openAddUserDialog()">Добавить пользователя</button>
     </mat-card-actions>
   </mat-card>
 </ng-template>

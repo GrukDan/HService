@@ -10,12 +10,16 @@ import {HeaderComponent} from './components/navigation/header/header.component';
 import {SidenavListComponent} from './components/navigation/sidenav-list/sidenav-list.component';
 import {ProjectPageComponent} from './components/projects/project-page/project-page.component';
 import {TasksTableComponent} from './components/projects/tasks-table/tasks-table.component';
-import {  CreateTaskDialogComponent} from './components/dialogs/create-task-dialog/create-task-dialog.component';
+import {CreateTaskDialogComponent} from './components/dialogs/create-task-dialog/create-task-dialog.component';
 import {DialogService} from "./services/view-services/dialog.service";
-import { InfoTaskDialogComponent } from './components/dialogs/info-task-dialog/info-task-dialog.component';
-import { UsersCommandsComponent } from './components/people/users-commands/users-commands.component';
-import { UserPageComponent } from './components/people/user-page/user-page.component';
+import {InfoTaskDialogComponent} from './components/dialogs/info-task-dialog/info-task-dialog.component';
+import {UsersCommandsComponent} from './components/people/users-commands/users-commands.component';
+import {UserPageComponent} from './components/people/user-page/user-page.component';
 import {FlexLayoutModule} from "@angular/flex-layout";
+import {AddUserDialogComponent} from './components/dialogs/add-user-dialog/add-user-dialog.component';
+import {RegistrationComponent} from './components/people/registration/registration.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CreateProjectDialogComponent} from './components/dialogs/create-project-dialog/create-project-dialog.component';
 
 
 @NgModule({
@@ -30,6 +34,9 @@ import {FlexLayoutModule} from "@angular/flex-layout";
     InfoTaskDialogComponent,
     UsersCommandsComponent,
     UserPageComponent,
+    AddUserDialogComponent,
+    RegistrationComponent,
+    CreateProjectDialogComponent,
 
   ],
   imports: [
@@ -37,7 +44,9 @@ import {FlexLayoutModule} from "@angular/flex-layout";
     BrowserAnimationsModule,
     RoutingModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [DialogService],
   bootstrap: [AppComponent]

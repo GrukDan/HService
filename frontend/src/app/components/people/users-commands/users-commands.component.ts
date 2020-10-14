@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {DialogService} from "../../../services/view-services/dialog.service";
 
 @Component({
   selector: 'app-users-commands',
@@ -7,7 +8,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class UsersCommandsComponent implements OnInit {
 
-  constructor() {
+  constructor(public dialogService:DialogService) {
   }
 
   ngOnInit(): void {

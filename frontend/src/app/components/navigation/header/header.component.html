@@ -20,7 +20,7 @@
         <button mat-menu-item>Item 2</button>
         <mat-divider></mat-divider>
         <button mat-menu-item>Просмотреть все проекты</button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="dialogService.openCreateProjectDialog()">
           <mat-icon>add_circle</mat-icon>
           Создать новый проект
         </button>

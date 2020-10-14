@@ -2,11 +2,22 @@ table {
   width: 100%;
 }
 
+.button-field-container{
+  display: flex;
+  justify-content: space-around;
+  margin: 5%;
+}
+
 .mat-form-field {
   font-size: 14px;
-  width: 100%;
+  width: 60%;
 }
 
 td, th {
   width: 25%;
+}
+
+.mat-elevation-z8{
+  padding-left: 5%;
+  padding-right: 5%;
 }
