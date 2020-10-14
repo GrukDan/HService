@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>Добавление пользователя</h1>
+<mat-dialog-content class="mat-typography">
+  <p>
+    Чтобы пригласить пользователя на <b>HService</b>, укажите его адрес электронной почты ниже.
+  </p>
+  <p>
+    Мы вышлим ему приглашение и он сможет пройти регистрацию на портале.
+  </p>
+  <form [formGroup]="emailFormGroup" >
+    <div class="form-field-container">
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label>Адрес электронной почты</mat-label>
+          <input matInput #inputEmail maxlength="40" placeholder="Введите адрес электронной почты">
+          <mat-hint align="end">{{inputEmail.value?.length || 0}}/40</mat-hint>
+          <mat-error *ngIf="false"></mat-error>
+        </mat-form-field>
+      </p>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Закрыть</button>
+  <button mat-raised-button color="primary">Пригласить</button>
+</mat-dialog-actions>

@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>Создание проекта</h1>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="projectFormGroup">
+    <div class="form-field-container">
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label>Название проекта</mat-label>
+          <input matInput #inputProjectName maxlength="40" placeholder="Введите название проекта">
+          <mat-hint align="end">{{inputProjectName.value?.length || 0}}/40</mat-hint>
+          <mat-error *ngIf="false"></mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label>Код проекта</mat-label>
+          <input matInput #inputProjectCode maxlength="40">
+          <mat-hint align="end">{{inputProjectCode.value?.length || 0}}/40</mat-hint>
+          <mat-error *ngIf="false"></mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label>Руководитель проекта</mat-label>
+          <mat-select>
+            <mat-option value="option">Option</mat-option>
+            <mat-option value="option">Option</mat-option>
+          </mat-select>
+          <mat-hint align="end">Выберите руководителя проекта</mat-hint>
+          <mat-error *ngIf="false"></mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill" class="form-field-textarea">
+          <mat-label>Описание проекта...</mat-label>
+          <textarea matInput #inputProjectDescription></textarea>
+          <mat-hint align="end">{{inputProjectDescription.value?.length || 0}}/250</mat-hint>
+        </mat-form-field>
+      </p>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Закрыть</button>
+  <button mat-raised-button color="primary">Создать</button>
+</mat-dialog-actions>
