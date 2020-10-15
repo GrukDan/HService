@@ -8,8 +8,10 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 @Entity
 @Data
@@ -19,13 +21,18 @@ import java.util.Objects;
 public class Task {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskId;
+
+    @NotBlank(message = "task name is mandatory")
+    @Size(min = 2, max = 45, message = "the length of task name is out of range")
     private String taskName;
+
+    @NotBlank(message = "task code is mandatory")
+    @Size(min = 2, max = 45, message = "the length of task code is out of range")
     private String taskCode;
-    private long project;
-    private long taskCreator;
-    private long taskExecutor;
+
+    @FutureOrPresent
     private Timestamp dueDate;
 
     @CreationTimestamp
@@ -34,19 +41,25 @@ public class Task {
     @UpdateTimestamp
     private Timestamp updated;
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "type", nullable = false)
     private Type type;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "priority", nullable = false)
     private Priority priority;
 
-    @ManyToOne
-    @JoinColumn(name = "status",  nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "status", nullable = false)
     private Status status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "description")
     private Description description;
+
+    private long project;
+
+    private long taskCreator;
+
+    private long taskExecutor;
 }

@@ -1,5 +1,6 @@
 package com.hservice.services.impl;
 
+import com.hservice.exceptions.NotFoundException;
 import com.hservice.models.Role;
 import com.hservice.repositories.RoleRepository;
 import com.hservice.services.RoleService;
@@ -20,8 +21,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role findById(Long id) {
-        return roleRepository.findById(id).orElseThrow(NullPointerException::new);
+    public Role findById(Long id) throws NotFoundException {
+        return roleRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.hservice.services.impl;
 
+import com.hservice.exceptions.AlreadyExistsException;
+import com.hservice.exceptions.NotFoundException;
 import com.hservice.models.User;
 import com.hservice.repositories.RoleRepository;
 import com.hservice.repositories.UserRepository;
@@ -17,13 +19,16 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public User save(User entity) {
+    public User save(User entity) throws AlreadyExistsException {
+        if(userRepository.existsByUserNameAndPassword(entity.getUserName(), entity.getPassword())
+                || userRepository.existsByEmailAndPassword(entity.getEmail(), entity.getPassword()))
+            throw new AlreadyExistsException(String.format("User with user name: %s already exists",entity.getUserName()));
         return userRepository.save(entity);
     }
 
     @Override
-    public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(NumberFormatException::new);
+    public User findById(Long id) throws NotFoundException {
+        return userRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @Override
@@ -47,7 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUserNameAndPassword(String userName, String password) {
-        return userRepository.findByUserNameAndPassword(userName,password).orElseThrow(NullPointerException::new);
+    public User findByUserNameAndPassword(String userName, String password) throws NotFoundException {
+        return userRepository.findByUserNameAndPassword(userName,password).orElseThrow(NotFoundException::new);
     }
 }

@@ -1,5 +1,7 @@
 package com.hservice.services.impl;
 
+import com.hservice.exceptions.AlreadyExistsException;
+import com.hservice.exceptions.NotFoundException;
 import com.hservice.models.User;
 import com.hservice.services.RoleService;
 import com.hservice.services.UserService;
@@ -22,7 +24,7 @@ class UserServiceImplTest {
     private RoleService roleService;
 
     @Test
-    void save() {
+    void save() throws NotFoundException, AlreadyExistsException {
         User user = User.builder()
                 .userName("super-admin")
                 .firstName("Dmitriy")

@@ -1,14 +1,16 @@
 package com.hservice.services;
 
+import com.hservice.exceptions.AlreadyExistsException;
+import com.hservice.exceptions.NotFoundException;
+
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
 
 public interface CrudService<T,PK extends Serializable> {
 
-    T save(T entity);
+    T save(T entity) throws AlreadyExistsException;
 
-    T findById(PK id);
+    T findById(PK id) throws NotFoundException;
 
     void deleteById(PK id);
 
