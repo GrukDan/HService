@@ -17,7 +17,7 @@ public class ProjectController {
 
     private final ProjectService projectService;
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody Project project) throws AlreadyExistsException {
         return ResponseEntity.ok(projectService.save(project));
     }
@@ -26,4 +26,15 @@ public class ProjectController {
     public ResponseEntity<?> getById(@PathVariable("id") Long id) throws NotFoundException {
         return ResponseEntity.ok(projectService.findById(id));
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getAll(){
+        return ResponseEntity.ok(projectService.findAll());
+    }
+
+    @GetMapping("/all/dtos")
+    public ResponseEntity<?> getAllDtos(){
+        return ResponseEntity.ok(projectService.getAllDtos());
+    }
+
 }

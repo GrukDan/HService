@@ -34,4 +34,9 @@ public class HistoryServiceImpl implements HistoryService {
     public Collection<History> findAll() {
         return historyRepository.findAll();
     }
+
+    @Override
+    public Collection<History> findAllByTask(long task) {
+        return historyRepository.findAllByTask(task);
+    }
 }

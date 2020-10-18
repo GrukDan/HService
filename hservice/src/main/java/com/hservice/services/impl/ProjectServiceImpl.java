@@ -1,5 +1,6 @@
 package com.hservice.services.impl;
 
+import com.hservice.dtos.ProjectDto;
 import com.hservice.exceptions.AlreadyExistsException;
 import com.hservice.exceptions.NotFoundException;
 import com.hservice.models.Project;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +20,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project save(Project entity) throws AlreadyExistsException {
-        if(projectRepository.existsByProjectCode(entity.getProjectCode()))
+        if (projectRepository.existsByProjectCode(entity.getProjectCode()))
             throw new AlreadyExistsException();
         return projectRepository.save(entity);
     }
@@ -36,5 +38,13 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Collection<Project> findAll() {
         return projectRepository.findAll();
+    }
+
+    @Override
+    public Collection<ProjectDto> getAllDtos() {
+        return projectRepository
+                .findAll().stream()
+                .map(ProjectDto::new)
+                .collect(Collectors.toList());
     }
 }

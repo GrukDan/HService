@@ -27,4 +27,6 @@ public class History {
     private String action;
 
     private long changer;
+
+    private long task;
 }

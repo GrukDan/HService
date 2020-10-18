@@ -20,6 +20,8 @@ import {AddUserDialogComponent} from './components/dialogs/add-user-dialog/add-u
 import {RegistrationComponent} from './components/people/registration/registration.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CreateProjectDialogComponent} from './components/dialogs/create-project-dialog/create-project-dialog.component';
+import { NotFoundComponent } from './components/details/error-pages/not-found/not-found.component';
+import { ServerErrorComponent } from './components/details/error-pages/server-error/server-error.component';
 
 
 @NgModule({
@@ -37,6 +39,8 @@ import {CreateProjectDialogComponent} from './components/dialogs/create-project-
     AddUserDialogComponent,
     RegistrationComponent,
     CreateProjectDialogComponent,
+    NotFoundComponent,
+    ServerErrorComponent,
 
   ],
   imports: [

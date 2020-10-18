@@ -24,6 +24,8 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatNativeDateModule} from "@angular/material/core";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 
@@ -56,7 +58,8 @@ import {MatNativeDateModule} from "@angular/material/core";
     MatTabsModule,
     MatTooltipModule,
     MatNativeDateModule,
-
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     MatTabsModule,
@@ -83,7 +86,9 @@ import {MatNativeDateModule} from "@angular/material/core";
     MatTableModule,
     MatTabsModule,
     MatTooltipModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule
   ],
 })
 export class MaterialModule { }
