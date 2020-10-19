@@ -24,5 +24,5 @@ public class Type {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "description")
-    private Description descriptionByDescription;
+    private Description description;
 }

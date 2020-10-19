@@ -22,6 +22,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CreateProjectDialogComponent} from './components/dialogs/create-project-dialog/create-project-dialog.component';
 import { NotFoundComponent } from './components/details/error-pages/not-found/not-found.component';
 import { ServerErrorComponent } from './components/details/error-pages/server-error/server-error.component';
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { ServerErrorComponent } from './components/details/error-pages/server-er
     MaterialModule,
     FlexLayoutModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [DialogService],
   bootstrap: [AppComponent]

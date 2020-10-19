@@ -5,7 +5,11 @@
       <p>
         <mat-form-field appearance="standard">
           <mat-label>Название проекта</mat-label>
-          <input matInput #inputProjectName maxlength="40" placeholder="Введите название проекта">
+          <input matInput
+                 #inputProjectName
+                 [(ngModel)]="createdProject.projectName"
+                 maxlength="40"
+                 placeholder="Введите название проекта">
           <mat-hint align="end">{{inputProjectName.value?.length || 0}}/40</mat-hint>
           <mat-error *ngIf="false"></mat-error>
         </mat-form-field>
@@ -13,7 +17,10 @@
       <p>
         <mat-form-field appearance="standard">
           <mat-label>Код проекта</mat-label>
-          <input matInput #inputProjectCode maxlength="40">
+          <input matInput
+                 #inputProjectCode
+                 [(ngModel)]="createdProject.projectCode"
+                 maxlength="40">
           <mat-hint align="end">{{inputProjectCode.value?.length || 0}}/40</mat-hint>
           <mat-error *ngIf="false"></mat-error>
         </mat-form-field>
@@ -21,9 +28,11 @@
       <p>
         <mat-form-field appearance="fill">
           <mat-label>Руководитель проекта</mat-label>
-          <mat-select>
-            <mat-option value="option">Option</mat-option>
-            <mat-option value="option">Option</mat-option>
+          <mat-select [(ngModel)]="createdProject.lead">
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let lead of projectLeads" [value]="lead.userId">
+              {{lead.lastName}} {{lead.firstName}}
+            </mat-option>
           </mat-select>
           <mat-hint align="end">Выберите руководителя проекта</mat-hint>
           <mat-error *ngIf="false"></mat-error>
@@ -32,7 +41,7 @@
       <p>
         <mat-form-field appearance="fill" class="form-field-textarea">
           <mat-label>Описание проекта...</mat-label>
-          <textarea matInput #inputProjectDescription></textarea>
+          <textarea matInput #inputProjectDescription [(ngModel)]="createdProject.description.content"></textarea>
           <mat-hint align="end">{{inputProjectDescription.value?.length || 0}}/250</mat-hint>
         </mat-form-field>
       </p>
