@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Создание проекта</h1>
 <mat-dialog-content class="mat-typography">
-  <form [formGroup]="projectFormGroup">
+  <form [formGroup]="projectFormGroup" (ngSubmit)="submitForm()" novalidate>
     <div class="form-field-container">
       <p>
         <mat-form-field appearance="standard">

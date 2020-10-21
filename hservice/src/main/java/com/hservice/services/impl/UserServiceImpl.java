@@ -1,5 +1,6 @@
 package com.hservice.services.impl;
 
+import com.hservice.dtos.UserShortDto;
 import com.hservice.exceptions.AlreadyExistsException;
 import com.hservice.exceptions.NotFoundException;
 import com.hservice.models.User;
@@ -10,12 +11,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final RoleRepository roleRepository;
     private final UserRepository userRepository;
 
     @Override
@@ -48,11 +51,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean existsByUserNameAndPassword(String userName, String password) {
-        return existsByUserNameAndPassword(userName,password);
+        return userRepository.existsByUserNameAndPassword(userName,password);
     }
 
     @Override
     public User findByUserNameAndPassword(String userName, String password) throws NotFoundException {
         return userRepository.findByUserNameAndPassword(userName,password).orElseThrow(NotFoundException::new);
+    }
+
+    @Override
+    public Collection<UserShortDto> findProjectLeads() {
+        return Optional.of(userRepository.findUsersByRoleName("ADMIN"))
+                .get().stream()
+                .map(UserShortDto::new)
+                .sorted(Comparator.comparing(UserShortDto::getFirstName))
+                .collect(Collectors.toList());
     }
 }

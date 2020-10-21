@@ -5,6 +5,7 @@ import {User} from "../../../dto/models/user";
 import {Observable, Subscription} from "rxjs";
 import {UserService} from "../../../services/http/user.service";
 import {ProjectService} from "../../../services/http/project.service";
+import {UserShortDto} from "../../../dto/view-models/user-short-dto";
 
 @Component({
   selector: 'app-create-project-dialog',
@@ -16,7 +17,7 @@ export class CreateProjectDialogComponent implements OnInit,OnDestroy {
   projectFormGroup: FormGroup;
 
   createdProject: Project = new Project();
-  projectLeads: User[] = [];
+  projectLeads: UserShortDto[] = [];
   subscriptions:Subscription[] = [];
 
   constructor(private userService: UserService,
@@ -30,7 +31,7 @@ export class CreateProjectDialogComponent implements OnInit,OnDestroy {
   private loadProjectLeads(){
     this.subscriptions.push(
       this.userService.getProjectLeads().subscribe(leads=>{
-        this.projectLeads = leads as User[];
+        this.projectLeads = leads;
       }))
   }
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {User} from "../../dto/models/user";
 import {HttpClient} from "@angular/common/http";
+import {UserShortDto} from "../../dto/view-models/user-short-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class UserService {
 
   constructor(private http:HttpClient) { }
 
-  getProjectLeads():Observable<User[]>{
-    return this.http.get<User[]>(this.url + '/project-leads')
+  getProjectLeads():Observable<UserShortDto[]>{
+    return this.http.get<UserShortDto[]>(this.url + '/project-leads')
   }
 }
