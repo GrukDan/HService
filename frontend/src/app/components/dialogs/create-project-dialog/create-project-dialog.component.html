@@ -8,10 +8,13 @@
           <input matInput
                  #inputProjectName
                  [(ngModel)]="createdProject.projectName"
+                 formControlName="projectName"
                  maxlength="40"
                  placeholder="Введите название проекта">
           <mat-hint align="end">{{inputProjectName.value?.length || 0}}/40</mat-hint>
-          <mat-error *ngIf="false"></mat-error>
+          <mat-error *ngIf="hasError('projectName', 'required')">Project's name is required</mat-error>
+          <mat-error *ngIf="hasError('projectName', 'minLength')">Project's name min length is 2 symbols</mat-error>
+          <mat-error *ngIf="hasError('projectName', 'maxLength')">Project's name max length is 40 symbols</mat-error>
         </mat-form-field>
       </p>
       <p>
@@ -20,29 +23,41 @@
           <input matInput
                  #inputProjectCode
                  [(ngModel)]="createdProject.projectCode"
+                 formControlName="projectCode"
                  maxlength="40">
           <mat-hint align="end">{{inputProjectCode.value?.length || 0}}/40</mat-hint>
-          <mat-error *ngIf="false"></mat-error>
+          <mat-error *ngIf="hasError('projectCode', 'required')">Project's code is required</mat-error>
+          <mat-error *ngIf="hasError('projectCode', 'minLength')">Project's code min length is 2 symbols</mat-error>
+          <mat-error *ngIf="hasError('projectCode', 'maxLength')">Project's code max length is 40 symbols</mat-error>
         </mat-form-field>
       </p>
       <p>
         <mat-form-field appearance="fill">
           <mat-label>Руководитель проекта</mat-label>
-          <mat-select [(ngModel)]="createdProject.lead">
+          <mat-select
+            formControlName="lead"
+            [(ngModel)]="createdProject.lead">
             <mat-option>--</mat-option>
             <mat-option *ngFor="let lead of projectLeads" [value]="lead.userId">
               {{lead.lastName}} {{lead.firstName}}
             </mat-option>
           </mat-select>
           <mat-hint align="end">Выберите руководителя проекта</mat-hint>
-          <mat-error *ngIf="false"></mat-error>
+          <mat-error *ngIf="hasError('lead', 'required')">Project's lead is required</mat-error>
         </mat-form-field>
       </p>
       <p>
         <mat-form-field appearance="fill" class="form-field-textarea">
           <mat-label>Описание проекта...</mat-label>
-          <textarea matInput #inputProjectDescription [(ngModel)]="createdProject.description.content"></textarea>
+          <textarea matInput
+                    formControlName="descriptionContent"
+                    #inputProjectDescription
+                    [(ngModel)]="createdProject.description.content">
+          </textarea>
           <mat-hint align="end">{{inputProjectDescription.value?.length || 0}}/250</mat-hint>
+          <mat-error *ngIf="hasError('descriptionContent', 'maxLength')">Project's description max length is 250
+            symbols
+          </mat-error>
         </mat-form-field>
       </p>
     </div>
@@ -50,5 +65,10 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Закрыть</button>
-  <button mat-raised-button color="primary">Создать</button>
+  <button mat-raised-button color="primary"
+          [disabled]="!projectFormGroup.valid"
+          (click)="submitForm()">
+    Создать
+  </button>
 </mat-dialog-actions>
+
