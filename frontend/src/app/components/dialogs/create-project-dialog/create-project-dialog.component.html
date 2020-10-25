@@ -37,7 +37,6 @@
           <mat-select
             formControlName="lead"
             [(ngModel)]="createdProject.lead">
-            <mat-option>--</mat-option>
             <mat-option *ngFor="let lead of projectLeads" [value]="lead.userId">
               {{lead.lastName}} {{lead.firstName}}
             </mat-option>
@@ -52,7 +51,7 @@
           <textarea matInput
                     formControlName="descriptionContent"
                     #inputProjectDescription
-                    [(ngModel)]="createdProject.description.content">
+                    [(ngModel)]="description.content">
           </textarea>
           <mat-hint align="end">{{inputProjectDescription.value?.length || 0}}/250</mat-hint>
           <mat-error *ngIf="hasError('descriptionContent', 'maxLength')">Project's description max length is 250

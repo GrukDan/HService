@@ -1,27 +1,16 @@
 <mat-nav-list>
   <a mat-list-item routerLink="/home" (click)="onSidenavClose()">
-    <mat-icon>home</mat-icon> <span class="nav-caption">Home</span>
+    <mat-icon>home</mat-icon>
+    <span class="nav-caption">Home</span>
   </a>
   <mat-divider></mat-divider>
   <span>Мои проекты</span>
-  <a mat-list-item routerLink="/owner" (click)="onSidenavClose()">
-    <mat-icon>work_outline</mat-icon> <span class="nav-caption">Project 1</span>
-  </a>
-  <a mat-list-item routerLink="/owner" (click)="onSidenavClose()">
-    <mat-icon>work_outline</mat-icon> <span class="nav-caption">Project 1</span>
-  </a>
-  <a mat-list-item routerLink="/owner" (click)="onSidenavClose()">
-    <mat-icon>work_outline</mat-icon> <span class="nav-caption">Project 1</span>
+  <a mat-list-item
+     *ngFor="let projectDto of projectDtos"
+     [routerLink]="['project', projectDto.idProject.toString()]"
+     (click)="onSidenavClose()">
+    <mat-icon>work_outline</mat-icon>
+    <span class="nav-caption">{{projectDto.projectName}}</span>
   </a>
   <mat-divider></mat-divider>
-  <span>Мои задачи</span>
-  <a mat-list-item routerLink="/owner" (click)="onSidenavClose()">
-    <mat-icon>content_paste</mat-icon> <span class="nav-caption">Task 1</span>
-  </a>
-  <a mat-list-item routerLink="/owner" (click)="onSidenavClose()">
-    <mat-icon>content_paste</mat-icon> <span class="nav-caption">Task 1</span>
-  </a>
-  <a mat-list-item routerLink="/owner" (click)="onSidenavClose()">
-    <mat-icon>content_paste</mat-icon> <span class="nav-caption">Task 1</span>
-  </a>
 </mat-nav-list>

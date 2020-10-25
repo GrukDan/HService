@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface ProjectRepository extends JpaRepository<Project,Long> {
 
     boolean existsByProjectCode(String projectCode);
+
+    //todo: написат запрос для извлечения всех проектов по исполнителю задач, принадлежащих данному проекту или по руководителю проекта
+//    Collection<Project>
 }

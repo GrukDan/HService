@@ -1,7 +1,6 @@
 package com.hservice.exceptions.exceptionHandler;
 
 import com.hservice.exceptions.NotFoundException;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
-@Slf4j
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -34,6 +32,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   HttpHeaders headers,
                                                                   HttpStatus status,
                                                                   WebRequest request) {
+        ex.printStackTrace();
         ErrorResponse errorResponse = new ErrorResponse(status, "method arg not valid", ex);
         errorResponse.addValidationErrors(ex.getBindingResult().getFieldErrors());
         return new ResponseEntity(errorResponse, BAD_REQUEST);
@@ -44,11 +43,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                                                                    HttpHeaders headers,
                                                                    HttpStatus status,
                                                                    WebRequest request) {
+        ex.printStackTrace();
         return new ResponseEntity<Object>(new ErrorResponse(status, "no handler found for this request", ex), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     protected ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        ex.printStackTrace();
         ErrorResponse errorResponse = new ErrorResponse(BAD_REQUEST);
         errorResponse.setMessage(String.format("The parameter '%s' of value '%s' could not be converted to type '%s'",
                 ex.getName(), ex.getValue(), ex.getRequiredType().getSimpleName()));
@@ -58,6 +59,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     protected ResponseEntity<Object> handleEntityNotFoundEx(NotFoundException ex) {
+        ex.printStackTrace();
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND, "record not found", ex);
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }

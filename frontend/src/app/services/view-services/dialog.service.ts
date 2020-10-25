@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {CreateTaskDialogComponent} from "../../components/dialogs/create-task-dialog/create-task-dialog.component";
 import {AddUserDialogComponent} from "../../components/dialogs/add-user-dialog/add-user-dialog.component";
@@ -13,9 +13,11 @@ export class DialogService {
 
   openCreateTaskDialog() {
     const dialogRef = this.dialog.open(CreateTaskDialogComponent);
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(`Dialog result: ${result}`);
-    // });
+    dialogRef.backdropClick()
+  }
+
+  close(){
+    this.dialog.closeAll();
   }
 
   openAddUserDialog(){

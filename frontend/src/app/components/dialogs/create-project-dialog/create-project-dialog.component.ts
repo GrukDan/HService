@@ -1,8 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {Project} from "../../../dto/models/project";
-import {User} from "../../../dto/models/user";
-import {Observable, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
 import {UserService} from "../../../services/http/user.service";
 import {ProjectService} from "../../../services/http/project.service";
 import {UserShortDto} from "../../../dto/view-models/user-short-dto";
@@ -10,6 +9,7 @@ import {FormGroupBuilderService} from "../../../services/validation/form-group-b
 import {Description} from "../../../dto/models/description";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {SnackBarComponent} from "../snack-bar/snack-bar.component";
+import {MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-create-project-dialog',
@@ -21,14 +21,15 @@ export class CreateProjectDialogComponent implements OnInit, OnDestroy {
   projectFormGroup: FormGroup;
   durationInSeconds = 5;
   createdProject: Project = new Project();
+  description = new Description();
   projectLeads: UserShortDto[] = [];
   subscriptions: Subscription[] = [];
 
   constructor(private userService: UserService,
               private projectService: ProjectService,
               private formGroupBuilderService: FormGroupBuilderService,
-              private snackBar: MatSnackBar) {
-    this.createdProject.description = new Description();
+              private snackBar: MatSnackBar,
+              private dialogRef: MatDialogRef<CreateProjectDialogComponent>) {
   }
 
   ngOnInit(): void {
@@ -52,16 +53,18 @@ export class CreateProjectDialogComponent implements OnInit, OnDestroy {
   }
 
   submitForm() {
-    this.openSnackBar('Проект создан! 🍕',this.durationInSeconds);
     if (this.projectFormGroup.valid) {
+      if (this.description.content?.length > 0)
+        this.createdProject.description = this.description;
       this.subscriptions.push(this.projectService.save(this.createdProject)
-        .subscribe(project=>{
-          this.openSnackBar(`Проект ${project.projectName} создан! 🍕`,this.durationInSeconds);
+        .subscribe(project => {
+          this.openSnackBar(`Проект ${project.projectName} создан! 🍕`, this.durationInSeconds);
+          this.dialogRef.close();
         }))
     }
   }
 
-  openSnackBar(message:string,durationInSeconds:number) {
+  openSnackBar(message: string, durationInSeconds: number) {
     this.snackBar.openFromComponent(SnackBarComponent, {
       data: message,
       duration: durationInSeconds * 1000,

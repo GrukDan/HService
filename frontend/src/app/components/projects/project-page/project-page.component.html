@@ -10,6 +10,12 @@
         <mat-grid-tile
           [colspan]="1"
           [rowspan]="1">
+          <span *ngIf="taskShortDtos | async ">Нет задач</span>
+          <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option *ngFor="let task of taskShortDtos | async" [value]="task.taskId">
+              {{task.taskName}}
+            </mat-list-option>
+          </mat-selection-list>
         </mat-grid-tile>
         <mat-grid-tile
           [colspan]="2"
@@ -19,39 +25,51 @@
             <p>
               <mat-form-field appearance="outline">
                 <mat-label>Название проекта</mat-label>
-                <input matInput placeholder="Введите название" #inputProjectName>
-                <mat-hint align="end">{{inputProjectName.value?.length || 0}}/50</mat-hint>
+                <input matInput
+                       placeholder="Введите название"
+                       #inputProjectName
+                       [(ngModel)]="project.projectName">
+                <mat-hint align="end">{{inputProjectName.value?.length || 0}}/40</mat-hint>
                 <mat-error *ngIf="false">{{"message"}}</mat-error>
               </mat-form-field>
             </p>
             <p>
               <mat-form-field appearance="outline">
                 <mat-label>Код проекта</mat-label>
-                <input  matInput placeholder="Введите ключ" #inputProjectCode>
-                <mat-hint align="end">{{inputProjectCode.value?.length || 0}}/30</mat-hint>
+                <input matInput
+                       placeholder="Введите ключ"
+                       #inputProjectCode
+                       [(ngModel)]="project.projectCode">
+                <mat-hint align="end">{{inputProjectCode.value?.length || 0}}/40</mat-hint>
                 <mat-error *ngIf="false">{{"message"}}</mat-error>
               </mat-form-field>
             </p>
             <p>
-            <mat-form-field appearance="fill">
-              <mat-label>Руководитель проекта</mat-label>
-              <mat-select>
-                <mat-option value="option">Option</mat-option>
-              </mat-select>
-            </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>Руководитель проекта</mat-label>
+                <mat-select [(value)]="project.lead">
+                  <mat-option *ngFor="let lead of leads"
+                              [value]="lead.userId">
+                    {{lead.lastName}} {{lead.firstName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </p>
             <p>
-            <mat-form-field appearance="fill">
-              <mat-label>Описание проекта</mat-label>
-              <textarea matInput></textarea>
-            </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>Описание проекта</mat-label>
+                <textarea matInput
+                          [(ngModel)]="project.description.content"></textarea>
+              </mat-form-field>
             </p>
             <div class="project-buttons-container">
               <button mat-raised-button color="primary">Сохранить изменения</button>
-              <button mat-raised-button color="warn">Удалить проект</button>
+              <button mat-raised-button color="warn" (click)="delete(project.idProject)">Удалить проект</button>
             </div>
           </div>
-          <mat-grid-tile-footer>Дата создания: 12 октября 2020</mat-grid-tile-footer>
+          <mat-grid-tile-footer>Дата создания:
+            {{project.creationDate | date }}
+          </mat-grid-tile-footer>
         </mat-grid-tile>
       </mat-grid-list>
     </div>
