@@ -1,4 +1,4 @@
-package com.hservice.models;
+package com.hservice.domain.models;
 
 import lombok.Data;
 
@@ -11,13 +11,13 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Data
-public class Role {
+public class Description {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long roleId;
+    private Long descriptionId;
 
-    @NotBlank(message = "role name is mandatory")
-    @Size(min = 2, max = 45, message = "the length of role name is out of range")
-    private String roleName;
+    @NotBlank(message = "description is mandatory")
+    @Size(min = 2, max = 250, message = "the length of description is out of range")
+    private String content;
 }

@@ -1,7 +1,7 @@
-package com.hservice.dtos;
+package com.hservice.domain.dtos;
 
 
-import com.hservice.models.Project;
+import com.hservice.domain.models.Project;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

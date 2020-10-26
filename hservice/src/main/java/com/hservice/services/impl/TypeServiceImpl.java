@@ -1,8 +1,8 @@
 package com.hservice.services.impl;
 
+import com.hservice.domain.models.Type;
 import com.hservice.exceptions.AlreadyExistsException;
 import com.hservice.exceptions.NotFoundException;
-import com.hservice.models.Type;
 import com.hservice.repositories.TypeRepository;
 import com.hservice.services.TypeService;
 import lombok.RequiredArgsConstructor;

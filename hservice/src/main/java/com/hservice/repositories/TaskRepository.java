@@ -1,6 +1,6 @@
 package com.hservice.repositories;
 
-import com.hservice.models.Task;
+import com.hservice.domain.models.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

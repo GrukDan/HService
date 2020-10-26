@@ -20,9 +20,11 @@ import {AddUserDialogComponent} from './components/dialogs/add-user-dialog/add-u
 import {RegistrationComponent} from './components/people/registration/registration.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CreateProjectDialogComponent} from './components/dialogs/create-project-dialog/create-project-dialog.component';
-import { NotFoundComponent } from './components/details/error-pages/not-found/not-found.component';
-import { ServerErrorComponent } from './components/details/error-pages/server-error/server-error.component';
+import {NotFoundComponent} from './components/details/error-pages/not-found/not-found.component';
+import {ServerErrorComponent} from './components/details/error-pages/server-error/server-error.component';
 import {HttpClientModule} from "@angular/common/http";
+import {SnackBarComponent} from './components/dialogs/snack-bar/snack-bar.component';
+import {ProjectsPageComponent} from './components/projects/projects-page/projects-page.component';
 
 
 @NgModule({
@@ -42,6 +44,8 @@ import {HttpClientModule} from "@angular/common/http";
     CreateProjectDialogComponent,
     NotFoundComponent,
     ServerErrorComponent,
+    SnackBarComponent,
+    ProjectsPageComponent,
 
   ],
   imports: [

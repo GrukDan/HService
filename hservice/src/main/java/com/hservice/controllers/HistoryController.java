@@ -1,8 +1,8 @@
 package com.hservice.controllers;
 
 
+import com.hservice.domain.models.History;
 import com.hservice.exceptions.AlreadyExistsException;
-import com.hservice.models.History;
 import com.hservice.services.HistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
 package com.hservice.repositories;
 
-import com.hservice.models.Status;
+import com.hservice.domain.models.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

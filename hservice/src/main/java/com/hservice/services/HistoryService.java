@@ -1,6 +1,6 @@
 package com.hservice.services;
 
-import com.hservice.models.History;
+import com.hservice.domain.models.History;
 
 import java.util.Collection;
 

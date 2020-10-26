@@ -1,6 +1,6 @@
 package com.hservice.services;
 
-import com.hservice.models.Message;
+import com.hservice.domain.models.Message;
 
 public interface MessageService extends CrudService<Message,Long> {
 }

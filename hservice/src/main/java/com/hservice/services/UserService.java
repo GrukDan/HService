@@ -1,8 +1,8 @@
 package com.hservice.services;
 
-import com.hservice.dtos.UserShortDto;
+import com.hservice.domain.dtos.UserShortDto;
+import com.hservice.domain.models.User;
 import com.hservice.exceptions.NotFoundException;
-import com.hservice.models.User;
 
 import java.util.Collection;
 
@@ -15,4 +15,6 @@ public interface UserService extends CrudService<User,Long> {
     User findByUserNameAndPassword(String userName, String password) throws NotFoundException;
 
     Collection<UserShortDto> findProjectLeads();
+
+    Collection<UserShortDto> findUsersByProjectId(Long projectId);
 }

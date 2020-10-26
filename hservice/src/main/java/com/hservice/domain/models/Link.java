@@ -1,4 +1,4 @@
-package com.hservice.models;
+package com.hservice.domain.models;
 
 import lombok.Data;
 

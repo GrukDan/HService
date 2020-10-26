@@ -1,7 +1,7 @@
 package com.hservice.services.impl;
 
+import com.hservice.domain.models.Status;
 import com.hservice.exceptions.NotFoundException;
-import com.hservice.models.Status;
 import com.hservice.repositories.StatusRepository;
 import com.hservice.services.StatusService;
 import lombok.RequiredArgsConstructor;

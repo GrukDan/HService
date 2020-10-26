@@ -1,7 +1,7 @@
 package com.hservice.services.impl;
 
+import com.hservice.domain.models.Link;
 import com.hservice.exceptions.NotFoundException;
-import com.hservice.models.Link;
 import com.hservice.repositories.LinkRepository;
 import com.hservice.services.LinkService;
 import lombok.RequiredArgsConstructor;

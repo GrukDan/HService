@@ -1,4 +1,4 @@
-package com.hservice.models;
+package com.hservice.domain.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +10,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -39,4 +41,7 @@ public class Project {
     @JoinColumn(name = "project_description")
     private Description description;
 
+    @ManyToMany(mappedBy = "projects",
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    private Set<User> users = new HashSet<>();
 }

@@ -1,4 +1,4 @@
-package com.hservice.models;
+package com.hservice.domain.models;
 
 import lombok.Data;
 
@@ -8,15 +8,15 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Data
-public class Priority {
+public class Status {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long priorityId;
+    private Long statusId;
 
-    @NotBlank(message = "priority name is mandatory")
-    @Size(min = 2, max = 45, message = "the length of priority name is out of range")
-    private String priorityName;
+    @NotBlank(message = "status name is mandatory")
+    @Size(min = 2, max = 45, message = "the length of status name is out of range")
+    private String statusName;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "description")

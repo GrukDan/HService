@@ -1,9 +1,13 @@
 mat-form-field{
-  width: 400px;
+  width: 600px;
+  margin-bottom: 25px;
 }
 
 .form-field-textarea{
   width: 600px;
-  height: 150px;
+  height: 180px;
+}
+textarea{
+  height: 100px;
 }
 

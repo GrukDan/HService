@@ -1,8 +1,8 @@
 package com.hservice.services.impl;
 
+import com.hservice.domain.models.User;
 import com.hservice.exceptions.AlreadyExistsException;
 import com.hservice.exceptions.NotFoundException;
-import com.hservice.models.User;
 import com.hservice.services.RoleService;
 import com.hservice.services.UserService;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

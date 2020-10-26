@@ -1,9 +1,9 @@
 package com.hservice.services.impl;
 
-import com.hservice.dtos.ProjectDto;
+import com.hservice.domain.dtos.ProjectDto;
+import com.hservice.domain.models.Project;
 import com.hservice.exceptions.AlreadyExistsException;
 import com.hservice.exceptions.NotFoundException;
-import com.hservice.models.Project;
 import com.hservice.repositories.ProjectRepository;
 import com.hservice.services.ProjectService;
 import lombok.RequiredArgsConstructor;

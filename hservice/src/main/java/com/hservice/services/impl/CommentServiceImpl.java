@@ -1,7 +1,7 @@
 package com.hservice.services.impl;
 
+import com.hservice.domain.models.Comment;
 import com.hservice.exceptions.NotFoundException;
-import com.hservice.models.Comment;
 import com.hservice.repositories.CommentRepository;
 import com.hservice.services.CommentService;
 import lombok.RequiredArgsConstructor;

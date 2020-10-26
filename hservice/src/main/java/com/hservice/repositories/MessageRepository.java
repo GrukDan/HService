@@ -1,6 +1,6 @@
 package com.hservice.repositories;
 
-import com.hservice.models.Message;
+import com.hservice.domain.models.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

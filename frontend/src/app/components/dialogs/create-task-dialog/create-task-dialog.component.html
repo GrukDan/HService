@@ -2,74 +2,82 @@
 <mat-dialog-content class="mat-typography">
   <form>
     <div class="form-field-container">
-    <p>
-    <mat-form-field appearance="fill">
-      <mat-label>Проект</mat-label>
-      <mat-select>
-        <mat-option value="option">Option</mat-option>
-        <mat-option value="option">Option</mat-option>
-      </mat-select>
-      <mat-hint align="end">Выберите проект для задачи</mat-hint>
-      <mat-error *ngIf="false"></mat-error>
-    </mat-form-field>
-    </p>
-    <p>
-    <mat-form-field appearance="fill">
-      <mat-label>Тип задачи</mat-label>
-      <mat-select>
-        <mat-option value="option">Option</mat-option>
-        <mat-option value="option">Option</mat-option>
-      </mat-select>
-      <mat-hint align="end">Выберите тип задачи</mat-hint>
-      <mat-error *ngIf="false"></mat-error>
-    </mat-form-field>
-    </p>
-    <p>
-      <mat-form-field appearance="standard">
-        <mat-label>Название задачи</mat-label>
-        <input matInput #inputTaskName maxlength="40" placeholder="Введите название задачи">
-        <mat-hint align="end">{{inputTaskName.value?.length || 0}}/40</mat-hint>
-        <mat-error *ngIf="false"></mat-error>
-      </mat-form-field>
-    </p>
-    <p>
-      <mat-form-field appearance="fill">
-        <mat-label>Приоритет задачи</mat-label>
-        <mat-select>
-          <mat-option value="option">Option</mat-option>
-          <mat-option value="option">Option</mat-option>
-        </mat-select>
-        <mat-hint align="end">Выберите приоритет задачи</mat-hint>
-        <mat-error *ngIf="false"></mat-error>
-      </mat-form-field>
-    </p>
-    <p>
-      <mat-form-field appearance="fill">
-        <mat-label>Дата готовности</mat-label>
-        <input matInput [matDatepicker]="picker">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker startView="month" color="primary" [startAt]="startDate"></mat-datepicker>
-        <mat-error *ngIf="false"></mat-error>
-      </mat-form-field>
-    </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label>Проект</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let project of projectDtos"
+                        [value]="project.idProject">{{project.projectName}}</mat-option>
+          </mat-select>
+          <mat-hint align="end">Выберите проект для задачи</mat-hint>
+          <mat-error *ngIf="false"></mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label>Тип задачи</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let type of types"
+                        [value]="type">{{type.typeName}}</mat-option>
+          </mat-select>
+          <mat-hint align="end">Выберите тип задачи</mat-hint>
+          <mat-error *ngIf="false"></mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label>Название задачи</mat-label>
+          <input matInput #inputTaskName maxlength="40" placeholder="Введите название задачи">
+          <mat-hint align="end">{{inputTaskName.value?.length || 0}}/40</mat-hint>
+          <mat-error *ngIf="false"></mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label>Код задачи</mat-label>
+          <input matInput #inputTaskCode maxlength="40" placeholder="Введите код задачи">
+          <mat-hint align="end">{{inputTaskCode.value?.length || 0}}/40</mat-hint>
+          <mat-error *ngIf="false"></mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label>Приоритет задачи</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let priority of priorities"
+                        [value]="priority">{{priority.priorityName}}</mat-option>
+          </mat-select>
+          <mat-hint align="end">Выберите приоритет задачи</mat-hint>
+          <mat-error *ngIf="false"></mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label>Дата готовности</mat-label>
+          <input matInput [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker startView="month" color="primary" [startAt]="startDate"></mat-datepicker>
+          <mat-error *ngIf="false"></mat-error>
+        </mat-form-field>
+      </p>
       <p>
         <mat-form-field appearance="fill">
           <mat-label>Исполнитель задачи</mat-label>
           <mat-select>
-            <mat-option value="option">Option</mat-option>
-            <mat-option value="option">Option</mat-option>
+            <mat-option *ngFor="let executor of executors"
+                        [value]="executor.userId">{{executor.lastName}} {{executor.firstName}}</mat-option>
           </mat-select>
           <mat-hint align="end">Выберите исполнителя задачи</mat-hint>
           <mat-error *ngIf="false"></mat-error>
         </mat-form-field>
       </p>
-    <p>
-      <mat-form-field appearance="fill" class="form-field-textarea">
-        <mat-label>Описание задачи...</mat-label>
-        <textarea matInput #inputTaskDescription></textarea>
-        <mat-hint align="end">{{inputTaskDescription.value?.length || 0}}/250</mat-hint>
-      </mat-form-field>
-    </p>
+      <p>
+        <mat-form-field appearance="fill" class="form-field-textarea">
+          <mat-label>Описание задачи...</mat-label>
+          <textarea matInput #inputTaskDescription></textarea>
+          <mat-hint align="end">{{inputTaskDescription.value?.length || 0}}/250</mat-hint>
+        </mat-form-field>
+      </p>
     </div>
   </form>
 </mat-dialog-content>

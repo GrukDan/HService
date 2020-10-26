@@ -1,7 +1,7 @@
 package com.hservice.services;
 
-import com.hservice.dtos.ProjectDto;
-import com.hservice.models.Project;
+import com.hservice.domain.dtos.ProjectDto;
+import com.hservice.domain.models.Project;
 
 import java.util.Collection;
 

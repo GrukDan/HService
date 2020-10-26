@@ -1,7 +1,7 @@
 package com.hservice.services.impl;
 
+import com.hservice.domain.models.Role;
 import com.hservice.exceptions.NotFoundException;
-import com.hservice.models.Role;
 import com.hservice.repositories.RoleRepository;
 import com.hservice.services.RoleService;
 import lombok.RequiredArgsConstructor;

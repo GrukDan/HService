@@ -1,7 +1,7 @@
 package com.hservice.services.impl;
 
+import com.hservice.domain.models.Message;
 import com.hservice.exceptions.NotFoundException;
-import com.hservice.models.Message;
 import com.hservice.services.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

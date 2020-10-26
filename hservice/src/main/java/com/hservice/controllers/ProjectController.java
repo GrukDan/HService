@@ -1,8 +1,8 @@
 package com.hservice.controllers;
 
+import com.hservice.domain.models.Project;
 import com.hservice.exceptions.AlreadyExistsException;
 import com.hservice.exceptions.NotFoundException;
-import com.hservice.models.Project;
 import com.hservice.services.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

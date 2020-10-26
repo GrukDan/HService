@@ -1,7 +1,7 @@
 package com.hservice.services.impl;
 
+import com.hservice.domain.models.Priority;
 import com.hservice.exceptions.NotFoundException;
-import com.hservice.models.Priority;
 import com.hservice.repositories.PriorityRepository;
 import com.hservice.services.PriorityService;
 import lombok.RequiredArgsConstructor;

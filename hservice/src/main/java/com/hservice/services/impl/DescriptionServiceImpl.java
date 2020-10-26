@@ -1,7 +1,7 @@
 package com.hservice.services.impl;
 
+import com.hservice.domain.models.Description;
 import com.hservice.exceptions.NotFoundException;
-import com.hservice.models.Description;
 import com.hservice.repositories.DescriptionRepository;
 import com.hservice.services.DescriptionService;
 import lombok.RequiredArgsConstructor;

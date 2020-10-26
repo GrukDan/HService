@@ -1,4 +1,4 @@
-package com.hservice.models;
+package com.hservice.domain.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,6 +53,13 @@ public class User {
             cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<Command> commands = new HashSet<>();
 
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinTable(
+            name = "user_project",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "project_id")})
+    private Set<Project> projects = new HashSet<>();
+
     private String position;
 
     private String department;
@@ -62,4 +69,6 @@ public class User {
     private Timestamp lastActivity;
 
     private String avatarUrl;
+
+    private Timestamp dateOfRegistration;
 }

@@ -1,6 +1,6 @@
 package com.hservice.services;
 
-import com.hservice.models.Link;
+import com.hservice.domain.models.Link;
 
 public interface LinkService extends CrudService<Link,Long> {
 }

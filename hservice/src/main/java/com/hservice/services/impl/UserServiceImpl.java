@@ -1,10 +1,9 @@
 package com.hservice.services.impl;
 
-import com.hservice.dtos.UserShortDto;
+import com.hservice.domain.dtos.UserShortDto;
+import com.hservice.domain.models.User;
 import com.hservice.exceptions.AlreadyExistsException;
 import com.hservice.exceptions.NotFoundException;
-import com.hservice.models.User;
-import com.hservice.repositories.RoleRepository;
 import com.hservice.repositories.UserRepository;
 import com.hservice.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -62,6 +61,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public Collection<UserShortDto> findProjectLeads() {
         return Optional.of(userRepository.findUsersByRoleName("ADMIN"))
+                .get().stream()
+                .map(UserShortDto::new)
+                .sorted(Comparator.comparing(UserShortDto::getFirstName))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Collection<UserShortDto> findUsersByProjectId(Long projectId) {
+        return Optional.of(userRepository.findUsersByProjectId(projectId))
                 .get().stream()
                 .map(UserShortDto::new)
                 .sorted(Comparator.comparing(UserShortDto::getFirstName))

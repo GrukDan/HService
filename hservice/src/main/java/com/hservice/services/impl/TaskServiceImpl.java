@@ -1,8 +1,8 @@
 package com.hservice.services.impl;
 
+import com.hservice.domain.models.Task;
 import com.hservice.exceptions.AlreadyExistsException;
 import com.hservice.exceptions.NotFoundException;
-import com.hservice.models.Task;
 import com.hservice.repositories.TaskRepository;
 import com.hservice.services.TaskService;
 import lombok.RequiredArgsConstructor;

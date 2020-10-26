@@ -1,7 +1,7 @@
 package com.hservice.services.impl;
 
+import com.hservice.domain.models.History;
 import com.hservice.exceptions.NotFoundException;
-import com.hservice.models.History;
 import com.hservice.repositories.HistoryRepository;
 import com.hservice.services.HistoryService;
 import lombok.RequiredArgsConstructor;
