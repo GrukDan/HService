@@ -4,7 +4,8 @@
     <input matInput (keyup)="applyFilter($event)" placeholder="Имя задачи" #input>
   </mat-form-field>
   <button mat-icon-button
-          matTooltip="Создатьь задачу"
+          (click)="dialogService.openCreateTaskDialog()"
+          matTooltip="Создать задачу"
           [matTooltipPosition]="'right'"
           matTooltipHideDelay="100000"
           color="primary">

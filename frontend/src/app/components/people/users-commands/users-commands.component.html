@@ -2,20 +2,30 @@
   <mat-grid-tile></mat-grid-tile>
   <mat-grid-tile [colspan]="3">
     <div class="container">
-      <div >
+      <div>
         <mat-form-field appearance="legacy">
           <mat-label>Поиск</mat-label>
-          <input matInput placeholder="Имя задачи">
+          <input matInput placeholder="Имя пользователя">
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
       </div>
+      <div class="projects-select">
+        <mat-form-field appearance="fill">
+          <mat-label>Проект для фитрации пользователей</mat-label>
+          <mat-select (selectionChange)="changeProject($event)">
+            <mat-option *ngFor="let project of projectDtos"
+                        [value]="project.idProject">{{project.projectName}}</mat-option>
+          </mat-select>
+          <mat-hint align="end">Выберите проект для фитрации пользователей</mat-hint>
+        </mat-form-field>
+      </div>
       <p class="mat-h2">
-        Люди
+        Пользователи
       </p>
-      <p class="card-container">
+      <div class="card-container">
         <ng-container *ngTemplateOutlet="newUserCard"></ng-container>
         <ng-container *ngTemplateOutlet="userCards"></ng-container>
-      </p>
+      </div>
       <mat-divider></mat-divider>
       <p class="mat-h2">
         Команды
@@ -30,15 +40,15 @@
 
 <ng-template #userCards>
   <div class="content" fxLayout="row wrap" fxLayoutGap="16px grid">
-  <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let user of users;let i = index">
+  <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let user of userShortDtos;let i = index">
     <mat-card class="user-card">
       <mat-card-header>
         <div mat-card-avatar [ngStyle]="{'background-image': backgroundUrlClass[i]}" class="header-image"></div>
-        <mat-card-title>{{user}}</mat-card-title>
-        <mat-card-subtitle>Developer</mat-card-subtitle>
+        <mat-card-title>{{user.lastName}} {{user.firstName}}</mat-card-title>
+        <mat-card-subtitle>{{user.roleName}}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-actions>
-        <button mat-raised-button color="primary">Подробнее</button>
+        <button mat-raised-button color="primary" (click)="toUserPage(user.userId)">Подробнее</button>
       </mat-card-actions>
     </mat-card>
   </div>
@@ -58,7 +68,7 @@
 </ng-template>
 
 <ng-template #commandCards>
-  <div *ngFor="let user of users;let i = index">
+  <div *ngFor="let user of userShortDtos;let i = index">
     <mat-card class="command-card">
       <mat-card-header>
         <mat-card-title>{{user}}</mat-card-title>

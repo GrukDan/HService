@@ -28,17 +28,27 @@ public class ProjectController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAll(){
+    public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(projectService.findAll());
     }
 
     @GetMapping("/all/dtos")
-    public ResponseEntity<?> getAllDtos(){
+    public ResponseEntity<?> getAllDtos() {
         return ResponseEntity.ok(projectService.getAllDtos());
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable("id") Long id){
+    public void deleteById(@PathVariable("id") Long id) {
         projectService.deleteById(id);
+    }
+
+    @GetMapping("/project-code")
+    public ResponseEntity<?> generateProjectCodeByProjectName(@RequestParam("projectName") String projectName) throws AlreadyExistsException {
+        return ResponseEntity.ok(projectService.generateProjectShortDtoByProjectName(projectName));
+    }
+
+    @GetMapping("/exists")
+    public boolean existsByProjectCode(@RequestParam("projectCode") String projectCode){
+        return projectService.existsByProjectCode(projectCode);
     }
 }

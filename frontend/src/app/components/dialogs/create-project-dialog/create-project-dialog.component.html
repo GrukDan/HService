@@ -8,6 +8,7 @@
           <input matInput
                  #inputProjectName
                  [(ngModel)]="createdProject.projectName"
+                 (blur)="blurProjectNameInput(createdProject.projectName)"
                  formControlName="projectName"
                  maxlength="40"
                  placeholder="Введите название проекта">

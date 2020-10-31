@@ -14,13 +14,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsByEmailAndPassword(String email, String password);
 
-    boolean existsByUserNameAndPassword(String userName,String password);
+    boolean existsByUserNameAndPassword(String userName, String password);
 
     Optional<User> findByUserNameAndPassword(String userName, String password);
 
     @Query("SELECT u FROM User u JOIN u.role r WHERE r.roleName = :roleName")
     Collection<User> findUsersByRoleName(@Param("roleName") String roleName);
 
-    @Query("SELECT DISTINCT u FROM User u JOIN u.projects p WHERE p.idProject= :projectId")
+    @Query("SELECT DISTINCT u FROM User u JOIN u.projects p WHERE p.idProject = :projectId")
     Collection<User> findUsersByProjectId(@Param("projectId") Long projectId);
 }

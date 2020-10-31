@@ -22,50 +22,65 @@
           [rowspan]="1">
           <mat-grid-tile-header>PROJECT</mat-grid-tile-header>
           <div style="margin-top: 25px">
-            <p>
-              <mat-form-field appearance="outline">
-                <mat-label>Название проекта</mat-label>
-                <input matInput
-                       placeholder="Введите название"
-                       #inputProjectName
-                       [(ngModel)]="project.projectName">
-                <mat-hint align="end">{{inputProjectName.value?.length || 0}}/40</mat-hint>
-                <mat-error *ngIf="false">{{"message"}}</mat-error>
-              </mat-form-field>
-            </p>
-            <p>
-              <mat-form-field appearance="outline">
-                <mat-label>Код проекта</mat-label>
-                <input matInput
-                       placeholder="Введите ключ"
-                       #inputProjectCode
-                       [(ngModel)]="project.projectCode">
-                <mat-hint align="end">{{inputProjectCode.value?.length || 0}}/40</mat-hint>
-                <mat-error *ngIf="false">{{"message"}}</mat-error>
-              </mat-form-field>
-            </p>
-            <p>
-              <mat-form-field appearance="fill">
-                <mat-label>Руководитель проекта</mat-label>
-                <mat-select [(value)]="project.lead">
-                  <mat-option *ngFor="let lead of leads"
-                              [value]="lead.userId">
-                    {{lead.lastName}} {{lead.firstName}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </p>
-            <p>
-              <mat-form-field appearance="fill">
-                <mat-label>Описание проекта</mat-label>
-                <textarea matInput
-                          [(ngModel)]="project.description.content"></textarea>
-              </mat-form-field>
-            </p>
-            <div class="project-buttons-container">
-              <button mat-raised-button color="primary">Сохранить изменения</button>
-              <button mat-raised-button color="warn" (click)="delete(project.idProject)">Удалить проект</button>
-            </div>
+            <form [formGroup]="projectFormGroup" (ngSubmit)="submitForm(project)" novalidate>
+              <p>
+                <mat-form-field appearance="outline">
+                  <mat-label>Название проекта</mat-label>
+                  <input matInput
+                         placeholder="Введите название"
+                         formControlName="projectName"
+                         #inputProjectName
+                         [(ngModel)]="project.projectName">
+                  <mat-hint align="end">{{inputProjectName.value?.length || 0}}/40</mat-hint>
+                  <mat-error *ngIf="hasError('projectName', 'required')">Project's name is required</mat-error>
+                  <mat-error *ngIf="hasError('projectName', 'minLength')">Project's name min length is 2 symbols</mat-error>
+                  <mat-error *ngIf="hasError('projectName', 'maxLength')">Project's name max length is 40 symbols</mat-error>
+                </mat-form-field>
+              </p>
+              <p>
+                <mat-form-field appearance="outline">
+                  <mat-label>Код проекта</mat-label>
+                  <input matInput
+                         placeholder="Введите ключ"
+                         formControlName="projectCode"
+                         [disabled]="true"
+                         #inputProjectCode
+                         [(ngModel)]="project.projectCode">
+                  <mat-hint align="end">{{inputProjectCode.value?.length || 0}}/40</mat-hint>
+                </mat-form-field>
+              </p>
+              <p>
+                <mat-form-field appearance="fill">
+                  <mat-label>Руководитель проекта</mat-label>
+                  <mat-select [(value)]="project.lead"
+                              formControlName="lead">
+                    <mat-option *ngFor="let lead of leads"
+                                [value]="lead.userId">
+                      {{lead.lastName}} {{lead.firstName}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="hasError('lead', 'required')">Project's lead is required</mat-error>
+                </mat-form-field>
+              </p>
+              <p>
+                <mat-form-field appearance="fill">
+                  <mat-label>Описание проекта</mat-label>
+                  <textarea matInput
+                            formControlName="descriptionContent"
+                            [(ngModel)]="project.description.content"></textarea>
+                </mat-form-field>
+                <mat-error *ngIf="hasError('descriptionContent', 'maxLength')">Project's description max length is 250
+                  symbols
+                </mat-error>
+              </p>
+              <div class="project-buttons-container">
+                <button mat-raised-button color="primary"
+                        *ngIf="formChangeFlag"
+                        (click)="submitForm(project)">Сохранить изменения
+                </button>
+                <button mat-raised-button color="warn" (click)="delete(project.idProject)">Удалить проект</button>
+              </div>
+            </form>
           </div>
           <mat-grid-tile-footer>Дата создания:
             {{project.creationDate | date }}

@@ -1,20 +1,33 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DialogService} from "../../../services/view-services/dialog.service";
+import {UserShortDto} from "../../../dto/view-models/user-short-dto";
+import {UserService} from "../../../services/http/user.service";
+import {Subscription} from "rxjs";
+import {ProjectDto} from "../../../dto/view-models/project-dto";
+import {ProjectService} from "../../../services/http/project.service";
 
 @Component({
   selector: 'app-users-commands',
   templateUrl: './users-commands.component.html',
   styleUrls: ['./users-commands.component.css']
 })
-export class UsersCommandsComponent implements OnInit {
+export class UsersCommandsComponent implements OnInit,OnDestroy {
 
-  constructor(public dialogService:DialogService) {
+  userShortDtos:UserShortDto[] = [];
+  subscriptions:Subscription[] = [];
+  projectDtos:ProjectDto[] = [];
+
+  constructor(public dialogService:DialogService,
+              private userService:UserService,
+              private projectService:ProjectService) {
   }
 
   ngOnInit(): void {
-    this.users.forEach(()=>{
-      this.backgroundUrlClass.push(this.getUrl());
-    })
+    this.loadProjectShortDtos();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   backgroundUrlClass:string[] = [];
@@ -45,14 +58,40 @@ export class UsersCommandsComponent implements OnInit {
     '/assets/images/users-svg/turtle-animal-svgrepo-com.svg',
     '/assets/images/users-svg/user-svgrepo-com.svg'
   ];
-  users: string[] = ["Max Hersher", "Albert Zimmer", "Ulrich Hingern", "Maria Vindsor", "Victor Gugo"];
 
   getUrl()
   {
     return `url(${this.imageUrls[this.randomInteger(0,23)]})`;
   }
 
+  setBackgroundUrls(){
+    this.userShortDtos.forEach(()=>{
+      this.backgroundUrlClass.push(this.getUrl());
+    })
+  }
+
   randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  loadUserShortDtosByProjectId(projectId:number){
+    this.subscriptions.push(this.userService.getUserShortDtosByProjectId(projectId)
+      .subscribe(projectExecutors=> {
+        this.userShortDtos = projectExecutors;
+        this.setBackgroundUrls();
+      }))
+  }
+
+  toUserPage(userId: number) {
+
+  }
+
+  changeProject(event) {
+    this.loadUserShortDtosByProjectId(event.value);
+  }
+
+  loadProjectShortDtos(){
+    this.subscriptions.push(this.projectService.getProjectDtos()
+      .subscribe(projectDtos=>this.projectDtos = projectDtos));
   }
 }

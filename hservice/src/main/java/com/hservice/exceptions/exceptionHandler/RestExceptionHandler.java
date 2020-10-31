@@ -23,6 +23,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                                                           HttpHeaders headers,
                                                           HttpStatus status,
                                                           WebRequest request) {
+        ex.printStackTrace();
         ErrorResponse requestError = new ErrorResponse(status, "Malformed JSON request", ex);
         return new ResponseEntity(requestError, status);
     }

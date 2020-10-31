@@ -22,9 +22,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User entity) throws AlreadyExistsException {
-        if(userRepository.existsByUserNameAndPassword(entity.getUserName(), entity.getPassword())
+        if (userRepository.existsByUserNameAndPassword(entity.getUserName(), entity.getPassword())
                 || userRepository.existsByEmailAndPassword(entity.getEmail(), entity.getPassword()))
-            throw new AlreadyExistsException(String.format("User with user name: %s already exists",entity.getUserName()));
+            throw new AlreadyExistsException(String.format("User with user name: %s already exists", entity.getUserName()));
         return userRepository.save(entity);
     }
 
@@ -50,26 +50,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean existsByUserNameAndPassword(String userName, String password) {
-        return userRepository.existsByUserNameAndPassword(userName,password);
+        return userRepository.existsByUserNameAndPassword(userName, password);
     }
 
     @Override
     public User findByUserNameAndPassword(String userName, String password) throws NotFoundException {
-        return userRepository.findByUserNameAndPassword(userName,password).orElseThrow(NotFoundException::new);
+        return userRepository.findByUserNameAndPassword(userName, password).orElseThrow(NotFoundException::new);
     }
 
     @Override
     public Collection<UserShortDto> findProjectLeads() {
-        return Optional.of(userRepository.findUsersByRoleName("ADMIN"))
-                .get().stream()
-                .map(UserShortDto::new)
-                .sorted(Comparator.comparing(UserShortDto::getFirstName))
-                .collect(Collectors.toList());
+        return fromUsers(userRepository.findUsersByRoleName("ADMIN"));
     }
 
     @Override
     public Collection<UserShortDto> findUsersByProjectId(Long projectId) {
-        return Optional.of(userRepository.findUsersByProjectId(projectId))
+        return fromUsers(userRepository.findUsersByProjectId(projectId));
+    }
+
+    private Collection<UserShortDto> fromUsers(Collection<User> users) {
+        return Optional.of(users)
                 .get().stream()
                 .map(UserShortDto::new)
                 .sorted(Comparator.comparing(UserShortDto::getFirstName))

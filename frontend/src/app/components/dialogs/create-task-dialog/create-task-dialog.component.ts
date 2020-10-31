@@ -10,6 +10,12 @@ import {StatusService} from "../../../services/http/status.service";
 import {TypeService} from "../../../services/http/type.service";
 import {Subscription} from "rxjs";
 import {UserShortDto} from "../../../dto/view-models/user-short-dto";
+import {UserService} from "../../../services/http/user.service";
+import {MatDialogRef} from "@angular/material/dialog";
+import {SnackBarService} from "../../../services/view-services/snack-bar.service";
+import {Task} from "../../../dto/models/task";
+import {FormGroup} from "@angular/forms";
+import {FormGroupBuilderService} from "../../../services/validation/form-group-builder.service";
 
 @Component({
   selector: 'app-create-task-dialog',
@@ -22,19 +28,27 @@ export class CreateTaskDialogComponent implements OnInit, OnDestroy {
   statuses: Status[] = [];
   types: Type[] = [];
   projectDtos: ProjectDto[] = [];
-  executors:UserShortDto[] = [];
+  executors: UserShortDto[] = [];
 
   startDate: Date = new Date();
   subscriptions: Subscription[] = [];
+  taskFormGroup:FormGroup;
+
+  task:Task = new Task();
 
   constructor(private projectService: ProjectService,
               private taskService: TaskService,
               private priorityService: PriorityService,
               private statusService: StatusService,
-              private typeService: TypeService) {
+              private typeService: TypeService,
+              private userService: UserService,
+              private snackBarService:SnackBarService,
+              private dialogRef: MatDialogRef<CreateTaskDialogComponent>,
+              private formGroupBuilderService:FormGroupBuilderService) {
   }
 
   ngOnInit(): void {
+    this.taskFormGroup= this.formGroupBuilderService.buildCreateTaskDialogFormGroup();
     this.loadProjectDtos();
     this.loadPriorities();
     this.loadStatuses();
@@ -61,4 +75,28 @@ export class CreateTaskDialogComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.priorityService.getAll().subscribe(priorities => this.priorities = priorities));
   }
 
+  loadExecutorsByProjectId(projectId: number) {
+    this.subscriptions.push(this.userService.getUserShortDtosByProjectId(projectId)
+      .subscribe(executors => this.executors = executors));
+  }
+
+  changeProject(event) {
+    this.loadExecutorsByProjectId(event.value)
+  }
+
+  public hasError = (controlName: string, errorName: string) => {
+    return this.taskFormGroup.controls[controlName].hasError(errorName);
+  }
+
+  submitForm() {
+    // if (this.taskFormGroup.valid) {
+    //   if (this.description.content?.length > 0)
+    //     this.createdProject.description = this.description;
+    //   this.subscriptions.push(this.projectService.save(this.createdProject)
+    //     .subscribe(project => {
+    //       this.snackBarService.openSnackBar(`Проект ${project.projectName} создан! 🍕`, 5);
+    //       this.dialogRef.close();
+    //     }))
+    // }
+  }
 }

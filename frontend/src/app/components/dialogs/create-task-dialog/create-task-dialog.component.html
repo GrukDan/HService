@@ -1,11 +1,11 @@
 <h1 mat-dialog-title>Создание задачи</h1>
 <mat-dialog-content class="mat-typography">
-  <form>
+  <form [formGroup]="taskFormGroup" (ngSubmit)="submitForm()" novalidate>
     <div class="form-field-container">
       <p>
         <mat-form-field appearance="fill">
           <mat-label>Проект</mat-label>
-          <mat-select>
+          <mat-select (selectionChange)="changeProject($event)">
             <mat-option *ngFor="let project of projectDtos"
                         [value]="project.idProject">{{project.projectName}}</mat-option>
           </mat-select>
@@ -29,15 +29,9 @@
           <mat-label>Название задачи</mat-label>
           <input matInput #inputTaskName maxlength="40" placeholder="Введите название задачи">
           <mat-hint align="end">{{inputTaskName.value?.length || 0}}/40</mat-hint>
-          <mat-error *ngIf="false"></mat-error>
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="standard">
-          <mat-label>Код задачи</mat-label>
-          <input matInput #inputTaskCode maxlength="40" placeholder="Введите код задачи">
-          <mat-hint align="end">{{inputTaskCode.value?.length || 0}}/40</mat-hint>
-          <mat-error *ngIf="false"></mat-error>
+          <mat-error *ngIf="hasError('taskName', 'required')">Task's name is required</mat-error>
+          <mat-error *ngIf="hasError('taskName', 'minLength')">Task's name min length is 2 symbols</mat-error>
+          <mat-error *ngIf="hasError('taskName', 'maxLength')">Task's name max length is 40 symbols</mat-error>
         </mat-form-field>
       </p>
       <p>
@@ -48,7 +42,7 @@
                         [value]="priority">{{priority.priorityName}}</mat-option>
           </mat-select>
           <mat-hint align="end">Выберите приоритет задачи</mat-hint>
-          <mat-error *ngIf="false"></mat-error>
+          <mat-error *ngIf="hasError('lead', 'required')">Project's lead is required</mat-error>
         </mat-form-field>
       </p>
       <p>
@@ -57,7 +51,7 @@
           <input matInput [matDatepicker]="picker">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker startView="month" color="primary" [startAt]="startDate"></mat-datepicker>
-          <mat-error *ngIf="false"></mat-error>
+          <mat-error *ngIf="hasError('lead', 'required')">Project's lead is required</mat-error>
         </mat-form-field>
       </p>
       <p>
@@ -76,6 +70,7 @@
           <mat-label>Описание задачи...</mat-label>
           <textarea matInput #inputTaskDescription></textarea>
           <mat-hint align="end">{{inputTaskDescription.value?.length || 0}}/250</mat-hint>
+          <mat-error *ngIf="hasError('lead', 'required')">Project's lead is required</mat-error>
         </mat-form-field>
       </p>
     </div>

@@ -16,4 +16,7 @@ export class UserService {
     return this.http.get<UserShortDto[]>(this.url + '/project-leads')
   }
 
+  getUserShortDtosByProjectId(projectId:number):Observable<UserShortDto[]>{
+    return this.http.get<UserShortDto[]>(this.url + '/executors/' + projectId);
+  }
 }

@@ -8,6 +8,9 @@ import {TaskShortDto} from "../../../dto/view-models/task-short-dto";
 import {UserShortDto} from "../../../dto/view-models/user-short-dto";
 import {UserService} from "../../../services/http/user.service";
 import {Description} from "../../../dto/models/description";
+import {FormGroup} from "@angular/forms";
+import {FormGroupBuilderService} from "../../../services/validation/form-group-builder.service";
+import {SnackBarService} from "../../../services/view-services/snack-bar.service";
 
 
 export interface ProjectTab {
@@ -23,10 +26,15 @@ export interface ProjectTab {
 })
 export class ProjectPageComponent implements OnInit, OnDestroy {
 
+  projectId: number;
+  formChangeFlag: boolean = false;
+
   asyncTabs: Observable<ProjectTab[]>;
-  subscriptions: Subscription[] = [];
-  projectId: number
   project: Project = new Project();
+
+  projectFormGroup: FormGroup;
+  subscriptions: Subscription[] = [];
+
   leads: UserShortDto[] = [];
   taskShortDtos: Observable<TaskShortDto[]>;
 
@@ -34,7 +42,9 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
               private router: Router,
               private projectService: ProjectService,
               private taskService: TaskService,
-              private userService: UserService) {
+              private userService: UserService,
+              private formGroupBuilderService: FormGroupBuilderService,
+              private snackBarService: SnackBarService) {
     this.subscriptions.push(activateRoute.params.subscribe(params => {
       this.projectId = params['id'];
       this.project.description = new Description();
@@ -53,12 +63,24 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.projectFormGroup = this.formGroupBuilderService.buildCreateProjectFormGroup();
+    this.projectFormGroup.controls['projectCode'].disable();
+    this.projectFormGroup.valueChanges.subscribe(changes => this.formChangeFlag = true);
     this.loadProjectLeads();
+  }
+
+  public hasError = (controlName: string, errorName: string) => {
+    return this.projectFormGroup.controls[controlName].hasError(errorName);
   }
 
   loadProjectById(id: number) {
     this.subscriptions.push(this.projectService.getById(id)
-      .subscribe(project => this.project = project));
+      .subscribe(project => {
+        this.project = project;
+        if (this.project.description == null) {
+          this.project.description = new Description();
+        }
+      }));
   }
 
   loadProjectLeads() {
@@ -79,5 +101,9 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.router.navigate(['/projects']);
       }))
+  }
+
+  submitForm(project: Project) {
+
   }
 }

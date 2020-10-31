@@ -1,21 +1,20 @@
 package com.hservice.domain.models;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Objects;
 
 @Entity
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Project {
@@ -32,8 +31,6 @@ public class Project {
     @Size(min = 2, max = 45, message = "the length of project code is out of range")
     private String projectCode;
 
-    private long lead;
-
     @CreationTimestamp
     private Date creationDate;
 
@@ -41,7 +38,19 @@ public class Project {
     @JoinColumn(name = "project_description")
     private Description description;
 
-    @ManyToMany(mappedBy = "projects",
-            cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    private Set<User> users = new HashSet<>();
+    private long lead;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Project)) return false;
+        Project project = (Project) o;
+        return projectName.equals(project.projectName) &&
+                projectCode.equals(project.projectCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectName, projectCode);
+    }
 }

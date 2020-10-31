@@ -7,9 +7,8 @@ import {ProjectService} from "../../../services/http/project.service";
 import {UserShortDto} from "../../../dto/view-models/user-short-dto";
 import {FormGroupBuilderService} from "../../../services/validation/form-group-builder.service";
 import {Description} from "../../../dto/models/description";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {SnackBarComponent} from "../snack-bar/snack-bar.component";
 import {MatDialogRef} from "@angular/material/dialog";
+import {SnackBarService} from "../../../services/view-services/snack-bar.service";
 
 @Component({
   selector: 'app-create-project-dialog',
@@ -19,7 +18,6 @@ import {MatDialogRef} from "@angular/material/dialog";
 export class CreateProjectDialogComponent implements OnInit, OnDestroy {
 
   projectFormGroup: FormGroup;
-  durationInSeconds = 5;
   createdProject: Project = new Project();
   description = new Description();
   projectLeads: UserShortDto[] = [];
@@ -28,12 +26,12 @@ export class CreateProjectDialogComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService,
               private projectService: ProjectService,
               private formGroupBuilderService: FormGroupBuilderService,
-              private snackBar: MatSnackBar,
+              private snackBarService: SnackBarService,
               private dialogRef: MatDialogRef<CreateProjectDialogComponent>) {
   }
 
   ngOnInit(): void {
-    this.projectFormGroup = this.formGroupBuilderService.buildCreateProjectDialogFormGroup();
+    this.projectFormGroup = this.formGroupBuilderService.buildCreateProjectFormGroup();
     this.loadProjectLeads();
   }
 
@@ -58,16 +56,20 @@ export class CreateProjectDialogComponent implements OnInit, OnDestroy {
         this.createdProject.description = this.description;
       this.subscriptions.push(this.projectService.save(this.createdProject)
         .subscribe(project => {
-          this.openSnackBar(`Проект ${project.projectName} создан! 🍕`, this.durationInSeconds);
+          this.snackBarService.openSnackBar(`Проект ${project.projectName} создан! 🍕`, 5);
           this.dialogRef.close();
         }))
     }
   }
 
-  openSnackBar(message: string, durationInSeconds: number) {
-    this.snackBar.openFromComponent(SnackBarComponent, {
-      data: message,
-      duration: durationInSeconds * 1000,
-    });
+  blurProjectNameInput(projectName: string) {
+    if (projectName != null && projectName.trim() != '') {
+      this.checkProjectNameAndGenerateProjectCode(projectName);
+    }
+  }
+
+  checkProjectNameAndGenerateProjectCode(projectName: string) {
+    this.subscriptions.push(this.projectService.checkProjectNameAndGenerateProjectCode(projectName)
+      .subscribe(projectShortDto => this.createdProject.projectCode = projectShortDto.projectCode));
   }
 }

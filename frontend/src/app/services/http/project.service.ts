@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Project} from "../../dto/models/project";
 import {ProjectDto} from "../../dto/view-models/project-dto";
+import {ProjectShortDto} from "../../dto/view-models/project-short-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,24 @@ export class ProjectService {
     return this.http.get<Project>(this.url + '/' + id);
   }
 
-  deleteById(id:number):Observable<void>{
+  deleteById(id: number): Observable<void> {
     return this.http.delete<void>(this.url + '/' + id);
+  }
+
+  checkProjectNameAndGenerateProjectCode(projectName: string): Observable<ProjectShortDto> {
+    return this.http.get<ProjectShortDto>(
+      this.url + '/project-code',
+      {
+        params: new HttpParams().set('projectName', projectName)
+      });
+  }
+
+  //todo: заменить на ProjectShortDto
+  existsByProjectCode(projectCode: string): Observable<any> {
+    return this.http.get(
+      this.url + '/exists',
+      {
+        params: new HttpParams().set('projectCode', projectCode)
+      });
   }
 }

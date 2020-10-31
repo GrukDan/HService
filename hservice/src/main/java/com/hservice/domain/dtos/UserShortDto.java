@@ -5,6 +5,8 @@ import com.hservice.domain.models.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 @Data
 @NoArgsConstructor
 public class UserShortDto {
@@ -19,7 +21,7 @@ public class UserShortDto {
 
     private String roleName;
 
-    public UserShortDto(User user){
+    public UserShortDto(@NotNull User user){
         this.userId = user.getUserId();
         this.userName = user.getUserName();
         this.firstName = user.getFirstName();
