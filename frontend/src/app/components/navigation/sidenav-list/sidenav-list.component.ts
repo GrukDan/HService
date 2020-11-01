@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {ProjectService} from "../../../services/http/project.service";
 import {Subscription} from "rxjs";
-import {ProjectDto} from "../../../dto/view-models/project-dto";
+import {ProjectShortDto} from "../../../dto/view-models/project-short-dto";
 
 @Component({
   selector: 'app-sidenav-list',
@@ -12,7 +12,7 @@ export class SidenavListComponent implements OnInit, OnDestroy {
   @Output() sidenavClose = new EventEmitter();
 
   subscriptions: Subscription[] = [];
-  projectDtos: ProjectDto[] = [];
+  projectDtos: ProjectShortDto[] = [];
 
   constructor(private projectService: ProjectService) {
     this.loadProjectDtos();
@@ -29,7 +29,7 @@ export class SidenavListComponent implements OnInit, OnDestroy {
   private loadProjectDtos() {
     this.subscriptions.push(this.projectService.getProjectDtos()
       .subscribe(dtos => {
-        this.projectDtos = dtos as ProjectDto[];
+        this.projectDtos = dtos;
       }))
   }
 

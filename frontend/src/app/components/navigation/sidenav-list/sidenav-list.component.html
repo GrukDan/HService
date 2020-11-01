@@ -7,7 +7,7 @@
   <span>Мои проекты</span>
   <a mat-list-item
      *ngFor="let projectDto of projectDtos"
-     [routerLink]="['project', projectDto.idProject.toString()]"
+     [routerLink]="['project', projectDto.projectId.toString()]"
      (click)="onSidenavClose()">
     <mat-icon>work_outline</mat-icon>
     <span class="nav-caption">{{projectDto.projectName}}</span>

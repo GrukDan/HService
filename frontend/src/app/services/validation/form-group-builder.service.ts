@@ -22,6 +22,7 @@ export class FormGroupBuilderService {
     return this.formBuilder.group({
       taskName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(40)]),
       taskCreator: new FormControl(['', Validators.required]),
+      project: new FormControl(['', Validators.required]),
       type: new FormControl(['', Validators.required]),
       priority: new FormControl(['', Validators.required]),
       dueDate: new FormControl(['', Validators.required]),

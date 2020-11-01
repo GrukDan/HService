@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Project} from "../../dto/models/project";
-import {ProjectDto} from "../../dto/view-models/project-dto";
 import {ProjectShortDto} from "../../dto/view-models/project-short-dto";
 
 @Injectable({
@@ -19,8 +18,8 @@ export class ProjectService {
     return this.http.post<Project>(this.url, project);
   }
 
-  getProjectDtos(): Observable<ProjectDto[]> {
-    return this.http.get<ProjectDto[]>(this.url + '/all/dtos');
+  getProjectDtos(): Observable<ProjectShortDto[]> {
+    return this.http.get<ProjectShortDto[]>(this.url + '/all/dtos');
   }
 
   getById(id: number): Observable<Project> {

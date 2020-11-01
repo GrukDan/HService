@@ -1,80 +1,101 @@
 <h1 mat-dialog-title>Создание задачи</h1>
 <mat-dialog-content class="mat-typography">
-  <form [formGroup]="taskFormGroup" (ngSubmit)="submitForm()" novalidate>
-    <div class="form-field-container">
-      <p>
-        <mat-form-field appearance="fill">
-          <mat-label>Проект</mat-label>
-          <mat-select (selectionChange)="changeProject($event)">
-            <mat-option *ngFor="let project of projectDtos"
-                        [value]="project.idProject">{{project.projectName}}</mat-option>
-          </mat-select>
-          <mat-hint align="end">Выберите проект для задачи</mat-hint>
-          <mat-error *ngIf="false"></mat-error>
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="fill">
-          <mat-label>Тип задачи</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let type of types"
-                        [value]="type">{{type.typeName}}</mat-option>
-          </mat-select>
-          <mat-hint align="end">Выберите тип задачи</mat-hint>
-          <mat-error *ngIf="false"></mat-error>
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="standard">
-          <mat-label>Название задачи</mat-label>
-          <input matInput #inputTaskName maxlength="40" placeholder="Введите название задачи">
-          <mat-hint align="end">{{inputTaskName.value?.length || 0}}/40</mat-hint>
-          <mat-error *ngIf="hasError('taskName', 'required')">Task's name is required</mat-error>
-          <mat-error *ngIf="hasError('taskName', 'minLength')">Task's name min length is 2 symbols</mat-error>
-          <mat-error *ngIf="hasError('taskName', 'maxLength')">Task's name max length is 40 symbols</mat-error>
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="fill">
-          <mat-label>Приоритет задачи</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let priority of priorities"
-                        [value]="priority">{{priority.priorityName}}</mat-option>
-          </mat-select>
-          <mat-hint align="end">Выберите приоритет задачи</mat-hint>
-          <mat-error *ngIf="hasError('lead', 'required')">Project's lead is required</mat-error>
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="fill">
-          <mat-label>Дата готовности</mat-label>
-          <input matInput [matDatepicker]="picker">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker startView="month" color="primary" [startAt]="startDate"></mat-datepicker>
-          <mat-error *ngIf="hasError('lead', 'required')">Project's lead is required</mat-error>
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="fill">
-          <mat-label>Исполнитель задачи</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let executor of executors"
-                        [value]="executor.userId">{{executor.lastName}} {{executor.firstName}}</mat-option>
-          </mat-select>
-          <mat-hint align="end">Выберите исполнителя задачи</mat-hint>
-          <mat-error *ngIf="false"></mat-error>
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="fill" class="form-field-textarea">
-          <mat-label>Описание задачи...</mat-label>
-          <textarea matInput #inputTaskDescription></textarea>
-          <mat-hint align="end">{{inputTaskDescription.value?.length || 0}}/250</mat-hint>
-          <mat-error *ngIf="hasError('lead', 'required')">Project's lead is required</mat-error>
-        </mat-form-field>
-      </p>
-    </div>
-  </form>
+  <div class="form-field-container">
+    <form [formGroup]="taskFormGroup" (ngSubmit)="submitForm()" novalidate>
+      <div>
+        <p>
+          <mat-form-field appearance="fill">
+            <mat-label>Проект</mat-label>
+            <mat-select formControlName="project"
+                        (selectionChange)="changeProject($event)"
+                        [(ngModel)]="createdTask.project">
+              <mat-option *ngFor="let project of projectDtos"
+                          [value]="project.projectId">{{project.projectName}}</mat-option>
+            </mat-select>
+            <mat-hint align="end">Выберите проект для задачи</mat-hint>
+            <mat-error *ngIf="hasError('project', 'required')">Task's project is required</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill">
+            <mat-label>Тип задачи</mat-label>
+            <mat-select formControlName="type"
+                        [(ngModel)]="createdTask.type">
+              <mat-option *ngFor="let type of types"
+                          [value]="type">{{type.typeName}}</mat-option>
+            </mat-select>
+            <mat-hint align="end">Выберите тип задачи</mat-hint>
+            <mat-error *ngIf="hasError('type', 'required')">Task's type is required</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Название задачи</mat-label>
+            <input
+              matInput
+
+              #inputTaskName
+              [(ngModel)]="createdTask.taskName"
+              formControlName="taskName"
+              maxlength="40"
+              placeholder="Введите название задачи">
+            <mat-hint align="end">{{inputTaskName.value?.length || 0}}/40</mat-hint>
+            <mat-error *ngIf="hasError('taskName', 'required')">Task's name is required</mat-error>
+            <mat-error *ngIf="hasError('taskName', 'minLength')">Task's name min length is 2 symbols</mat-error>
+            <mat-error *ngIf="hasError('taskName', 'maxLength')">Task's name max length is 40 symbols</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill">
+            <mat-label>Приоритет задачи</mat-label>
+            <mat-select formControlName="priority"
+                        [(ngModel)]="createdTask.priority">
+              <mat-option *ngFor="let priority of priorities"
+                          [value]="priority">{{priority.priorityName}}</mat-option>
+            </mat-select>
+            <mat-hint align="end">Выберите приоритет задачи</mat-hint>
+            <mat-error *ngIf="hasError('priority', 'required')">Task's priority is required</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill">
+            <mat-label>Дата готовности</mat-label>
+            <input matInput
+                   formControlName="dueDate"
+                   [(ngModel)]="createdTask.dueDate"
+                   [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker startView="month" color="primary" [startAt]="startDate"></mat-datepicker>
+            <mat-error *ngIf="hasError('dueDate', 'required')">Task's due date is required</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill" class="form-field-textarea">
+            <mat-label>Описание задачи...</mat-label>
+            <textarea matInput
+                      formControlName="descriptionContent"
+                      [(ngModel)]="description.content"
+                      #inputTaskDescription>
+          </textarea>
+            <mat-hint align="end">{{inputTaskDescription.value?.length || 0}}/250</mat-hint>
+            <mat-error *ngIf="hasError('descriptionContent', 'maxLength')">Task's description max length is 250
+              symbols
+            </mat-error>
+          </mat-form-field>
+        </p>
+      </div>
+    </form>
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Исполнитель задачи</mat-label>
+        <mat-select [(ngModel)]="createdTask.taskExecutor">
+          <mat-option *ngFor="let executor of executors"
+                      [value]="executor.userId">{{executor.lastName}} {{executor.firstName}}</mat-option>
+        </mat-select>
+        <mat-hint align="end">Выберите исполнителя задачи</mat-hint>
+      </mat-form-field>
+    </p>
+  </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Закрыть</button>

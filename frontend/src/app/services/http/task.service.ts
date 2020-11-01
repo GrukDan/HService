@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Task} from "../../dto/models/task";
 import {TaskShortDto} from "../../dto/view-models/task-short-dto";
@@ -20,5 +20,13 @@ export class TaskService {
 
   getTaskShortDtosByProject(project:number):Observable<TaskShortDto[]> {
     return this.http.get<TaskShortDto[]>(this.url + '/all/short-dtos/by-project/' + project);
+  }
+
+  generateTaskCodeByProject(projectId: number):Observable<TaskShortDto> {
+    return this.http.get<TaskShortDto>(
+      this.url + '/task-code',
+      {
+        params: new HttpParams().set('projectId', projectId.toString())
+      });
   }
 }

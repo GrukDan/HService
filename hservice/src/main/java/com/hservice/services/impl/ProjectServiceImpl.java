@@ -1,13 +1,12 @@
 package com.hservice.services.impl;
 
-import com.hservice.domain.dtos.ProjectDto;
 import com.hservice.domain.dtos.ProjectShortDto;
 import com.hservice.domain.models.Project;
 import com.hservice.exceptions.AlreadyExistsException;
 import com.hservice.exceptions.NotFoundException;
-import com.hservice.helper.StringHandler;
 import com.hservice.repositories.ProjectRepository;
 import com.hservice.services.ProjectService;
+import com.hservice.util.StringHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -44,10 +43,10 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Collection<ProjectDto> getAllDtos() {
+    public Collection<ProjectShortDto> getAllDtos() {
         return projectRepository
                 .findAll().stream()
-                .map(ProjectDto::new)
+                .map(ProjectShortDto::new)
                 .collect(Collectors.toList());
     }
 

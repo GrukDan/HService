@@ -3,8 +3,8 @@ import {DialogService} from "../../../services/view-services/dialog.service";
 import {UserShortDto} from "../../../dto/view-models/user-short-dto";
 import {UserService} from "../../../services/http/user.service";
 import {Subscription} from "rxjs";
-import {ProjectDto} from "../../../dto/view-models/project-dto";
 import {ProjectService} from "../../../services/http/project.service";
+import {ProjectShortDto} from "../../../dto/view-models/project-short-dto";
 
 @Component({
   selector: 'app-users-commands',
@@ -15,7 +15,7 @@ export class UsersCommandsComponent implements OnInit,OnDestroy {
 
   userShortDtos:UserShortDto[] = [];
   subscriptions:Subscription[] = [];
-  projectDtos:ProjectDto[] = [];
+  projectDtos:ProjectShortDto[] = [];
 
   constructor(public dialogService:DialogService,
               private userService:UserService,

@@ -14,7 +14,7 @@ public class ProjectShortDto {
     private String projectCode;
 
     public ProjectShortDto(@NotNull Project project) {
-        projectId = project.getIdProject();
+        projectId = project.getProjectId();
         projectName = project.getProjectName();
         projectCode = project.getProjectCode();
     }
@@ -23,4 +23,6 @@ public class ProjectShortDto {
         this.projectName = projectName;
         this.projectCode = projectCode;
     }
+
+
 }

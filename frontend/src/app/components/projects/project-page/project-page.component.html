@@ -52,7 +52,7 @@
               <p>
                 <mat-form-field appearance="fill">
                   <mat-label>Руководитель проекта</mat-label>
-                  <mat-select [(value)]="project.lead"
+                  <mat-select [(ngModel)]="project.lead"
                               formControlName="lead">
                     <mat-option *ngFor="let lead of leads"
                                 [value]="lead.userId">
@@ -76,6 +76,7 @@
               <div class="project-buttons-container">
                 <button mat-raised-button color="primary"
                         *ngIf="formChangeFlag"
+                        [disabled]="!formChangeFlag"
                         (click)="submitForm(project)">Сохранить изменения
                 </button>
                 <button mat-raised-button color="warn" (click)="delete(project.idProject)">Удалить проект</button>

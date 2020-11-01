@@ -14,7 +14,7 @@
           <mat-label>Проект для фитрации пользователей</mat-label>
           <mat-select (selectionChange)="changeProject($event)">
             <mat-option *ngFor="let project of projectDtos"
-                        [value]="project.idProject">{{project.projectName}}</mat-option>
+                        [value]="project.projectId">{{project.projectName}}</mat-option>
           </mat-select>
           <mat-hint align="end">Выберите проект для фитрации пользователей</mat-hint>
         </mat-form-field>

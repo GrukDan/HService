@@ -21,7 +21,7 @@ public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idProject;
+    private Long projectId;
 
     @NotBlank(message = "Project name is mandatory")
     @Size(min = 2, max = 45, message = "the length of project name is out of range")

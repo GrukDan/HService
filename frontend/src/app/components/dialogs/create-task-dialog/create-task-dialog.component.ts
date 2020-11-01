@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Priority} from "../../../dto/models/priority";
 import {Status} from "../../../dto/models/status";
 import {Type} from "../../../dto/models/type";
-import {ProjectDto} from "../../../dto/view-models/project-dto";
 import {ProjectService} from "../../../services/http/project.service";
 import {TaskService} from "../../../services/http/task.service";
 import {PriorityService} from "../../../services/http/priority.service";
@@ -16,6 +15,8 @@ import {SnackBarService} from "../../../services/view-services/snack-bar.service
 import {Task} from "../../../dto/models/task";
 import {FormGroup} from "@angular/forms";
 import {FormGroupBuilderService} from "../../../services/validation/form-group-builder.service";
+import {Description} from "../../../dto/models/description";
+import {ProjectShortDto} from "../../../dto/view-models/project-short-dto";
 
 @Component({
   selector: 'app-create-task-dialog',
@@ -27,14 +28,15 @@ export class CreateTaskDialogComponent implements OnInit, OnDestroy {
   priorities: Priority[] = [];
   statuses: Status[] = [];
   types: Type[] = [];
-  projectDtos: ProjectDto[] = [];
+  projectDtos: ProjectShortDto[] = [];
   executors: UserShortDto[] = [];
+  description = new Description();
+
+  createdTask:Task = new Task();
 
   startDate: Date = new Date();
   subscriptions: Subscription[] = [];
   taskFormGroup:FormGroup;
-
-  task:Task = new Task();
 
   constructor(private projectService: ProjectService,
               private taskService: TaskService,
@@ -84,7 +86,7 @@ export class CreateTaskDialogComponent implements OnInit, OnDestroy {
     this.loadExecutorsByProjectId(event.value)
   }
 
-  public hasError = (controlName: string, errorName: string) => {
+  hasError = (controlName: string, errorName: string) => {
     return this.taskFormGroup.controls[controlName].hasError(errorName);
   }
 
