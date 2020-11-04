@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+     viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
 <g>
 	<rect x="234.663" y="10.667" style="fill:#D12D4E;" width="42.666" height="42.665"/>
-	<polygon style="fill:#ED8C18;" points="277.332,53.333 234.667,53.333 10.667,53.333 10.667,96.002 48,96.002 463.998,96.002 
+	<polygon style="fill:#ED8C18;" points="277.332,53.333 234.667,53.333 10.667,53.333 10.667,96.002 48,96.002 463.998,96.002
 		501.333,96.002 501.333,53.333 	"/>
-	<polygon style="fill:#FCD051;" points="463.998,96.002 48,96.002 48,362.669 178.447,362.669 256.001,362.669 333.555,362.669 
+	<polygon style="fill:#FCD051;" points="463.998,96.002 48,96.002 48,362.669 178.447,362.669 256.001,362.669 333.555,362.669
 		463.998,362.669 	"/>
 	<circle style="fill:#D12D4E;" cx="255.998" cy="426.668" r="21.333"/>
 </g>

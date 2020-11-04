@@ -1,36 +1,43 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DialogService} from "../../../services/view-services/dialog.service";
-import {UserShortDto} from "../../../dto/view-models/user-short-dto";
+import {UserShortDto} from "../../../dto/dtos/user-short-dto";
 import {UserService} from "../../../services/http/user.service";
 import {Subscription} from "rxjs";
 import {ProjectService} from "../../../services/http/project.service";
-import {ProjectShortDto} from "../../../dto/view-models/project-short-dto";
+import {ProjectShortDto} from "../../../dto/dtos/project-short-dto";
+import {CommandShortDto} from "../../../dto/dtos/command-short-dto";
+import {CommandService} from "../../../services/http/command.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-users-commands',
   templateUrl: './users-commands.component.html',
   styleUrls: ['./users-commands.component.css']
 })
-export class UsersCommandsComponent implements OnInit,OnDestroy {
+export class UsersCommandsComponent implements OnInit, OnDestroy {
 
-  userShortDtos:UserShortDto[] = [];
-  subscriptions:Subscription[] = [];
-  projectDtos:ProjectShortDto[] = [];
+  userDtos: UserShortDto[] = [];
+  subscriptions: Subscription[] = [];
+  projectDtos: ProjectShortDto[] = [];
+  commandDtos: CommandShortDto[] = [];
 
-  constructor(public dialogService:DialogService,
-              private userService:UserService,
-              private projectService:ProjectService) {
+  constructor(public dialogService: DialogService,
+              private userService: UserService,
+              private projectService: ProjectService,
+              private commandService: CommandService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
     this.loadProjectShortDtos();
+    this.loadCommandShortDtos();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  backgroundUrlClass:string[] = [];
+  backgroundUrlClass: string[] = [];
 
   imageUrls: string[] = [
     '/assets/images/users-svg/animal-dog-svgrepo-com.svg',
@@ -59,13 +66,12 @@ export class UsersCommandsComponent implements OnInit,OnDestroy {
     '/assets/images/users-svg/user-svgrepo-com.svg'
   ];
 
-  getUrl()
-  {
-    return `url(${this.imageUrls[this.randomInteger(0,23)]})`;
+  getUrl() {
+    return `url(${this.imageUrls[this.randomInteger(0, 23)]})`;
   }
 
-  setBackgroundUrls(){
-    this.userShortDtos.forEach(()=>{
+  setBackgroundUrls() {
+    this.userDtos.forEach(() => {
       this.backgroundUrlClass.push(this.getUrl());
     })
   }
@@ -74,24 +80,29 @@ export class UsersCommandsComponent implements OnInit,OnDestroy {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  loadUserShortDtosByProjectId(projectId:number){
+  loadUserShortDtosByProjectId(projectId: number) {
     this.subscriptions.push(this.userService.getUserShortDtosByProjectId(projectId)
-      .subscribe(projectExecutors=> {
-        this.userShortDtos = projectExecutors;
+      .subscribe(projectExecutors => {
+        this.userDtos = projectExecutors;
         this.setBackgroundUrls();
       }))
   }
 
   toUserPage(userId: number) {
-
+    this.router.navigateByUrl(`/people/${userId}`);
   }
 
   changeProject(event) {
     this.loadUserShortDtosByProjectId(event.value);
   }
 
-  loadProjectShortDtos(){
+  loadProjectShortDtos() {
     this.subscriptions.push(this.projectService.getProjectDtos()
-      .subscribe(projectDtos=>this.projectDtos = projectDtos));
+      .subscribe(projectDtos => this.projectDtos = projectDtos));
+  }
+
+  loadCommandShortDtos() {
+    this.subscriptions.push(this.commandService.getAllDtos()
+      .subscribe(commandDtos => this.commandDtos = commandDtos));
   }
 }

@@ -4,8 +4,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ProjectService} from "../../../services/http/project.service";
 import {TaskService} from "../../../services/http/task.service";
 import {Project} from "../../../dto/models/project";
-import {TaskShortDto} from "../../../dto/view-models/task-short-dto";
-import {UserShortDto} from "../../../dto/view-models/user-short-dto";
+import {TaskShortDto} from "../../../dto/dtos/task-short-dto";
+import {UserShortDto} from "../../../dto/dtos/user-short-dto";
 import {UserService} from "../../../services/http/user.service";
 import {Description} from "../../../dto/models/description";
 import {FormGroup} from "@angular/forms";
@@ -48,7 +48,6 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(activateRoute.params.subscribe(params => {
       this.projectId = params['id'];
       this.project.description = new Description();
-      this.loadProjectById(this.projectId);
     }));
 
     this.asyncTabs = new Observable((observer: Observer<ProjectTab[]>) => {
@@ -67,6 +66,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
     this.projectFormGroup.controls['projectCode'].disable();
     this.projectFormGroup.valueChanges.subscribe(changes => this.formChangeFlag = true);
     this.loadProjectLeads();
+    this.loadProjectById(this.projectId);
   }
 
   public hasError = (controlName: string, errorName: string) => {

@@ -1,5 +1,6 @@
 import {Role} from "./role";
 import {Command} from "./command";
+import {Project} from "./project";
 
 export class User {
   userId:number;
@@ -10,6 +11,7 @@ export class User {
   password:string;
   role:Role;
   commands:Set<Command>;
+  projects:Set<Project>;
   position:string;
   department:string;
   placeOfResidence:string;

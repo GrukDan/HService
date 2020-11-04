@@ -17,8 +17,13 @@
     <form>
       <p>
         <mat-form-field appearance="standard">
-          <mat-label>Имя пользователя</mat-label>
-          <input matInput #inputUserName maxlength="40" placeholder="Введите имя пользователя">
+          <mat-label>Имя аккаунта</mat-label>
+          <input matInput
+                 #inputUserName
+                 [(ngModel)]="loadedUser.userName"
+                 maxlength="40"
+                 name="userName"
+                 placeholder="Введите имя пользователя">
           <mat-hint align="end">{{inputUserName.value?.length || 0}}/40</mat-hint>
           <mat-error *ngIf="false"></mat-error>
         </mat-form-field>
@@ -26,7 +31,12 @@
       <p>
         <mat-form-field appearance="standard">
           <mat-label>Полное имя пользователя</mat-label>
-          <input matInput #inputFirstName maxlength="40" placeholder="Введите полное имя пользователя">
+          <input matInput
+                 #inputFirstName
+                 [(ngModel)]="loadedUser.firstName"
+                 maxlength="40"
+                 name="firstName"
+                 placeholder="Введите полное имя пользователя">
           <mat-hint align="end">{{inputFirstName.value?.length || 0}}/40</mat-hint>
           <mat-error *ngIf="false"></mat-error>
         </mat-form-field>
@@ -34,7 +44,12 @@
       <p>
         <mat-form-field appearance="standard">
           <mat-label>Фамилия пользователя</mat-label>
-          <input matInput #inputLastName maxlength="40" placeholder="Введите фамилию пользователя">
+          <input matInput
+                 #inputLastName
+                 [(ngModel)]="loadedUser.lastName"
+                 maxlength="40"
+                 name="lastName"
+                 placeholder="Введите фамилию пользователя">
           <mat-hint align="end">{{inputLastName.value?.length || 0}}/40</mat-hint>
           <mat-error *ngIf="false"></mat-error>
         </mat-form-field>
@@ -42,7 +57,12 @@
       <p>
         <mat-form-field appearance="standard">
           <mat-label>Адрес электронной почты</mat-label>
-          <input matInput #inputLastName maxlength="40" placeholder="Введите email">
+          <input matInput
+                 #inputLastName
+                 [(ngModel)]="loadedUser.email"
+                 maxlength="40"
+                 name="email"
+                 placeholder="Введите email">
           <mat-hint align="end">{{inputLastName.value?.length || 0}}/45</mat-hint>
           <mat-error *ngIf="false"></mat-error>
         </mat-form-field>
@@ -50,7 +70,12 @@
       <p>
         <mat-form-field appearance="standard">
           <mat-label>Должность</mat-label>
-          <input matInput #inputPosition maxlength="40" placeholder="Введите Вашу должность">
+          <input matInput
+                 #inputPosition
+                 [(ngModel)]="loadedUser.position"
+                 maxlength="40"
+                 name="position"
+                 placeholder="Введите Вашу должность">
           <mat-hint align="end">{{inputPosition.value?.length || 0}}/40</mat-hint>
           <mat-error *ngIf="false"></mat-error>
         </mat-form-field>
@@ -58,7 +83,12 @@
       <p>
         <mat-form-field appearance="standard">
           <mat-label>Название отдела</mat-label>
-          <input matInput #inputDepartment maxlength="40" placeholder="Введите название Вашего отдела">
+          <input matInput
+                 #inputDepartment
+                 [(ngModel)]="loadedUser.department"
+                 maxlength="40"
+                 name="department"
+                 placeholder="Введите название Вашего отдела">
           <mat-hint align="end">{{inputDepartment.value?.length || 0}}/40</mat-hint>
           <mat-error *ngIf="false"></mat-error>
         </mat-form-field>
@@ -66,15 +96,20 @@
       <p>
         <mat-form-field appearance="standard">
           <mat-label>Местоположение</mat-label>
-          <input matInput #inputPlace maxlength="40" placeholder="Введите Ваше местоположение">
+          <input matInput
+                 #inputPlace
+                 [(ngModel)]="loadedUser.placeOfResidence"
+                 maxlength="40"
+                 name="placeOfResidence"
+                 placeholder="Введите Ваше местоположение">
           <mat-hint align="end">{{inputPlace.value?.length || 0}}/40</mat-hint>
           <mat-error *ngIf="false"></mat-error>
         </mat-form-field>
       </p>
     </form>
     <div class="buttons-container">
-    <button mat-raised-button>Отменить</button>
-    <button mat-raised-button color="primary">Сохранить изменения</button>
+      <button mat-raised-button>Отменить</button>
+      <button mat-raised-button color="primary">Сохранить изменения</button>
     </div>
   </div>
 </ng-template>
@@ -82,9 +117,11 @@
 <ng-template #projectsData>
   <div>
     <p class="mat-h2">Проекты</p>
-    <mat-selection-list #shoes [multiple]="false">
-      <mat-list-option *ngFor="let shoe of typesOfShoes" [value]="shoe" (click)="true">
-        {{shoe}}
+    <mat-selection-list [multiple]="false">
+      <mat-list-option *ngFor="let project of loadedUser.projects"
+                       [value]="project"
+                       (click)="true">
+        {{project.projectName}}
       </mat-list-option>
     </mat-selection-list>
   </div>
@@ -99,7 +136,7 @@
           <mat-card-header>
             <mat-card-title>Mountains {{num}}</mat-card-title>
           </mat-card-header>
-          <img mat-card-image src="assets/images/task-types-svg/rocket-svgrepo-com.svg">
+          <img mat-card-image src="../../../../assets/images/task-types-svg/DEPLOYMENT.svg">
           <mat-card-content>
             <p>
               The Himalayas is a mountain range in Asia.

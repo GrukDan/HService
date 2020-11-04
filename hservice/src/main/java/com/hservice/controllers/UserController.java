@@ -1,6 +1,7 @@
 package com.hservice.controllers;
 
 
+import com.hservice.exceptions.NotFoundException;
 import com.hservice.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,5 +25,10 @@ public class UserController {
     @GetMapping("/executors/{projectId}")
     public ResponseEntity<?> getUserShortDtosByProjectId(@PathVariable("projectId") Long projectId){
         return ResponseEntity.ok(userService.findUsersByProjectId(projectId));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable("id") Long id) throws NotFoundException {
+        return ResponseEntity.ok(userService.findById(id));
     }
 }

@@ -26,4 +26,9 @@ public class TaskController {
     public ResponseEntity<?> getById(@PathVariable("id") Long id) throws NotFoundException {
         return ResponseEntity.ok(taskService.findById(id));
     }
+
+    @GetMapping("/by-executor")
+    public ResponseEntity<?> getTasksByExecutor(@RequestParam("executor") long executor){
+        return ResponseEntity.ok(taskService.findAlByExecutor(executor));
+    }
 }

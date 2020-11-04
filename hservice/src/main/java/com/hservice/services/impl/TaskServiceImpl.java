@@ -57,4 +57,8 @@ public class TaskServiceImpl implements TaskService {
         return stringHandler.generateTaskCode(projectCode, numberCode);
     }
 
+    @Override
+    public Collection<Task> findAlByExecutor(long executor) {
+        return taskRepository.findAllByTaskExecutor(executor);
+    }
 }

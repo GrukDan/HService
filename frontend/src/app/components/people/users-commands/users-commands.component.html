@@ -24,14 +24,22 @@
       </p>
       <div class="card-container">
         <ng-container *ngTemplateOutlet="newUserCard"></ng-container>
-        <ng-container *ngTemplateOutlet="userCards"></ng-container>
+        <p *ngIf="userDtos.length>0" class="card-container">
+          <ng-container *ngTemplateOutlet="userCards"></ng-container>
+        </p>
+        <p *ngIf="userDtos.length==0" class="card-container">
+          На данном проекте нет сотрудников.
+        </p>
       </div>
       <mat-divider></mat-divider>
       <p class="mat-h2">
         Команды
       </p>
-      <p class="card-container">
+      <p *ngIf="commandDtos.length>0" class="card-container">
         <ng-container *ngTemplateOutlet="commandCards"></ng-container>
+      </p>
+      <p *ngIf="commandDtos.length==0" class="card-container">
+        Нет созданных команд.
       </p>
     </div>
   </mat-grid-tile>
@@ -40,18 +48,18 @@
 
 <ng-template #userCards>
   <div class="content" fxLayout="row wrap" fxLayoutGap="16px grid">
-  <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let user of userShortDtos;let i = index">
-    <mat-card class="user-card">
-      <mat-card-header>
-        <div mat-card-avatar [ngStyle]="{'background-image': backgroundUrlClass[i]}" class="header-image"></div>
-        <mat-card-title>{{user.lastName}} {{user.firstName}}</mat-card-title>
-        <mat-card-subtitle>{{user.roleName}}</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="toUserPage(user.userId)">Подробнее</button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
+    <div *ngFor="let user of userDtos;let i = index">
+      <mat-card class="user-card">
+        <mat-card-header>
+          <div mat-card-avatar [ngStyle]="{'background-image': backgroundUrlClass[i]}" class="header-image"></div>
+          <mat-card-title>{{user.lastName}} {{user.firstName}}</mat-card-title>
+          <mat-card-subtitle>{{user.roleName}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="toUserPage(user.userId)">Подробнее</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
   </div>
 </ng-template>
 
@@ -62,16 +70,17 @@
       <mat-card-title>Новый пользователь</mat-card-title>
     </mat-card-header>
     <mat-card-actions>
-      <button mat-raised-button color="accent" (click)="dialogService.openAddUserDialog()">Добавить пользователя</button>
+      <button mat-raised-button color="accent" (click)="dialogService.openAddUserDialog()">Добавить пользователя
+      </button>
     </mat-card-actions>
   </mat-card>
 </ng-template>
 
 <ng-template #commandCards>
-  <div *ngFor="let user of userShortDtos;let i = index">
+  <div *ngFor="let command of commandDtos;let i = index">
     <mat-card class="command-card">
       <mat-card-header>
-        <mat-card-title>{{user}}</mat-card-title>
+        <mat-card-title>{{command.commandName}}</mat-card-title>
       </mat-card-header>
       <mat-card-actions>
         <button mat-raised-button color="primary">Подробнее</button>

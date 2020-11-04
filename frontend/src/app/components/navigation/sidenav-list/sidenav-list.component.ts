@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {ProjectService} from "../../../services/http/project.service";
 import {Subscription} from "rxjs";
-import {ProjectShortDto} from "../../../dto/view-models/project-short-dto";
+import {ProjectShortDto} from "../../../dto/dtos/project-short-dto";
 
 @Component({
   selector: 'app-sidenav-list',

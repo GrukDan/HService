@@ -4,7 +4,7 @@ import {Project} from "../../../dto/models/project";
 import {Subscription} from "rxjs";
 import {UserService} from "../../../services/http/user.service";
 import {ProjectService} from "../../../services/http/project.service";
-import {UserShortDto} from "../../../dto/view-models/user-short-dto";
+import {UserShortDto} from "../../../dto/dtos/user-short-dto";
 import {FormGroupBuilderService} from "../../../services/validation/form-group-builder.service";
 import {Description} from "../../../dto/models/description";
 import {MatDialogRef} from "@angular/material/dialog";

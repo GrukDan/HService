@@ -8,7 +8,7 @@ import {PriorityService} from "../../../services/http/priority.service";
 import {StatusService} from "../../../services/http/status.service";
 import {TypeService} from "../../../services/http/type.service";
 import {Subscription} from "rxjs";
-import {UserShortDto} from "../../../dto/view-models/user-short-dto";
+import {UserShortDto} from "../../../dto/dtos/user-short-dto";
 import {UserService} from "../../../services/http/user.service";
 import {MatDialogRef} from "@angular/material/dialog";
 import {SnackBarService} from "../../../services/view-services/snack-bar.service";
@@ -16,7 +16,7 @@ import {Task} from "../../../dto/models/task";
 import {FormGroup} from "@angular/forms";
 import {FormGroupBuilderService} from "../../../services/validation/form-group-builder.service";
 import {Description} from "../../../dto/models/description";
-import {ProjectShortDto} from "../../../dto/view-models/project-short-dto";
+import {ProjectShortDto} from "../../../dto/dtos/project-short-dto";
 
 @Component({
   selector: 'app-create-task-dialog',

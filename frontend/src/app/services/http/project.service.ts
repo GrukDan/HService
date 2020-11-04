@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Project} from "../../dto/models/project";
-import {ProjectShortDto} from "../../dto/view-models/project-short-dto";
+import {ProjectShortDto} from "../../dto/dtos/project-short-dto";
 
 @Injectable({
   providedIn: 'root'
