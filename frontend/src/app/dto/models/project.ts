@@ -1,7 +1,7 @@
 import {Description} from "./description";
 
 export class Project {
-  idProject: number;
+  projectId: number;
   projectName: string;
   projectCode: string;
   lead: number;

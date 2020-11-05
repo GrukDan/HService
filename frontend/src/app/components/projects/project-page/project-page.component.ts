@@ -31,6 +31,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
 
   asyncTabs: Observable<ProjectTab[]>;
   project: Project = new Project();
+  idForMembersTab: Observable<number>;
 
   projectFormGroup: FormGroup;
   subscriptions: Subscription[] = [];
@@ -48,6 +49,11 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(activateRoute.params.subscribe(params => {
       this.projectId = params['id'];
       this.project.description = new Description();
+      this.idForMembersTab = new Observable((observer: Observer<number>) => {
+        setTimeout(() => {
+          observer.next(this.projectId);
+        }, 1000);
+      });
     }));
 
     this.asyncTabs = new Observable((observer: Observer<ProjectTab[]>) => {

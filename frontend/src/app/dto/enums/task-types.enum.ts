@@ -1,4 +1,4 @@
-export  enum TaskTypesEnum{
+export enum TaskTypesEnum {
   SPECIFICATION_DEVELOPMENT,//Разработка спецификации
   DESIGN,//Проектирование
   DEVELOPMENT,//Разработка

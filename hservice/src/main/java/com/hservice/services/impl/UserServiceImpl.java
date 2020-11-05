@@ -1,5 +1,6 @@
 package com.hservice.services.impl;
 
+import com.hservice.domain.dtos.UserLongDto;
 import com.hservice.domain.dtos.UserShortDto;
 import com.hservice.domain.models.User;
 import com.hservice.exceptions.AlreadyExistsException;
@@ -7,6 +8,8 @@ import com.hservice.exceptions.NotFoundException;
 import com.hservice.repositories.UserRepository;
 import com.hservice.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -60,19 +63,34 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Collection<UserShortDto> findProjectLeads() {
-        return fromUsers(userRepository.findUsersByRoleName("ADMIN"));
+        return toUserShortDtos(userRepository.findUsersByRoleName("ADMIN"));
     }
 
     @Override
     public Collection<UserShortDto> findUsersByProjectId(Long projectId) {
-        return fromUsers(userRepository.findUsersByProjectId(projectId));
+        return toUserShortDtos(userRepository.findUsersByProjectId(projectId));
     }
 
-    private Collection<UserShortDto> fromUsers(Collection<User> users) {
+    private Collection<UserShortDto> toUserShortDtos(Collection<User> users) {
         return Optional.of(users)
                 .get().stream()
                 .map(UserShortDto::new)
                 .sorted(Comparator.comparing(UserShortDto::getFirstName))
                 .collect(Collectors.toList());
+    }
+
+    private Collection<UserLongDto> toUserLongDtos(Collection<User> users) {
+        return Optional.of(users)
+                .get().stream()
+                .map(UserLongDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Collection<UserLongDto> findMembersByProjectId(Long projectId, int page, int size, boolean order, String parameter) {
+        return toUserLongDtos(userRepository
+                .findUsersByProjectId(
+                        projectId,
+                        PageRequest.of(page, size, Sort.by(order ? Sort.Direction.ASC : Sort.Direction.DESC, parameter))).getContent());
     }
 }

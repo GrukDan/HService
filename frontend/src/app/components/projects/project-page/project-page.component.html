@@ -33,8 +33,10 @@
                          [(ngModel)]="project.projectName">
                   <mat-hint align="end">{{inputProjectName.value?.length || 0}}/40</mat-hint>
                   <mat-error *ngIf="hasError('projectName', 'required')">Project's name is required</mat-error>
-                  <mat-error *ngIf="hasError('projectName', 'minLength')">Project's name min length is 2 symbols</mat-error>
-                  <mat-error *ngIf="hasError('projectName', 'maxLength')">Project's name max length is 40 symbols</mat-error>
+                  <mat-error *ngIf="hasError('projectName', 'minLength')">Project's name min length is 2 symbols
+                  </mat-error>
+                  <mat-error *ngIf="hasError('projectName', 'maxLength')">Project's name max length is 40 symbols
+                  </mat-error>
                 </mat-form-field>
               </p>
               <p>
@@ -79,7 +81,7 @@
                         [disabled]="!formChangeFlag"
                         (click)="submitForm(project)">Сохранить изменения
                 </button>
-                <button mat-raised-button color="warn" (click)="delete(project.idProject)">Удалить проект</button>
+                <button mat-raised-button color="warn" (click)="delete(project.projectId)">Удалить проект</button>
               </div>
             </form>
           </div>
@@ -93,6 +95,10 @@
   <mat-tab>
     <ng-template mat-tab-label>Задачи проекта</ng-template>
     <app-tasks-table></app-tasks-table>
+  </mat-tab>
+  <mat-tab *ngIf="idForMembersTab | async">
+    <ng-template mat-tab-label>Участники проекта</ng-template>
+    <app-members-table [projectId]="idForMembersTab"></app-members-table>
   </mat-tab>
 </mat-tab-group>
 

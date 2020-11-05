@@ -9,6 +9,7 @@ import {Task} from "../../../dto/models/task";
 import {CommandShortDto} from "../../../dto/dtos/command-short-dto";
 import {CommandService} from "../../../services/http/command.service";
 import {TaskTypesEnum} from "../../../dto/enums/task-types.enum";
+import {Type} from "../../../dto/models/type";
 
 @Component({
   selector: 'app-user-page',
@@ -18,13 +19,13 @@ import {TaskTypesEnum} from "../../../dto/enums/task-types.enum";
 export class UserPageComponent implements OnInit {
 
   imageUrls: string[] = [
-    '/assets/images/users-svg/SPECIFICATION_DEVELOPMENT.svg',
-    '/assets/images/users-svg/DESIGN.svg',
-    '/assets/images/users-svg/DEVELOPMENT.svg',
-    '/assets/images/users-svg/TESTING.svg',
-    '/assets/images/users-svg/FIND_ERRORS.svg',
-    '/assets/images/users-svg/REFACTORING.svg',
-    '/assets/images/users-svg/DEPLOYMENT.svg',];
+    '/assets/images/task-types-svg/SPECIFICATION_DEVELOPMENT.svg',
+    '/assets/images/task-types-svg/DESIGN.svg',
+    '/assets/images/task-types-svg/DEVELOPMENT.svg',
+    '/assets/images/task-types-svg/TESTING.svg',
+    '/assets/images/task-types-svg/FIND_ERRORS.svg',
+    '/assets/images/task-types-svg/REFACTORING.svg',
+    '/assets/images/task-types-svg/DEPLOYMENT.svg',];
 
   typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
 
@@ -32,6 +33,7 @@ export class UserPageComponent implements OnInit {
   userId: number;
   loadedUser: User = new User();
 
+  edit:boolean = false;
   tasks:Task[] = [];
   commandDtos:CommandShortDto[] = [];
 
@@ -50,8 +52,8 @@ export class UserPageComponent implements OnInit {
     this.loadUserById(this.userId);
   }
 
-  getUrl(task:Task) {
-    switch (task.type.typeName) {
+  getImageUrlByTaskType(type:Type) {
+    switch (type.typeName) {
       case 'Разработка спецификации':return `url(${this.imageUrls[TaskTypesEnum.SPECIFICATION_DEVELOPMENT]})`;
       case 'Проектирование':return `url(${this.imageUrls[TaskTypesEnum.DESIGN]})`;
       case 'Разработка':return `url(${this.imageUrls[TaskTypesEnum.DEVELOPMENT]})`;
@@ -70,5 +72,13 @@ export class UserPageComponent implements OnInit {
   loadTasksByExecutor(executor:number){
     this.subscriptions.push(this.taskService.getTasksByExecutor(executor)
       .subscribe(tasks=>this.tasks = tasks));
+  }
+
+  editUser(edit:boolean){
+    this.edit = !edit;
+  }
+
+  toProject(id: number) {
+    this.router.navigateByUrl(`/project/${id}`);
   }
 }

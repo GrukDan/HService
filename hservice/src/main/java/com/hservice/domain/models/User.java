@@ -1,6 +1,8 @@
 package com.hservice.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -40,6 +42,7 @@ public class User {
     @Email(message = "email isn't valid")
     private String email;
 
+    @JsonIgnore
     @NotBlank(message = "Password code is mandatory")
     @Size(min = 6, max = 150, message = "the length of first name is out of range")
     private String password;
@@ -71,6 +74,7 @@ public class User {
 
     private String avatarUrl;
 
+    @CreationTimestamp
     private Timestamp dateOfRegistration;
 
     @Override
