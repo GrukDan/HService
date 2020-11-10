@@ -1,12 +1,12 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {DialogService} from "../../../services/view-services/dialog.service";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.css'],
 })
-export class HeaderComponent implements OnInit {
+export class NavbarComponent implements OnInit {
 
   @Output() public sidenavToggle = new EventEmitter();
 

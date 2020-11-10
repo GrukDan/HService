@@ -6,7 +6,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RoutingModule} from './modules/routing/routing.module';
 import {HomeComponent} from './components/home/home.component';
 import {MaterialModule} from './modules/material/material.module';
-import {HeaderComponent} from './components/navigation/header/header.component';
+import {NavbarComponent} from './components/navigation/navbar/navbar.component';
 import {SidenavListComponent} from './components/navigation/sidenav-list/sidenav-list.component';
 import {ProjectPageComponent} from './components/projects/project-page/project-page.component';
 import {TasksTableComponent} from './components/projects/tasks-table/tasks-table.component';
@@ -25,13 +25,15 @@ import {ServerErrorComponent} from './components/details/error-pages/server-erro
 import {HttpClientModule} from "@angular/common/http";
 import {SnackBarComponent} from './components/dialogs/snack-bar/snack-bar.component';
 import {ProjectsPageComponent} from './components/projects/projects-page/projects-page.component';
+import {MembersTableComponent} from './components/projects/members-table/members-table.component';
+import {HeaderComponent} from './components/navigation/header/header/header.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    HeaderComponent,
+    NavbarComponent,
     SidenavListComponent,
     ProjectPageComponent,
     TasksTableComponent,
@@ -46,6 +48,8 @@ import {ProjectsPageComponent} from './components/projects/projects-page/project
     ServerErrorComponent,
     SnackBarComponent,
     ProjectsPageComponent,
+    MembersTableComponent,
+    HeaderComponent,
 
   ],
   imports: [

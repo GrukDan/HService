@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -26,7 +26,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-
 
 
 @NgModule({
@@ -60,6 +59,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MatNativeDateModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatSortModule,
+    MatPaginatorModule
   ],
   exports: [
     MatTabsModule,
@@ -88,7 +89,9 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MatTooltipModule,
     MatNativeDateModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSortModule,
+    MatPaginatorModule
   ],
 })
 export class MaterialModule { }

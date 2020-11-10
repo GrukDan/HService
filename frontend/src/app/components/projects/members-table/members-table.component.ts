@@ -1,7 +1,10 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {UserService} from "../../../services/http/user.service";
-import {Observable, Subscription} from "rxjs";
-import {UserLongDto} from "../../../dto/dtos/user-long-dto";
+import {merge} from "rxjs";
+import {UsersDataSource} from "../../../dto/table-datasources/users-data-source";
+import {MatPaginator} from "@angular/material/paginator";
+import {tap} from "rxjs/operators";
+import {MatSort} from "@angular/material/sort";
 
 
 const sortParameters: string[] =
@@ -21,35 +24,48 @@ const sortParameters: string[] =
   templateUrl: './members-table.component.html',
   styleUrls: ['./members-table.component.css']
 })
-export class MembersTableComponent implements OnInit,OnDestroy {
+export class MembersTableComponent implements AfterViewInit, OnInit {
 
-  @Input() projectId: Observable<number>;
-  subscriptions: Subscription[] = [];
+  @Input() projectId: number;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  id:number;
-  members: UserLongDto[] = [];
-
-  page: number = 0;
-  size: number = 5;
-  order: boolean = true;
-  parameter: string = sortParameters[1];
-
-  parameters: string[] = [];
+  dataSource: UsersDataSource;
+  displayedColumns: string[] = [
+    'userName',
+    'firstName',
+    'lastName',
+    'email',
+    'position',
+    'department',
+    'placeOfResidence'];
 
   constructor(private userService: UserService) {
-    this.projectId.subscribe(id=>this.id = id);
-  }
+
+  };
+
 
   ngOnInit(): void {
-    this.loadMembersByProjectId(this.id,this.page,this.size,this.order,this.parameter);
+    this.dataSource = new UsersDataSource(this.userService);
+    this.dataSource.loadMembersByProjectId(this.projectId);
   }
 
-  loadMembersByProjectId(id: number,page:number,size:number,order:boolean,parameter:string) {
-    this.subscriptions.push(this.userService.getMembersByProjectId(id,page,size,order,parameter)
-      .subscribe(members=>this.members = members));
+  loadMembersByProjectId() {
+    this.dataSource.loadMembersByProjectId(
+      this.projectId,
+      this.paginator.pageIndex,
+      this.paginator.pageSize,
+      this.sort.direction === 'asc',
+      '');
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  ngAfterViewInit(): void {
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        tap(() => this.loadMembersByProjectId())
+      )
+      .subscribe();
   }
 }

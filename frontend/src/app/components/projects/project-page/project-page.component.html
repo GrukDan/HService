@@ -1,7 +1,7 @@
 <ng-container *ngIf="(asyncTabs | async) === null">
   Loading tabs...
 </ng-container>
-
+<!--<app-header [header]="project.projectName"></app-header>-->
 <mat-tab-group>
   <mat-tab>
     <ng-template mat-tab-label>Данные о проекте</ng-template>
@@ -96,9 +96,9 @@
     <ng-template mat-tab-label>Задачи проекта</ng-template>
     <app-tasks-table></app-tasks-table>
   </mat-tab>
-  <mat-tab *ngIf="idForMembersTab | async">
+  <mat-tab *ngIf="projectId">
     <ng-template mat-tab-label>Участники проекта</ng-template>
-    <app-members-table [projectId]="idForMembersTab"></app-members-table>
+    <app-members-table [projectId]="projectId"></app-members-table>
   </mat-tab>
 </mat-tab-group>
 
