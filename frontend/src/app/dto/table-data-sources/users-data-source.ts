@@ -9,6 +9,8 @@ export class UsersDataSource implements DataSource<UserLongDto> {
   private usersSubject = new BehaviorSubject<UserLongDto[]>([]);
   private loadingSubject = new BehaviorSubject<boolean>(false);
 
+  public $loading = this.loadingSubject.asObservable();
+
   constructor(private userService: UserService) {
   }
 
@@ -25,11 +27,11 @@ export class UsersDataSource implements DataSource<UserLongDto> {
                          page: number = 0,
                          size: number = 5,
                          order: boolean = true,
-                         parameter: string = '') {
+                         parameter: string = 'userName') {
     this.loadingSubject.next(true);
     this.userService.getMembersByProjectId(projectId, page, size, order, parameter).pipe(
       catchError(() => of([])),
       finalize(() => this.loadingSubject.next(false)))
-      .subscribe(lessons => this.usersSubject.next(lessons));
+      .subscribe(users => this.usersSubject.next(users));
   }
 }

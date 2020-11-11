@@ -7,4 +7,6 @@ export class Project {
   lead: number;
   creationDate: Date;
   description: Description;
+  membersAmount:number;
+  tasksAmount:number;
 }

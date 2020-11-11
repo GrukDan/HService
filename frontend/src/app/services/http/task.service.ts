@@ -18,11 +18,11 @@ export class TaskService {
     return this.http.post<Task>(this.url, task);
   }
 
-  getTaskShortDtosByProject(project:number):Observable<TaskShortDto[]> {
+  getTaskShortDtosByProject(project: number): Observable<TaskShortDto[]> {
     return this.http.get<TaskShortDto[]>(this.url + '/all/short-dtos/by-project/' + project);
   }
 
-  generateTaskCodeByProject(projectId: number):Observable<TaskShortDto> {
+  generateTaskCodeByProject(projectId: number): Observable<TaskShortDto> {
     return this.http.get<TaskShortDto>(
       this.url + '/task-code',
       {
@@ -30,11 +30,26 @@ export class TaskService {
       });
   }
 
-  getTasksByExecutor(executor: number):Observable<Task[]> {
+  getTasksByExecutor(executor: number): Observable<Task[]> {
     return this.http.get<Task[]>(
       this.url + '/by-executor',
       {
         params: new HttpParams().set('executor', executor.toString())
+      });
+  }
+
+  getTasksByProjectId(projectId: number,
+                      page: number,
+                      size: number,
+                      order: boolean,
+                      parameter: string): Observable<Task[]> {
+    return this.http.get<Task[]>(this.url + '/project-table/' + projectId,
+      {
+        params: new HttpParams()
+          .set('page', page.toString())
+          .set('size', size.toString())
+          .set('order', order.toString())
+          .set('parameter', parameter)
       });
   }
 }

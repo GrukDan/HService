@@ -1,8 +1,8 @@
 <div class="button-field-container">
-  <mat-form-field>
-    <mat-label>Поиск</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Имя задачи" #input>
-  </mat-form-field>
+<!--  <mat-form-field>-->
+<!--    <mat-label>Поиск</mat-label>-->
+<!--    <input matInput (keyup)="applyFilter($event)" placeholder="Имя задачи" #input>-->
+<!--  </mat-form-field>-->
   <button mat-icon-button
           (click)="dialogService.openCreateTaskDialog()"
           matTooltip="Создать задачу"
@@ -14,40 +14,84 @@
 </div>
 
 <div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource" matSort>
 
-    <!-- ID Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID</th>
-      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+  <div class="spinner-container" *ngIf="dataSource.$loading | async">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <table mat-table
+         matSort
+         matSortActive = "taskName"
+         matSortDirection = "asc"
+         matSortDisableClear
+         [dataSource]="dataSource">
+    <!-- taskCode Column -->
+    <ng-container matColumnDef="taskCode">
+      <th mat-header-cell *matHeaderCellDef>Код задачи</th>
+      <td mat-cell *matCellDef="let row"> {{row.taskCode}}</td>
     </ng-container>
 
-    <!-- Progress Column -->
-    <ng-container matColumnDef="progress">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress</th>
-      <td mat-cell *matCellDef="let row"> {{row.progress}}%</td>
+    <!-- taskName Column -->
+    <ng-container matColumnDef="taskName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Название задачи</th>
+      <td mat-cell *matCellDef="let row"> {{row.taskName}} </td>
     </ng-container>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
-      <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+    <!-- type Column -->
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Тип</th>
+      <td mat-cell *matCellDef="let row"> {{row.type.typeName}} </td>
     </ng-container>
 
-    <!-- Color Column -->
-    <ng-container matColumnDef="color">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Color</th>
-      <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </td>
+    <!-- priority Column -->
+    <ng-container matColumnDef="priority">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Приоритет</th>
+      <td mat-cell *matCellDef="let row"> {{row.priority.priorityName}} </td>
+    </ng-container>
+
+    <!-- status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Статус</th>
+      <td mat-cell *matCellDef="let row"> {{row.status.statusName}} </td>
+    </ng-container>
+
+    <!-- creator Column -->
+    <ng-container matColumnDef="creator">
+      <th mat-header-cell *matHeaderCellDef>Создал</th>
+      <td mat-cell *matCellDef="let row">{{row.creator.lastName}} {{row.creator.firstName}}</td>
+    </ng-container>
+
+    <!-- executor Column -->
+    <ng-container matColumnDef="executor">
+      <th mat-header-cell *matHeaderCellDef>Исполнитель</th>
+      <td mat-cell *matCellDef="let row">{{row.executor.lastName}} {{row.executor.firstName}}</td>
+    </ng-container>
+
+    <!-- created Column -->
+    <ng-container matColumnDef="created">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Создана</th>
+      <td mat-cell *matCellDef="let row"> {{row.created | date}} </td>
+    </ng-container>
+
+    <!-- updated Column -->
+    <ng-container matColumnDef="updated">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Обновлена</th>
+      <td mat-cell *matCellDef="let row"> {{row.updated | date}} </td>
+    </ng-container>
+
+    <!-- dueDate Column -->
+    <ng-container matColumnDef="dueDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Дата готовности</th>
+      <td mat-cell *matCellDef="let row"> {{row.dueDate | date}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-    <!-- Row shown when there is no matching data. -->
-    <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-    </tr>
   </table>
-
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  <mat-paginator [length]="tasksAmount"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 15]">
+  </mat-paginator>
 </div>
+

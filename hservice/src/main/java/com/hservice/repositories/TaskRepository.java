@@ -1,6 +1,8 @@
 package com.hservice.repositories;
 
 import com.hservice.domain.models.Task;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,4 +20,8 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     Optional<Task> getOneByMaxTaskId(@Param("projectId") long projectId);
 
     Collection<Task> findAllByTaskExecutor(long taskExecutor);
+
+    int countTasksByProject(long project);
+
+    Page<Task> findAllByProject(long project,Pageable pageable);
 }

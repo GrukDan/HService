@@ -28,4 +28,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT DISTINCT u FROM User u JOIN u.projects p WHERE p.projectId = :projectId")
     Page<User> findUsersByProjectId(@Param("projectId") Long projectId, Pageable pageable);
+
+    @Query(value = "SELECT COUNT(*) from user u\n" +
+            "JOIN user_project up on u.user_id = up.user_id\n" +
+            "JOIN project p on up.project_id = p.project_id\n" +
+            "WHERE p.project_id = :projectId",nativeQuery = true)
+    int countUsersByProjectId(long projectId);
 }

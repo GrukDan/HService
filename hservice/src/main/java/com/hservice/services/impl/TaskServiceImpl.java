@@ -8,6 +8,8 @@ import com.hservice.services.ProjectService;
 import com.hservice.services.TaskService;
 import com.hservice.util.StringHandler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -60,5 +62,13 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Collection<Task> findAlByExecutor(long executor) {
         return taskRepository.findAllByTaskExecutor(executor);
+    }
+
+    @Override
+    public Collection<Task> findTasksByProjectId(Long projectId, int page, int size, boolean order, String parameter) {
+        return taskRepository.findAllByProject(
+                        projectId,
+                        PageRequest.of(page, size, Sort.by(order ? Sort.Direction.ASC : Sort.Direction.DESC, parameter)))
+                .getContent();
     }
 }

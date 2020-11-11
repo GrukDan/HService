@@ -13,6 +13,8 @@ public interface UserService extends CrudService<User,Long> {
 
     boolean existsByUserNameAndPassword(String userName,String password);
 
+    int countUsersByProjectId(long projectId);
+
     User findByUserNameAndPassword(String userName, String password) throws NotFoundException;
 
     Collection<UserShortDto> findProjectLeads();

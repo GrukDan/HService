@@ -40,6 +40,12 @@ public class Project {
 
     private long lead;
 
+    @Transient
+    private int membersAmount;
+
+    @Transient
+    private int tasksAmount;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

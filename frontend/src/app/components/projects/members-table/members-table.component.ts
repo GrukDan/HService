@@ -1,23 +1,10 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {UserService} from "../../../services/http/user.service";
 import {merge} from "rxjs";
-import {UsersDataSource} from "../../../dto/table-datasources/users-data-source";
+import {UsersDataSource} from "../../../dto/table-data-sources/users-data-source";
 import {MatPaginator} from "@angular/material/paginator";
 import {tap} from "rxjs/operators";
 import {MatSort} from "@angular/material/sort";
-
-
-const sortParameters: string[] =
-  ['userId',
-    'userName',
-    'firstName',
-    'lastName',
-    'email',
-    'role',
-    'position',
-    'department',
-    'placeOfResidence'];
-
 
 @Component({
   selector: 'app-members-table',
@@ -27,6 +14,7 @@ const sortParameters: string[] =
 export class MembersTableComponent implements AfterViewInit, OnInit {
 
   @Input() projectId: number;
+  @Input() membersAmount:number;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -40,10 +28,7 @@ export class MembersTableComponent implements AfterViewInit, OnInit {
     'department',
     'placeOfResidence'];
 
-  constructor(private userService: UserService) {
-
-  };
-
+  constructor(private userService: UserService) {  };
 
   ngOnInit(): void {
     this.dataSource = new UsersDataSource(this.userService);
@@ -56,7 +41,7 @@ export class MembersTableComponent implements AfterViewInit, OnInit {
       this.paginator.pageIndex,
       this.paginator.pageSize,
       this.sort.direction === 'asc',
-      '');
+      this.sort.active);
   }
 
   ngAfterViewInit(): void {
@@ -67,5 +52,9 @@ export class MembersTableComponent implements AfterViewInit, OnInit {
         tap(() => this.loadMembersByProjectId())
       )
       .subscribe();
+  }
+
+  getDefaultValue(value:string):string{
+    return value === null ? '━':value;
   }
 }

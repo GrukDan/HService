@@ -5,7 +5,9 @@ import com.hservice.domain.models.Project;
 import com.hservice.exceptions.AlreadyExistsException;
 import com.hservice.exceptions.NotFoundException;
 import com.hservice.repositories.ProjectRepository;
+import com.hservice.repositories.TaskRepository;
 import com.hservice.services.ProjectService;
+import com.hservice.services.UserService;
 import com.hservice.util.StringHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,9 @@ import java.util.stream.Collectors;
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final TaskRepository taskRepository;
     private final StringHandler stringHandler;
+    private final UserService userService;
 
     @Override
     public Project save(Project entity) throws AlreadyExistsException {
@@ -29,7 +33,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project findById(Long id) throws NotFoundException {
-        return projectRepository.findById(id).orElseThrow(NotFoundException::new);
+        Project project = projectRepository.findById(id).orElseThrow(NotFoundException::new);
+        project.setMembersAmount(userService.countUsersByProjectId(id));
+        project.setTasksAmount(taskRepository.countTasksByProject(id));
+        return project;
     }
 
     @Override

@@ -31,4 +31,13 @@ public class TaskController {
     public ResponseEntity<?> getTasksByExecutor(@RequestParam("executor") long executor){
         return ResponseEntity.ok(taskService.findAlByExecutor(executor));
     }
+
+    @GetMapping("/project-table/{projectId}")
+    public ResponseEntity<?> getTasksByProjectId(@PathVariable("projectId") Long projectId,
+                                                        @RequestParam("page") int page,
+                                                        @RequestParam("size") int size,
+                                                        @RequestParam("order") boolean order,
+                                                        @RequestParam("parameter") String parameter){
+        return ResponseEntity.ok(taskService.findTasksByProjectId(projectId,page,size,order,parameter));
+    }
 }

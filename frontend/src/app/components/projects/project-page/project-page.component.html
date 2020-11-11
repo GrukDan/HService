@@ -1,6 +1,3 @@
-<ng-container *ngIf="(asyncTabs | async) === null">
-  Loading tabs...
-</ng-container>
 <!--<app-header [header]="project.projectName"></app-header>-->
 <mat-tab-group>
   <mat-tab>
@@ -10,12 +7,12 @@
         <mat-grid-tile
           [colspan]="1"
           [rowspan]="1">
-          <span *ngIf="taskShortDtos | async ">Нет задач</span>
-          <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option *ngFor="let task of taskShortDtos | async" [value]="task.taskId">
-              {{task.taskName}}
-            </mat-list-option>
-          </mat-selection-list>
+          <span *ngIf="!project.tasksAmount">Нет задач</span>
+          <!--          <mat-selection-list [multiple]="false">-->
+          <!--            <mat-list-option *ngFor="let task of taskShortDtos | async" [value]="task.taskId">-->
+          <!--              {{task.taskName}}-->
+          <!--            </mat-list-option>-->
+          <!--          </mat-selection-list>-->
         </mat-grid-tile>
         <mat-grid-tile
           [colspan]="2"
@@ -94,11 +91,15 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>Задачи проекта</ng-template>
-    <app-tasks-table></app-tasks-table>
+    <app-tasks-table [projectId]="projectId"
+                     [tasksAmount]="project.tasksAmount">
+    </app-tasks-table>
   </mat-tab>
   <mat-tab *ngIf="projectId">
     <ng-template mat-tab-label>Участники проекта</ng-template>
-    <app-members-table [projectId]="projectId"></app-members-table>
+    <app-members-table [projectId]="projectId"
+                       [membersAmount]="project.membersAmount">
+    </app-members-table>
   </mat-tab>
 </mat-tab-group>
 

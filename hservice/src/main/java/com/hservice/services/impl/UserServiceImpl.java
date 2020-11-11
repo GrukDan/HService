@@ -91,6 +91,12 @@ public class UserServiceImpl implements UserService {
         return toUserLongDtos(userRepository
                 .findUsersByProjectId(
                         projectId,
-                        PageRequest.of(page, size, Sort.by(order ? Sort.Direction.ASC : Sort.Direction.DESC, parameter))).getContent());
+                        PageRequest.of(page, size, Sort.by(order ? Sort.Direction.ASC : Sort.Direction.DESC, parameter)))
+                .getContent());
+    }
+
+    @Override
+    public int countUsersByProjectId(long projectId) {
+        return userRepository.countUsersByProjectId(projectId);
     }
 }

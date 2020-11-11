@@ -1,74 +1,59 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {DialogService} from "../../../services/view-services/dialog.service";
-
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  color: string;
-}
-
-/** Constants used to fill up our data base. */
-const COLORS: string[] = [
-  'maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple', 'fuchsia', 'lime', 'teal',
-  'aqua', 'blue', 'navy', 'black', 'gray'
-];
-const NAMES: string[] = [
-  'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
-  'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
-];
+import {TaskDataSource} from "../../../dto/table-data-sources/task-data-source";
+import {merge} from "rxjs";
+import {tap} from "rxjs/operators";
+import {TaskService} from "../../../services/http/task.service";
 
 @Component({
   selector: 'app-tasks-table',
   templateUrl: './tasks-table.component.html',
   styleUrls: ['./tasks-table.component.css']
 })
-export class TasksTableComponent implements OnInit {
+export class TasksTableComponent implements AfterViewInit, OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'progress', 'color'];
-  dataSource: MatTableDataSource<UserData>;
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @Input() projectId: number;
+  @Input() tasksAmount: number;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(public dialogService:DialogService) {
-    // Create 100 users
-    const users = Array.from({length: 100}, (_, k) => this.createNewUser(k + 1));
+  dataSource: TaskDataSource;
+  displayedColumns: string[] = [
+    'taskName',
+    'type',
+    'priority',
+    'status',
+    'created',
+    'updated',
+    'dueDate'];
 
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  createNewUser(id: number): UserData {
-    const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-
-    return {
-      id: id.toString(),
-      name: name,
-      progress: Math.round(Math.random() * 100).toString(),
-      color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
-    };
+  constructor(public dialogService: DialogService,
+              private taskService: TaskService) {
   }
 
   ngOnInit(): void {
+    this.dataSource = new TaskDataSource(this.taskService);
+    this.dataSource.loadTasksByProjectId(this.projectId);
   }
 
+  loadTasksByProjectId() {
+    this.dataSource.loadTasksByProjectId(
+      this.projectId,
+      this.paginator.pageIndex,
+      this.paginator.pageSize,
+      this.sort.direction === 'asc',
+      this.sort.active);
+  }
+
+  ngAfterViewInit(): void {
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        tap(() => this.loadTasksByProjectId())
+      )
+      .subscribe();
+  }
 }

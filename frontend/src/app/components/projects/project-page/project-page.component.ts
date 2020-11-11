@@ -1,10 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Observable, Observer, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ProjectService} from "../../../services/http/project.service";
 import {TaskService} from "../../../services/http/task.service";
 import {Project} from "../../../dto/models/project";
-import {TaskShortDto} from "../../../dto/dtos/task-short-dto";
 import {UserShortDto} from "../../../dto/dtos/user-short-dto";
 import {UserService} from "../../../services/http/user.service";
 import {Description} from "../../../dto/models/description";
@@ -29,15 +28,12 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
   projectId: number;
   formChangeFlag: boolean = false;
 
-  asyncTabs: Observable<ProjectTab[]>;
   project: Project = new Project();
-  idForMembersTab: Observable<number>;
 
   projectFormGroup: FormGroup;
   subscriptions: Subscription[] = [];
 
   leads: UserShortDto[] = [];
-  taskShortDtos: Observable<TaskShortDto[]>;
 
   constructor(private activateRoute: ActivatedRoute,
               private router: Router,
@@ -50,16 +46,6 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
       this.projectId = params['id'];
       this.project.description = new Description();
     }));
-
-    this.asyncTabs = new Observable((observer: Observer<ProjectTab[]>) => {
-      setTimeout(() => {
-        observer.next([
-          {label: 'First', content: 'Content 1'},
-          {label: 'Second', content: 'Content 2'},
-          {label: 'Third', content: 'Content 3'},
-        ]);
-      }, 1000);
-    });
   }
 
   ngOnInit(): void {
@@ -87,10 +73,6 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
   loadProjectLeads() {
     this.subscriptions.push(this.userService.getProjectLeads()
       .subscribe(leads => this.leads = leads));
-  }
-
-  loadTaskShortDtosByProject(project: number) {
-    this.taskShortDtos = this.taskService.getTaskShortDtosByProject(project);
   }
 
   ngOnDestroy(): void {
