@@ -5,8 +5,9 @@ import com.hservice.domain.models.History;
 import com.hservice.exceptions.AlreadyExistsException;
 import com.hservice.services.HistoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/api/histories")
@@ -16,13 +17,12 @@ public class HistoryController {
     private final HistoryService historyService;
 
     @GetMapping("/all/{task}")
-    public ResponseEntity<?> getAllByTask(@PathVariable("task") long task){
-        return
-                ResponseEntity.ok(historyService.findAllByTask(task));
+    public Collection<History> getAllByTask(@PathVariable("task") long task) {
+        return historyService.findAllByTask(task);
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody History history) throws AlreadyExistsException {
-        return ResponseEntity.ok(historyService.save(history));
+    public History save(@RequestBody History history) throws AlreadyExistsException {
+        return historyService.save(history);
     }
 }

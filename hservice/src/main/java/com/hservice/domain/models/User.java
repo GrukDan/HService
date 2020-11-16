@@ -25,16 +25,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @NotBlank
-    @Size(min = 6, max = 45)
     private String userName;
 
-    @NotBlank(message = "First name code is mandatory")
-    @Size(min = 2, max = 45, message = "the length of first name is out of range")
     private String firstName;
 
-    @NotBlank(message = "Last name code is mandatory")
-    @Size(min = 1, max = 45, message = "the length of first name is out of range")
     private String lastName;
 
     @NotBlank(message = "Email code is mandatory")
@@ -47,8 +41,8 @@ public class User {
     @Size(min = 6, max = 150, message = "the length of first name is out of range")
     private String password;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "role", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role",nullable = false)
     private Role role;
 
     @ManyToMany(mappedBy = "users",
@@ -77,6 +71,11 @@ public class User {
     @CreationTimestamp
     private Timestamp dateOfRegistration;
 
+    @Enumerated(EnumType.STRING)
+    private InvitedUserStatus status;
+
+    private Timestamp expirationTime;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,5 +91,20 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(userName, firstName, lastName, email, password);
+    }
+
+    public void update(User user) {
+        userId = user.userId;
+        userName = user.userName;
+        firstName = user.firstName;
+        lastName = user.lastName;
+        email = user.email;
+        password = user.password;
+        role = user.role;
+        commands = user.commands;
+        projects = user.projects;
+        position = user.position;
+        department = user.department;
+        placeOfResidence = user.placeOfResidence;
     }
 }

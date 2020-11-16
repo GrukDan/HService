@@ -17,4 +17,7 @@ export class User {
   placeOfResidence:string;
   lastActivity:Date;
   avatarUrl:string;
+  dateOfRegistration:Date;
+  status:string;
+  expirationTime:Date;
 }

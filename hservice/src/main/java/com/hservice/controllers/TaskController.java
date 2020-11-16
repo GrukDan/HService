@@ -5,10 +5,10 @@ import com.hservice.exceptions.AlreadyExistsException;
 import com.hservice.exceptions.NotFoundException;
 import com.hservice.services.TaskService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -18,26 +18,26 @@ public class TaskController {
     private final TaskService taskService;
 
     @PostMapping
-    public ResponseEntity<?> save(@Valid @RequestBody Task task) throws AlreadyExistsException, NotFoundException {
-        return ResponseEntity.ok(taskService.save(task));
+    public Task save(@Valid @RequestBody Task task) throws AlreadyExistsException {
+        return taskService.save(task);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") Long id) throws NotFoundException {
-        return ResponseEntity.ok(taskService.findById(id));
+    public Task getById(@PathVariable("id") Long id) throws NotFoundException {
+        return taskService.findById(id);
     }
 
     @GetMapping("/by-executor")
-    public ResponseEntity<?> getTasksByExecutor(@RequestParam("executor") long executor){
-        return ResponseEntity.ok(taskService.findAlByExecutor(executor));
+    public Collection<Task> getTasksByExecutor(@RequestParam("executor") long executor) {
+        return taskService.findAlByExecutor(executor);
     }
 
     @GetMapping("/project-table/{projectId}")
-    public ResponseEntity<?> getTasksByProjectId(@PathVariable("projectId") Long projectId,
-                                                        @RequestParam("page") int page,
-                                                        @RequestParam("size") int size,
-                                                        @RequestParam("order") boolean order,
-                                                        @RequestParam("parameter") String parameter){
-        return ResponseEntity.ok(taskService.findTasksByProjectId(projectId,page,size,order,parameter));
+    public Collection<Task> getTasksByProjectId(@PathVariable("projectId") Long projectId,
+                                                @RequestParam("page") int page,
+                                                @RequestParam("size") int size,
+                                                @RequestParam("order") boolean order,
+                                                @RequestParam("parameter") String parameter) {
+        return taskService.findTasksByProjectId(projectId, page, size, order, parameter);
     }
 }

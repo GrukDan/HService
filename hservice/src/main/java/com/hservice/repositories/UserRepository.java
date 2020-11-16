@@ -18,6 +18,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsByUserNameAndPassword(String userName, String password);
 
+    boolean existsByEmail(String email);
+
     Optional<User> findByUserNameAndPassword(String userName, String password);
 
     @Query("SELECT u FROM User u JOIN u.role r WHERE r.roleName = :roleName")

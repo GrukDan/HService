@@ -1,0 +1,108 @@
+POST http://localhost:8080/api/auth
+Content-Type: application/json
+
+{"username": "donsachos@gmail.ru","password": "$2a$04$K8pCjGnxANIrvWSnteeAmOpJroGnttc8UmZ6W8WPmCbp4KFRt.7KK"}
+
+<> 2020-09-23T125231.403.json
+<> 2020-09-10T062949.403.json
+<> 2020-09-10T062557.403.json
+<> 2020-09-10T062106.403.json
+<> 2020-09-10T061235.403.json
+<> 2020-09-10T055346.403.json
+<> 2020-09-10T055054.403.json
+<> 2020-09-10T054654.403.json
+<> 2020-09-10T054226.403.json
+<> 2020-09-10T050506.403.json
+<> 2020-09-10T050130.403.json
+<> 2020-09-10T050032.403.json
+<> 2020-09-10T050003.403.json
+<> 2020-09-10T045344.403.json
+<> 2020-09-10T045118.500.json
+<> 2020-09-10T041942.500.json
+<> 2020-09-10T041556.403.json
+
+###
+###
+
+###
+POST http://localhost:8080/api/auth/auth
+Content-Type: application/json
+
+{"username": "tor@mail.com","password": "0NYAJI"}
+
+<> 2020-09-24T122047.200.txt
+<> 2020-09-24T122021.500.json
+<> 2020-09-24T121959.200.txt
+
+###
+POST http://localhost:8080/api/orders/descriptions
+Content-Type: application/json
+
+{"idDescription": "","description": "Hello world!"}
+
+<> 2020-10-05T122122.200.json
+<> 2020-10-05T121318.500.json
+<> 2020-10-05T120728.200.json
+<> 2020-10-05T120331.500.json
+
+###
+POST http://localhost:8090/api/projects/
+Content-Type: application/json
+
+{
+  "projectName": "Third project",
+  "projectCode": "TP",
+  "lead": 1,
+  "description": {"content": "Simple description of TP!" }
+}
+
+<> 2020-10-15T102513.200.json
+<> 2020-10-15T102432.400.json
+<> 2020-10-15T095609.404.json
+<> 2020-10-15T095345.400.json
+<> 2020-10-15T053506.200.json
+<> 2020-10-15T053401.500.json
+<> 2020-10-15T112452.200.json
+<> 2020-10-15T112217.500.json
+<> 2020-10-15T111943.500.json
+
+###
+GET http://localhost:8090/api/projects/14
+
+<> 2020-10-29T045006.200.json
+<> 2020-10-29T044945.200.json
+<> 2020-10-29T044644.200.json
+<> 2020-10-29T044223.200.json
+<> 2020-10-29T044201.200.json
+<> 2020-10-29T043907.500.html
+<> 2020-10-29T043651.500.html
+<> 2020-10-29T043219.500.html
+<> 2020-10-15T100613.200.json
+<> 2020-10-15T100547.400.json
+<> 2020-10-15T100504.404.json
+
+###
+GET http://localhost:8090/api/users/executors/14
+
+<> 2020-10-30T115813.200.json
+<> 2020-10-29T044959.200.json
+<> 2020-10-29T043206.200.json
+<> 2020-10-26T113434.200.json
+<> 2020-10-26T113426.200.json
+<> 2020-10-26T113122.500.json
+
+###
+DELETE http://localhost:8090/api/projects/14
+
+###
+POST http://localhost:8090/api/projects/project-code
+Content-Type: application/json
+
+{
+  "projectName": "Third project"
+}
+
+
+
+###
+POST http://localhost:8090/api/projects/exists

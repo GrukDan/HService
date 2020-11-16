@@ -7,7 +7,9 @@ import com.hservice.services.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +35,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Collection<Role> findAll() {
         return roleRepository.findAll();
+    }
+
+    @Override
+    public List<Role> findInviteRoles() {
+        return roleRepository.findAllByRoleNameIn(Arrays.asList("DEVELOPER", "TESTER"));
     }
 }

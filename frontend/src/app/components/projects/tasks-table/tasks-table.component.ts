@@ -49,11 +49,7 @@ export class TasksTableComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit(): void {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-
     merge(this.sort.sortChange, this.paginator.page)
-      .pipe(
-        tap(() => this.loadTasksByProjectId())
-      )
-      .subscribe();
+      .pipe(tap(() => this.loadTasksByProjectId())).subscribe();
   }
 }

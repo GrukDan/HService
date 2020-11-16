@@ -3,8 +3,10 @@ package com.hservice.services;
 import com.hservice.domain.dtos.UserLongDto;
 import com.hservice.domain.dtos.UserShortDto;
 import com.hservice.domain.models.User;
+import com.hservice.exceptions.AlreadyExistsException;
 import com.hservice.exceptions.NotFoundException;
 
+import javax.mail.MessagingException;
 import java.util.Collection;
 
 public interface UserService extends CrudService<User,Long> {
@@ -22,4 +24,8 @@ public interface UserService extends CrudService<User,Long> {
     Collection<UserShortDto> findUsersByProjectId(Long projectId);
 
     Collection<UserLongDto> findMembersByProjectId(Long projectId, int page, int size, boolean order, String parameter);
+
+    User invite(User user) throws AlreadyExistsException, MessagingException;
+
+    User update(User updatedUser) throws NotFoundException, AlreadyExistsException;
 }

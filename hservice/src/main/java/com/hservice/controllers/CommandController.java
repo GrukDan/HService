@@ -1,11 +1,13 @@
 package com.hservice.controllers;
 
+import com.hservice.domain.dtos.CommandShortDto;
 import com.hservice.services.CommandService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/api/commands")
@@ -15,8 +17,7 @@ public class CommandController {
     private final CommandService commandService;
 
     @GetMapping("/all/dtos")
-    public ResponseEntity<?> getAllDtos(){
-        return ResponseEntity.ok(commandService.getAllDtos());
+    public Collection<CommandShortDto> getAllDtos() {
+        return commandService.getAllDtos();
     }
-
 }

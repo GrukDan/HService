@@ -14,7 +14,7 @@ import {MatSort} from "@angular/material/sort";
 export class MembersTableComponent implements AfterViewInit, OnInit {
 
   @Input() projectId: number;
-  @Input() membersAmount:number;
+  @Input() membersAmount: number;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -28,7 +28,8 @@ export class MembersTableComponent implements AfterViewInit, OnInit {
     'department',
     'placeOfResidence'];
 
-  constructor(private userService: UserService) {  };
+  constructor(private userService: UserService) {
+  };
 
   ngOnInit(): void {
     this.dataSource = new UsersDataSource(this.userService);
@@ -46,15 +47,11 @@ export class MembersTableComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit(): void {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-
     merge(this.sort.sortChange, this.paginator.page)
-      .pipe(
-        tap(() => this.loadMembersByProjectId())
-      )
-      .subscribe();
+      .pipe(tap(() => this.loadMembersByProjectId())).subscribe();
   }
 
-  getDefaultValue(value:string):string{
-    return value === null ? '━':value;
+  getDefaultValue(value: string): string {
+    return value === null ? '━' : value;
   }
 }

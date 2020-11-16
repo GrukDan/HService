@@ -2,5 +2,8 @@ package com.hservice.services;
 
 import com.hservice.domain.models.Role;
 
-public interface RoleService extends CrudService<Role,Long> {
+import java.util.List;
+
+public interface RoleService extends CrudService<Role, Long> {
+    List<Role> findInviteRoles();
 }

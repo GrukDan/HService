@@ -12,31 +12,45 @@ export class UserService {
 
   private url: string = '/api/users';
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  getProjectLeads():Observable<UserShortDto[]>{
+  getProjectLeads(): Observable<UserShortDto[]> {
     return this.http.get<UserShortDto[]>(this.url + '/project-leads')
   }
 
-  getUserShortDtosByProjectId(projectId:number):Observable<UserShortDto[]>{
+  getUserShortDtosByProjectId(projectId: number): Observable<UserShortDto[]> {
     return this.http.get<UserShortDto[]>(this.url + '/executors/' + projectId);
   }
 
-  getUserById(id: number):Observable<User> {
+  getUserById(id: number): Observable<User> {
     return this.http.get<User>(this.url + '/' + id);
   }
 
-  getMembersByProjectId(projectId:number,
-                        page:number,
-                        size:number,
-                        order:boolean,
-                        parameter:string):Observable<UserLongDto[]>{
+  getMembersByProjectId(projectId: number,
+                        page: number,
+                        size: number,
+                        order: boolean,
+                        parameter: string): Observable<UserLongDto[]> {
     return this.http.get<UserLongDto[]>(this.url + '/members/' + projectId,
-      {params:new HttpParams()
-          .set('page',page.toString())
-          .set('size',size.toString())
-          .set('order',order.toString())
-          .set('parameter',parameter)});
+      {
+        params: new HttpParams()
+          .set('page', page.toString())
+          .set('size', size.toString())
+          .set('order', order.toString())
+          .set('parameter', parameter)
+      });
   }
 
+  save(user: User): Observable<User> {
+    return this.http.post<User>(this.url + '/full-user', user);
+  }
+
+  update(user: User): Observable<User> {
+    return this.http.post<User>(this.url + '/update', user);
+  }
+
+  invite(user: User): Observable<User> {
+    return this.http.post<User>(this.url + '/invite', user);
+  }
 }

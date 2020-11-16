@@ -6,14 +6,45 @@
   <p>
     Мы вышлим ему приглашение и он сможет пройти регистрацию на портале.
   </p>
-  <form [formGroup]="emailFormGroup" >
+  <form [formGroup]="emailFormGroup" (ngSubmit)="submitForm()" novalidate>
     <div class="form-field-container">
       <p>
         <mat-form-field appearance="standard">
           <mat-label>Адрес электронной почты</mat-label>
-          <input matInput #inputEmail maxlength="40" placeholder="Введите адрес электронной почты">
-          <mat-hint align="end">{{inputEmail.value?.length || 0}}/40</mat-hint>
-          <mat-error *ngIf="false"></mat-error>
+          <input matInput
+                 #inputEmail
+                 [(ngModel)]="invitedUser.email"
+                 maxlength="50"
+                 formControlName="email"
+                 placeholder="Введите адрес электронной почты">
+          <mat-hint align="end">{{inputEmail.value?.length || 0}}/50</mat-hint>
+          <mat-error *ngIf="hasError('email', 'required')">Email is required</mat-error>
+          <mat-error *ngIf="hasError('email', 'minLength')">Email's min length is 2 symbols</mat-error>
+          <mat-error *ngIf="hasError('email', 'maxLength')">Email's max length is 50 symbols</mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label>Роль нового пользователя</mat-label>
+          <mat-select formControlName="role"
+                      [(ngModel)]="invitedUser.role">
+            <mat-option *ngFor="let role of roles"
+                        [value]="role">{{role.roleName}}</mat-option>
+          </mat-select>
+          <mat-hint align="end">Выберите роль нового пользователя</mat-hint>
+          <mat-error *ngIf="hasError('role', 'required')">User's role is required</mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill">
+          <mat-label>Срок истечения приглашения</mat-label>
+          <input matInput
+                 formControlName="expirationTime"
+                 [(ngModel)]="invitedUser.expirationTime"
+                 [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker startView="month" color="primary" [startAt]="startInviteDate"></mat-datepicker>
+          <mat-error *ngIf="hasError('expirationTime', 'required')">Invite is required</mat-error>
         </mat-form-field>
       </p>
     </div>
@@ -21,5 +52,9 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Закрыть</button>
-  <button mat-raised-button color="primary">Пригласить</button>
+  <button mat-raised-button color="primary"
+          [disabled]="!emailFormGroup.valid"
+          (click)="submitForm()">
+    Пригласить
+  </button>
 </mat-dialog-actions>

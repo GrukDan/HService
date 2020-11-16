@@ -1,14 +1,15 @@
 package com.hservice.controllers;
 
+import com.hservice.domain.dtos.ProjectShortDto;
 import com.hservice.domain.models.Project;
 import com.hservice.exceptions.AlreadyExistsException;
 import com.hservice.exceptions.NotFoundException;
 import com.hservice.services.ProjectService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/api/projects")
@@ -18,23 +19,23 @@ public class ProjectController {
     private final ProjectService projectService;
 
     @PostMapping
-    public ResponseEntity<?> save(@Valid @RequestBody Project project) throws AlreadyExistsException {
-        return ResponseEntity.ok(projectService.save(project));
+    public Project save(@Valid @RequestBody Project project) throws AlreadyExistsException {
+        return projectService.save(project);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") Long id) throws NotFoundException {
-        return ResponseEntity.ok(projectService.findById(id));
+    public Project getById(@PathVariable("id") Long id) throws NotFoundException {
+        return projectService.findById(id);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAll() {
-        return ResponseEntity.ok(projectService.findAll());
+    public Collection<Project> getAll() {
+        return projectService.findAll();
     }
 
     @GetMapping("/all/dtos")
-    public ResponseEntity<?> getAllDtos() {
-        return ResponseEntity.ok(projectService.getAllDtos());
+    public Collection<ProjectShortDto> getAllDtos() {
+        return projectService.getAllDtos();
     }
 
     @DeleteMapping("/{id}")
@@ -43,8 +44,8 @@ public class ProjectController {
     }
 
     @GetMapping("/project-code")
-    public ResponseEntity<?> generateProjectCodeByProjectName(@RequestParam("projectName") String projectName) throws AlreadyExistsException {
-        return ResponseEntity.ok(projectService.generateProjectShortDtoByProjectName(projectName));
+    public ProjectShortDto generateProjectCodeByProjectName(@RequestParam("projectName") String projectName) throws AlreadyExistsException {
+        return projectService.generateProjectShortDtoByProjectName(projectName);
     }
 
     @GetMapping("/exists")
