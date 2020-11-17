@@ -1,0 +1,24 @@
+.first-image-container{
+  background-image: url("src/assets/images/home-page/1.jpg");
+  background-color: #c7b39b; /* Цвет фона */
+  background-size: cover;
+  width: 1600px;
+  height: 880px;
+}
+.second-image-container{
+  background-image: url("src/assets/images/home-page/2.jpg");
+  background-color: #c7b39b; /* Цвет фона */
+  background-size: cover;
+  width: 1600px;
+  height: 880px;
+}
+.third-image-container{
+  background-image: url("src/assets/images/home-page/3.jpg");
+  background-color: #c7b39b; /* Цвет фона */
+  background-size: cover;
+  width: 1600px;
+  height: 880px;
+}
+.container{
+  overflow-scrolling: auto;
+}

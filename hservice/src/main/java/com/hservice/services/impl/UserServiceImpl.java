@@ -2,8 +2,8 @@ package com.hservice.services.impl;
 
 import com.hservice.domain.dtos.UserLongDto;
 import com.hservice.domain.dtos.UserShortDto;
-import com.hservice.domain.models.InvitedUserStatus;
 import com.hservice.domain.models.User;
+import com.hservice.domain.models.UserStatus;
 import com.hservice.email.EmailService;
 import com.hservice.exceptions.AlreadyExistsException;
 import com.hservice.exceptions.NotFoundException;
@@ -117,7 +117,8 @@ public class UserServiceImpl implements UserService {
             user.setPassword(passayGenerator.generatePassword());
         } while (userRepository.existsByEmailAndPassword(user.getEmail(), user.getPassword()));
 
-        user.setStatus(InvitedUserStatus.INVITED);
+        user.setStatus(UserStatus.INVITED);
+        user.setUserName(user.getEmail());
         //emailService.sendEmailToUser(user);
         return userRepository.save(user);
     }

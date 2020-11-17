@@ -4,7 +4,11 @@
       <mat-icon>menu</mat-icon>
     </button>
   </div>
-  <span class="toolbar-title"><b>H</b>Service</span>
+  <span class="toolbar-title"
+        routerLink="/home"
+        matTooltip="Домашняя страница"
+        [matTooltipPosition]="'below'"
+        matTooltipHideDelay="1000"><b>H</b>Service</span>
   <div class="toolbar-menu-buttons">
     <div class="menu-buttons">
       <button mat-flat-button color="primary">
@@ -37,6 +41,10 @@
         <button mat-menu-item routerLink="/people">
           <mat-icon>people</mat-icon>
           Все пользователи и команды
+        </button>
+        <button mat-menu-item (click)="dialogService.openAddUserDialog()">
+          <mat-icon>person_add</mat-icon>
+          Пригласить пользователя
         </button>
         <button mat-menu-item>
           <mat-icon>group_add</mat-icon>

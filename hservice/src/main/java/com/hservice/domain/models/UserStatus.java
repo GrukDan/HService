@@ -5,9 +5,10 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum InvitedUserStatus {
+public enum UserStatus {
     INVITED("Приглашен"),
-    EXPIRED("Срок регистрации истек");
+    EXPIRED("Срок регистрации истек"),
+    CREATED("Создан");
 
     private final String statusName;
 

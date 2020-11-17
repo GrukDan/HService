@@ -1,17 +1,13 @@
-
-.component-page-header {
-  padding-left: 0;
-}
-
-.component-page-header {
+.docs-primary-header {
+  background: #3f51b5;
+  box-shadow: inset  0 10px 10px rgba(0,0,0,0.4);
+  height: 80px;
   display: flex;
   align-items: center;
 }
 
-.docs-primary-header {
-  background: #3f51b5;
+h1{
+  color: white;
+  padding-left: 3%;
 }
 
-header {
-  display: block;
-}

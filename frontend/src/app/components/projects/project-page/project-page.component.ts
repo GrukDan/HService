@@ -45,15 +45,15 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(activateRoute.params.subscribe(params => {
       this.projectId = params['id'];
       this.project.description = new Description();
+      this.projectFormGroup = this.formGroupBuilderService.buildCreateProjectFormGroup();
+      this.projectFormGroup.controls['projectCode'].disable();
+      this.projectFormGroup.valueChanges.subscribe(changes => this.formChangeFlag = true);
+      this.loadProjectLeads();
+      this.loadProjectById(this.projectId);
     }));
   }
 
   ngOnInit(): void {
-    this.projectFormGroup = this.formGroupBuilderService.buildCreateProjectFormGroup();
-    this.projectFormGroup.controls['projectCode'].disable();
-    this.projectFormGroup.valueChanges.subscribe(changes => this.formChangeFlag = true);
-    this.loadProjectLeads();
-    this.loadProjectById(this.projectId);
   }
 
   public hasError = (controlName: string, errorName: string) => {

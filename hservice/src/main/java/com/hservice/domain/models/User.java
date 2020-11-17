@@ -72,7 +72,7 @@ public class User {
     private Timestamp dateOfRegistration;
 
     @Enumerated(EnumType.STRING)
-    private InvitedUserStatus status;
+    private UserStatus status;
 
     private Timestamp expirationTime;
 
