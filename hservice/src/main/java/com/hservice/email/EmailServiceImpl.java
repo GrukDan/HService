@@ -16,6 +16,10 @@ public class EmailServiceImpl implements EmailService {
 
     @Value("${spring.mail.username}")
     private String from;
+
+    @Value("${home.page.url}")
+    private String homePageUrl;
+
     private final String subject = "You are invited to the system HService";
     private final JavaMailSender javaMailSender;
 
@@ -27,6 +31,7 @@ public class EmailServiceImpl implements EmailService {
         String htmlMsg = "<h2>You are invited to the system HService</h3>"
                 + String.format("<h4>Your password: %s</h4>", user.getPassword())
                 + String.format("<h4>Term expires: %s</h4>", user.getExpirationTime())
+                + String.format("<a url='%s'>Click to start:</a>", homePageUrl)
                 + "<img src='http://i.zaxis.su/u/pic/91/e0149088ee11e3b85b420b4019a22d/-/Лого%20металл.jpg'>";
 
         message.setContent(htmlMsg, "text/html");

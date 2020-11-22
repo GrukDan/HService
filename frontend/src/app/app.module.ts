@@ -27,6 +27,7 @@ import {SnackBarComponent} from './components/dialogs/snack-bar/snack-bar.compon
 import {ProjectsPageComponent} from './components/projects/projects-page/projects-page.component';
 import {MembersTableComponent} from './components/projects/members-table/members-table.component';
 import {HeaderComponent} from './components/navigation/header/header/header.component';
+import {LoginDialogComponent} from './components/dialogs/login-dialog/login-dialog.component';
 
 
 @NgModule({
@@ -50,7 +51,7 @@ import {HeaderComponent} from './components/navigation/header/header/header.comp
     ProjectsPageComponent,
     MembersTableComponent,
     HeaderComponent,
-
+    LoginDialogComponent,
   ],
   imports: [
     BrowserModule,

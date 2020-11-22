@@ -16,7 +16,7 @@ const routes: Routes = [
   {path: 'project/:id', component: ProjectPageComponent},
   {path: 'people', component: UsersCommandsComponent , pathMatch: 'full'},
   {path: 'people/:id', component: UserPageComponent , pathMatch: 'full'},
-  {path: 'people/registration', component: RegistrationComponent},
+  {path: 'registration', component: RegistrationComponent},
   {path: '404', component: NotFoundComponent},
   {path: '500', component: ServerErrorComponent},
   {path: '**', redirectTo: '/404', pathMatch: 'full'},

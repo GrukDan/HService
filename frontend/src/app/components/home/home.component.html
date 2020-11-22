@@ -1,6 +1,35 @@
 <app-header [header]="'WELCOME'"></app-header>
+<div class="sticky-sidenav">
+  <p>
+    <button mat-raised-button
+            (click)="dialogService.openLoginDialog()"
+            class="login-button"
+            color="primary">
+      Авторизация
+      <mat-icon>login</mat-icon>
+    </button>
+  </p>
+</div>
 <div class="container">
-  <div class="second-image-container"></div>
-  <div class="first-image-container"></div>
-  <div class="third-image-container"></div>
+  <div class="first-image-container">
+    <div class="first-content-container">
+      <h1>
+        <b>HService</b> - эффективное решение для управления проектами и задачами в Вашей компании.
+      </h1>
+    </div>
+  </div>
+  <div class="second-image-container">
+    <div class="second-content-container">
+      <h1>
+        Быстрое и качественное взаимодействие всех участников проекта. Удобный и проверенный процесс менеджмента.
+      </h1>
+    </div>
+  </div>
+  <div class="third-image-container">
+    <div class="third-content-container">
+      <h1>
+        Быстрое и качественное взаимодействие всех участников проекта. Удобный и проверенный процесс менеджмента.
+      </h1>
+    </div>
+  </div>
 </div>

@@ -49,4 +49,53 @@ export class FormGroupBuilderService {
       expirationTime: new FormControl('', [Validators.required])
     });
   }
+
+  buildAuthFormGroup() {
+    return this.formBuilder.group({
+      username: new FormControl('',
+        [Validators.required,
+          Validators.minLength(7),
+          Validators.maxLength(20)]),
+      password: new FormControl('',
+        [Validators.required,
+          Validators.minLength(7),
+          Validators.maxLength(20)]),
+    });
+  }
+
+
+  buildUserFormGroup() {
+    return this.formBuilder.group({
+      formArray: this.formBuilder.array([
+        this.formBuilder.group({
+          username: new FormControl('',
+            [Validators.required,
+              Validators.minLength(5),
+              Validators.maxLength(20)]),
+        }),
+        this.formBuilder.group({
+          firstName: new FormControl('',
+            [Validators.required,
+              Validators.minLength(2),
+              Validators.maxLength(20)]),
+          lastName: new FormControl('',
+            [Validators.required,
+              Validators.minLength(2),
+              Validators.maxLength(20)]),
+        }),
+        this.formBuilder.group({
+          email: new FormControl('',
+            [Validators.required,
+              Validators.minLength(7),
+              Validators.maxLength(50)]),
+        }),
+        this.formBuilder.group({
+          password: new FormControl('',
+            [Validators.required,
+              Validators.minLength(7),
+              Validators.maxLength(20)]),
+        }),
+      ])
+    });
+  }
 }

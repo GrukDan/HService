@@ -1,108 +1,138 @@
 <p class="mat-h1">Регистрация пользователя</p>
-<mat-vertical-stepper #stepper>
-  <mat-step [stepControl]="firstFormGroup" errorMessage="Имя пользователя обязательно.">
-    <form [formGroup]="firstFormGroup">
+<form [formGroup]="userFormGroup">
+  <mat-vertical-stepper #stepper formArrayName="formArray">
+    <mat-step [stepControl]="formArray?.get([0])"
+              formGroupName="0"
+              errorMessage="Имя пользователя обязательно.">
       <ng-template matStepLabel>Имя пользователя</ng-template>
       <mat-form-field>
         <mat-label>Имя пользователя</mat-label>
-        <input matInput placeholder="Имя аккаунта пользователя" formControlName="firstCtrl" required>
+        <input matInput
+               #inputUserName
+               placeholder="Имя аккаунта пользователя"
+               formControlName="username"
+               maxlength="20"
+               minlength="5"
+               required>
+        <mat-hint align="end">{{inputUserName.value?.length || 0}}/20</mat-hint>
       </mat-form-field>
       <div>
         <button mat-stroked-button color="primary" matStepperNext>Дальше</button>
       </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="secondFormGroup" errorMessage="Имя и фамилия обязательны.">
-    <form [formGroup]="secondFormGroup">
+    </mat-step>
+    <mat-step [stepControl]="formArray?.get([1])"
+              formGroupName="1"
+              errorMessage="Имя и фамилия обязательны.">
       <ng-template matStepLabel>Полные имя и фамилию</ng-template>
       <mat-form-field>
         <mat-label>Имя</mat-label>
-        <input matInput placeholder="Ваше имя" formControlName="secondCtrl"
+        <input matInput
+               #inputFirstName
+               placeholder="Ваше имя"
+               formControlName="firstName"
+               maxlength="20"
+               minlength="2"
                required>
+        <mat-hint align="end">{{inputFirstName.value?.length || 0}}/20</mat-hint>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Фамилия</mat-label>
-        <input matInput placeholder="Ваша фамилия" formControlName="secondCtrl"
+        <input matInput
+               placeholder="Ваша фамилия"
+               #inputLastName
+               maxlength="20"
+               minlength="2"
+               formControlName="lastName"
                required>
+        <mat-hint align="end">{{inputLastName.value?.length || 0}}/20</mat-hint>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Назад</button>
         <button mat-stroked-button color="primary" matStepperNext>Дальше</button>
       </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="firstFormGroup" errorMessage="Email обязателен.">
-    <form [formGroup]="firstFormGroup">
+    </mat-step>
+    <mat-step [stepControl]="formArray?.get([2])"
+              formGroupName="2"
+              errorMessage="Email обязателен.">
       <ng-template matStepLabel>Адрес электронной почты</ng-template>
       <mat-form-field>
-        <mat-label>Адрес электронной почты</mat-label>
-        <input matInput placeholder="example@mail.com" formControlName="firstCtrl" required>
+        <mat-label>Адрес электронной почты, на который пришло приглашение</mat-label>
+        <input matInput
+               placeholder="example@mail.com"
+               formControlName="email"
+               #inputEmail
+               maxlength=50
+               minlength="7"
+               required>
+        <mat-hint align="end">{{inputEmail.value?.length || 0}}/50</mat-hint>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Назад</button>
         <button mat-stroked-button color="primary" matStepperNext>Дальше</button>
       </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="firstFormGroup" errorMessage="Пароль обязателен.">
-    <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Пароль аккаунта</ng-template>
+    </mat-step>
+    <mat-step [stepControl]="formArray?.get([3])"
+              formGroupName="3"
+              errorMessage="Пароль обязателен.">
+      <ng-template matStepLabel>Пароль</ng-template>
       <mat-form-field>
         <mat-label>Пароль</mat-label>
-        <input matInput  formControlName="firstCtrl" required>
+        <input matInput
+               formControlName="password"
+               #inputPassword
+               maxlength=50
+               minlength="7"
+               required>
+        <mat-hint align="end">{{inputPassword.value?.length || 0}}/50</mat-hint>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Назад</button>
         <button mat-stroked-button color="primary" matStepperNext>Дальше</button>
       </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="firstFormGroup" optional>
-    <form [formGroup]="firstFormGroup">
+    </mat-step>
+    <mat-step optional>
       <ng-template matStepLabel>Должность</ng-template>
       <mat-form-field>
         <mat-label>Должность</mat-label>
-        <input matInput placeholder="Developer" formControlName="firstCtrl" required>
+        <input matInput placeholder="Developer" required>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Назад</button>
         <button mat-stroked-button color="primary" matStepperNext>Дальше</button>
       </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="firstFormGroup" optional>
-    <form [formGroup]="firstFormGroup">
+    </mat-step>
+    <mat-step optional>
       <ng-template matStepLabel>Отдел</ng-template>
       <mat-form-field>
         <mat-label>Отдел</mat-label>
-        <input matInput placeholder="Apps development" formControlName="firstCtrl" required>
+        <input matInput placeholder="Apps development" required>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Назад</button>
         <button mat-stroked-button color="primary" matStepperNext>Дальше</button>
       </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="firstFormGroup" optional>
-    <form [formGroup]="firstFormGroup">
+    </mat-step>
+    <mat-step optional>
       <ng-template matStepLabel>Местоположение</ng-template>
       <mat-form-field>
         <mat-label>Отдел</mat-label>
-        <input matInput placeholder="Беларусь, Минск, ул.Гикало,д.15-23." formControlName="firstCtrl" required>
+        <input matInput placeholder="Беларусь, Минск, ул.Гикало,д.15-23." required>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Назад</button>
         <button mat-stroked-button color="primary" matStepperNext>Дальше</button>
       </div>
-    </form>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Готово</ng-template>
-    <p>Вы все заполнили!</p>
-    <div class="buttons-container">
-      <button mat-button (click)="stepper.reset()">Очистить все</button>
-      <button mat-button matStepperPrevious>Назад</button>
-      <button mat-raised-button color="primary">Регистрация</button>
-    </div>
-  </mat-step>
-</mat-vertical-stepper>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Готово</ng-template>
+      <p>Вы все заполнили!</p>
+      <div class="buttons-container">
+        <button mat-button (click)="stepper.reset()">Очистить все</button>
+        <button mat-button matStepperPrevious>Назад</button>
+        <button mat-raised-button
+                [disabled]="!userFormGroup.valid"
+                (click)="submitForm()" color="primary">Регистрация</button>
+      </div>
+    </mat-step>
+  </mat-vertical-stepper>
+</form>

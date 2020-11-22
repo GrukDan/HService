@@ -1,0 +1,49 @@
+<h1 mat-dialog-title>Авторизация</h1>
+<mat-dialog-content class="mat-typography">
+  <div class="form-field-container">
+    <form [formGroup]="authFormGroup" (ngSubmit)="submitForm()" novalidate>
+      <div>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Имя пользователя</mat-label>
+            <input
+              matInput
+              #inputLogin
+              [(ngModel)]="auth.username"
+              formControlName="username"
+              maxlength="20"
+              minlength="5"
+              placeholder="Введите имя пользователя">
+            <mat-hint align="end">{{inputLogin.value?.length || 0}}/20</mat-hint>
+            <mat-error *ngIf="hasError('username', 'required')">username is required</mat-error>
+            <mat-error *ngIf="hasError('username', 'minLength')">username min length is 2 symbols</mat-error>
+            <mat-error *ngIf="hasError('username', 'maxLength')">username max length is 20 symbols</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Пароль</mat-label>
+            <input
+              matInput
+              #inputPassword
+              [(ngModel)]="auth.password"
+              formControlName="password"
+              maxlength="20"
+              minlength="7"
+              placeholder="Введите пароль">
+            <mat-hint align="end">{{inputPassword.value?.length || 0}}/20</mat-hint>
+            <mat-error *ngIf="hasError('password', 'required')">password is required</mat-error>
+            <mat-error *ngIf="hasError('password', 'minLength')">password min length is 2 symbols</mat-error>
+            <mat-error *ngIf="hasError('password', 'maxLength')">password max length is 20 symbols</mat-error>
+          </mat-form-field>
+        </p>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Закрыть</button>
+  <button mat-raised-button
+          (click)="submitForm()"
+          color="primary">Войти</button>
+</mat-dialog-actions>

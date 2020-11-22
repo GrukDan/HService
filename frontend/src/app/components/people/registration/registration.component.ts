@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormGroup} from "@angular/forms";
+import {User} from "../../../dto/models/user";
+import {FormGroupBuilderService} from "../../../services/validation/form-group-builder.service";
+import {UserService} from "../../../services/http/user.service";
 
 @Component({
   selector: 'app-registration',
@@ -12,17 +15,19 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class RegistrationComponent implements OnInit {
 
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
+  userFormGroup: FormGroup;
+  registrationUser:User = new User();
 
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(private formGroupBuilderService:FormGroupBuilderService,
+              private userService:UserService) {}
 
   ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
+    this.userFormGroup = this.formGroupBuilderService.buildUserFormGroup()
+  }
+
+  get formArray(): AbstractControl | null { return this.userFormGroup.get('formArray'); }
+
+  submitForm() {
+
   }
 }

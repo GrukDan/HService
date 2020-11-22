@@ -1,6 +1,8 @@
 package com.hservice.controllers;
 
 
+import com.hservice.domain.dtos.AuthRequest;
+import com.hservice.domain.dtos.AuthResponse;
 import com.hservice.domain.dtos.UserLongDto;
 import com.hservice.domain.dtos.UserShortDto;
 import com.hservice.domain.models.User;
@@ -58,5 +60,10 @@ public class UserController {
     @PostMapping("/invite")
     public User inviteUser(@RequestBody User user) throws AlreadyExistsException, MessagingException {
         return userService.invite(user);
+    }
+
+    @PostMapping("/auth")
+    public AuthResponse auth(@RequestBody AuthRequest authRequest){
+
     }
 }
