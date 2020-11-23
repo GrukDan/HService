@@ -1,5 +1,7 @@
 package com.hservice.services.impl;
 
+import com.hservice.domain.dtos.AuthRequest;
+import com.hservice.domain.dtos.AuthResponse;
 import com.hservice.domain.dtos.UserLongDto;
 import com.hservice.domain.dtos.UserShortDto;
 import com.hservice.domain.models.User;
@@ -31,11 +33,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User entity) throws AlreadyExistsException {
-        if (userRepository.existsByUserNameAndPassword(entity.getUserName(), entity.getPassword())
-                || userRepository.existsByEmailAndPassword(entity.getEmail(), entity.getPassword())) {
-            throw new AlreadyExistsException(String.format("User with user name: %s already exists", entity.getUserName()));
+        if (!userRepository.existsByUserNameAndPassword(entity.getUserName(), entity.getPassword())) {
+            entity.checkStatus();
+            return userRepository.save(entity);
         }
-        return userRepository.save(entity);
+        throw new AlreadyExistsException(String.format("User with user name: %s already exists", entity.getUserName()));
     }
 
     @Override
@@ -120,13 +122,20 @@ public class UserServiceImpl implements UserService {
         user.setStatus(UserStatus.INVITED);
         user.setUserName(user.getEmail());
         //emailService.sendEmailToUser(user);
-        return userRepository.save(user);
+        return save(user);
     }
 
     @Override
     public User update(User updatedUser) throws NotFoundException, AlreadyExistsException {
-        User user = userRepository.findById(updatedUser.getUserId()).orElseThrow(NotFoundException::new);
+        User user = findById(updatedUser.getUserId());
         user.update(updatedUser);
         return save(user);
+    }
+
+    @Override
+    public AuthResponse auth(AuthRequest authRequest) throws NotFoundException {
+        User user = userRepository.findByUserNameAndPassword(authRequest.getUsername(), authRequest.getPassword())
+                .orElseThrow(NotFoundException::new);
+        return new AuthResponse(user);
     }
 }

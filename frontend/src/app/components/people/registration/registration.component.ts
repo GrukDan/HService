@@ -4,6 +4,7 @@ import {AbstractControl, FormGroup} from "@angular/forms";
 import {User} from "../../../dto/models/user";
 import {FormGroupBuilderService} from "../../../services/validation/form-group-builder.service";
 import {UserService} from "../../../services/http/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-registration',
@@ -19,7 +20,10 @@ export class RegistrationComponent implements OnInit {
   registrationUser:User = new User();
 
   constructor(private formGroupBuilderService:FormGroupBuilderService,
-              private userService:UserService) {}
+              private userService:UserService,
+              private router: Router) {
+    this.registrationUser = userService.authResponse.user;
+  }
 
   ngOnInit() {
     this.userFormGroup = this.formGroupBuilderService.buildUserFormGroup()
@@ -28,6 +32,9 @@ export class RegistrationComponent implements OnInit {
   get formArray(): AbstractControl | null { return this.userFormGroup.get('formArray'); }
 
   submitForm() {
-
+    this.userService.registration(this.registrationUser)
+      .subscribe(registeredUser=>{
+        this.router.navigateByUrl(`/people/${registeredUser.userId}`);
+      })
   }
 }

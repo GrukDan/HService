@@ -1,5 +1,7 @@
 package com.hservice.services;
 
+import com.hservice.domain.dtos.AuthRequest;
+import com.hservice.domain.dtos.AuthResponse;
 import com.hservice.domain.dtos.UserLongDto;
 import com.hservice.domain.dtos.UserShortDto;
 import com.hservice.domain.models.User;
@@ -28,4 +30,6 @@ public interface UserService extends CrudService<User,Long> {
     User invite(User user) throws AlreadyExistsException, MessagingException;
 
     User update(User updatedUser) throws NotFoundException, AlreadyExistsException;
+
+    AuthResponse auth(AuthRequest authRequest) throws NotFoundException;
 }

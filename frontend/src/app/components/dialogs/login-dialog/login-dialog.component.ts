@@ -5,21 +5,24 @@ import {Subscription} from "rxjs";
 import {AuthRequest} from "../../../dto/dtos/auth-request";
 import {FormGroup} from "@angular/forms";
 import {FormGroupBuilderService} from "../../../services/validation/form-group-builder.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login-dialog',
   templateUrl: './login-dialog.component.html',
   styleUrls: ['./login-dialog.component.css']
 })
-export class LoginDialogComponent implements OnInit,OnDestroy {
+export class LoginDialogComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
-  auth:AuthRequest = new AuthRequest();
-  authFormGroup:FormGroup;
+  auth: AuthRequest = new AuthRequest();
+  authFormGroup: FormGroup;
 
   constructor(private dialogRef: MatDialogRef<LoginDialogComponent>,
               private userService: UserService,
-              private formGroupBuilderService:FormGroupBuilderService) { }
+              private formGroupBuilderService: FormGroupBuilderService,
+              private router: Router) {
+  }
 
   ngOnInit(): void {
     this.authFormGroup = this.formGroupBuilderService.buildAuthFormGroup();
@@ -34,6 +37,18 @@ export class LoginDialogComponent implements OnInit,OnDestroy {
   }
 
   submitForm() {
+    this.userService.auth(this.auth).subscribe(res => {
+        this.userService.authResponse = res;
 
+        //todo if if expired
+          if (res.mustRegister) {
+            this.userService.clearRegistrationData();
+            this.router.navigateByUrl(`/registration`);
+          } else {
+            this.router.navigateByUrl(`/people/${res.user.userId}`);
+          }
+        this.dialogRef.close()
+      }
+    )
   }
 }

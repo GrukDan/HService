@@ -9,6 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -42,7 +43,7 @@ public class User {
     private String password;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role",nullable = false)
+    @JoinColumn(name = "role", nullable = false)
     private Role role;
 
     @ManyToMany(mappedBy = "users",
@@ -99,12 +100,27 @@ public class User {
         firstName = user.firstName;
         lastName = user.lastName;
         email = user.email;
-        password = user.password;
         role = user.role;
         commands = user.commands;
         projects = user.projects;
         position = user.position;
         department = user.department;
         placeOfResidence = user.placeOfResidence;
+    }
+
+    public void checkStatus(){
+        if (!status.equals(UserStatus.CREATED)) {
+            status = expirationTime.before(new Date()) ? UserStatus.INVITED : UserStatus.EXPIRED;
+        }
+    }
+
+    public boolean isExpired() {
+        checkStatus();
+        return status.equals(UserStatus.EXPIRED);
+    }
+
+    public boolean isInvited() {
+        checkStatus();
+        return status.equals(UserStatus.INVITED);
     }
 }

@@ -47,7 +47,7 @@ public class UserController {
         return userService.findById(id);
     }
 
-    @PostMapping("/full-user")
+    @PostMapping("/registration")
     public User save(@RequestBody @Valid User user) throws AlreadyExistsException {
         return userService.save(user);
     }
@@ -63,7 +63,7 @@ public class UserController {
     }
 
     @PostMapping("/auth")
-    public AuthResponse auth(@RequestBody AuthRequest authRequest){
-
+    public AuthResponse auth(@RequestBody AuthRequest authRequest) throws NotFoundException {
+        return userService.auth(authRequest);
     }
 }

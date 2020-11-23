@@ -4,6 +4,8 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {UserShortDto} from "../../dto/dtos/user-short-dto";
 import {User} from "../../dto/models/user";
 import {UserLongDto} from "../../dto/dtos/user-long-dto";
+import {AuthRequest} from "../../dto/dtos/auth-request";
+import {AuthResponse} from "../../dto/dtos/auth-response";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +13,17 @@ import {UserLongDto} from "../../dto/dtos/user-long-dto";
 export class UserService {
 
   private url: string = '/api/users';
+
+  private _authResponse:AuthResponse;
+
+  get authResponse():AuthResponse{return this._authResponse};
+
+  set authResponse(authResponse:AuthResponse){this._authResponse = authResponse};
+
+  public clearRegistrationData(){
+    this._authResponse.user.password = null;
+    this._authResponse.user.userName = null;
+  }
 
   constructor(private http: HttpClient) {
   }
@@ -42,8 +55,8 @@ export class UserService {
       });
   }
 
-  save(user: User): Observable<User> {
-    return this.http.post<User>(this.url + '/full-user', user);
+  registration(user: User): Observable<User> {
+    return this.http.post<User>(this.url + '/registration', user);
   }
 
   update(user: User): Observable<User> {
@@ -52,5 +65,9 @@ export class UserService {
 
   invite(user: User): Observable<User> {
     return this.http.post<User>(this.url + '/invite', user);
+  }
+
+  auth(authRequest:AuthRequest):Observable<AuthResponse>{
+    return this.http.post<AuthResponse>(this.url + '/auth',authRequest);
   }
 }

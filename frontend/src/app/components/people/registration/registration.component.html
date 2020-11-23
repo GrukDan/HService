@@ -9,6 +9,7 @@
         <mat-label>Имя пользователя</mat-label>
         <input matInput
                #inputUserName
+               [(ngModel)]="registrationUser.userName"
                placeholder="Имя аккаунта пользователя"
                formControlName="username"
                maxlength="20"
@@ -28,6 +29,7 @@
         <mat-label>Имя</mat-label>
         <input matInput
                #inputFirstName
+               [(ngModel)]="registrationUser.firstName"
                placeholder="Ваше имя"
                formControlName="firstName"
                maxlength="20"
@@ -40,6 +42,7 @@
         <input matInput
                placeholder="Ваша фамилия"
                #inputLastName
+               [(ngModel)]="registrationUser.lastName"
                maxlength="20"
                minlength="2"
                formControlName="lastName"
@@ -60,8 +63,9 @@
         <input matInput
                placeholder="example@mail.com"
                formControlName="email"
+               [(ngModel)]="registrationUser.email"
                #inputEmail
-               maxlength=50
+               maxlength="50"
                minlength="7"
                required>
         <mat-hint align="end">{{inputEmail.value?.length || 0}}/50</mat-hint>
@@ -79,8 +83,9 @@
         <mat-label>Пароль</mat-label>
         <input matInput
                formControlName="password"
+               [(ngModel)]="registrationUser.password"
                #inputPassword
-               maxlength=50
+               maxlength="50"
                minlength="7"
                required>
         <mat-hint align="end">{{inputPassword.value?.length || 0}}/50</mat-hint>
@@ -94,7 +99,14 @@
       <ng-template matStepLabel>Должность</ng-template>
       <mat-form-field>
         <mat-label>Должность</mat-label>
-        <input matInput placeholder="Developer" required>
+        <input matInput
+               placeholder="Your position"
+               #inputUserPosition
+               [(ngModel)]="registrationUser.position"
+               [ngModelOptions]="{standalone: true}"
+               maxlength="45"
+               minlength="2">
+        <mat-hint align="end">{{inputUserPosition.value?.length || 0}}/45</mat-hint>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Назад</button>
@@ -105,7 +117,14 @@
       <ng-template matStepLabel>Отдел</ng-template>
       <mat-form-field>
         <mat-label>Отдел</mat-label>
-        <input matInput placeholder="Apps development" required>
+        <input matInput
+               placeholder="Your department"
+               #inputUserDepartment
+               [(ngModel)]="registrationUser.department"
+               [ngModelOptions]="{standalone: true}"
+               maxlength="45"
+               minlength="2">
+        <mat-hint align="end">{{inputUserDepartment.value?.length || 0}}/45</mat-hint>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Назад</button>
@@ -116,7 +135,14 @@
       <ng-template matStepLabel>Местоположение</ng-template>
       <mat-form-field>
         <mat-label>Отдел</mat-label>
-        <input matInput placeholder="Беларусь, Минск, ул.Гикало,д.15-23." required>
+        <input matInput
+               #inputUserPlaceOfResidence
+               [(ngModel)]="registrationUser.placeOfResidence"
+               [ngModelOptions]="{standalone: true}"
+               placeholder="Belarus, Minsk, st.Hikalo, 34-44"
+               maxlength="45"
+               minlength="2">
+        <mat-hint align="end">{{inputUserPlaceOfResidence.value?.length || 0}}/45</mat-hint>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Назад</button>
@@ -125,7 +151,8 @@
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Готово</ng-template>
-      <p>Вы все заполнили!</p>
+      <p *ngIf="userFormGroup.valid">Отлично!</p>
+      <p *ngIf="!userFormGroup.valid">Вы не все заполнили!</p>
       <div class="buttons-container">
         <button mat-button (click)="stepper.reset()">Очистить все</button>
         <button mat-button matStepperPrevious>Назад</button>
