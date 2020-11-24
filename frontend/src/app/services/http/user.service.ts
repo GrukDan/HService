@@ -21,8 +21,8 @@ export class UserService {
   set authResponse(authResponse:AuthResponse){this._authResponse = authResponse};
 
   public clearRegistrationData(){
-    this._authResponse.user.password = null;
-    this._authResponse.user.userName = null;
+    this._authResponse.user.password = "";
+    this._authResponse.user.userName = "";
   }
 
   constructor(private http: HttpClient) {

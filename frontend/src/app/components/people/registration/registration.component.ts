@@ -34,6 +34,8 @@ export class RegistrationComponent implements OnInit {
   submitForm() {
     this.userService.registration(this.registrationUser)
       .subscribe(registeredUser=>{
+        this.userService.authResponse.mustRegister = false;
+        this.userService.authResponse.user = registeredUser;
         this.router.navigateByUrl(`/people/${registeredUser.userId}`);
       })
   }

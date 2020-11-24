@@ -1,6 +1,7 @@
 package com.hservice.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -33,13 +34,13 @@ public class User {
     private String lastName;
 
     @NotBlank(message = "Email code is mandatory")
-    @Size(min = 10, max = 50, message = "the length of first name is out of range")
+    @Size(min = 10, max = 50, message = "the length of email is out of range")
     @Email(message = "email isn't valid")
     private String email;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank(message = "Password code is mandatory")
-    @Size(min = 6, max = 150, message = "the length of first name is out of range")
+    @Size(min = 6, max = 150, message = "the length of password is out of range")
     private String password;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -110,15 +111,17 @@ public class User {
 
     public void checkStatus(){
         if (!status.equals(UserStatus.CREATED)) {
-            status = expirationTime.before(new Date()) ? UserStatus.INVITED : UserStatus.EXPIRED;
+            status = expirationTime.after(new Date()) ? UserStatus.INVITED : UserStatus.EXPIRED;
         }
     }
 
+    @JsonIgnore
     public boolean isExpired() {
         checkStatus();
         return status.equals(UserStatus.EXPIRED);
     }
 
+    @JsonIgnore
     public boolean isInvited() {
         checkStatus();
         return status.equals(UserStatus.INVITED);

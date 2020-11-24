@@ -33,8 +33,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User entity) throws AlreadyExistsException {
+        entity.checkStatus();
         if (!userRepository.existsByUserNameAndPassword(entity.getUserName(), entity.getPassword())) {
-            entity.checkStatus();
+            entity.setStatus(UserStatus.CREATED);
             return userRepository.save(entity);
         }
         throw new AlreadyExistsException(String.format("User with user name: %s already exists", entity.getUserName()));
@@ -136,6 +137,7 @@ public class UserServiceImpl implements UserService {
     public AuthResponse auth(AuthRequest authRequest) throws NotFoundException {
         User user = userRepository.findByUserNameAndPassword(authRequest.getUsername(), authRequest.getPassword())
                 .orElseThrow(NotFoundException::new);
+        if(user.isExpired())userRepository.save(user);
         return new AuthResponse(user);
     }
 }
