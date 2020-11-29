@@ -34,11 +34,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User entity) throws AlreadyExistsException {
         entity.checkStatus();
-        if (!userRepository.existsByUserNameAndPassword(entity.getUserName(), entity.getPassword())) {
-            entity.setStatus(UserStatus.CREATED);
-            return userRepository.save(entity);
+        if (userRepository.existsByUserNameAndPassword(entity.getUserName(), entity.getPassword())) {
+            throw new AlreadyExistsException(String.format("User with user name: %s already exists", entity.getUserName()));
         }
-        throw new AlreadyExistsException(String.format("User with user name: %s already exists", entity.getUserName()));
+        entity.setStatus(UserStatus.CREATED);
+        return userRepository.save(entity);
     }
 
     @Override
@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
     public User update(User updatedUser) throws NotFoundException, AlreadyExistsException {
         User user = findById(updatedUser.getUserId());
         user.update(updatedUser);
-        return save(user);
+        return userRepository.save(user);
     }
 
     @Override

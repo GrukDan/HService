@@ -135,7 +135,8 @@
       </button>
       <button mat-raised-button
               *ngIf="edit"
-              color="primary">
+              color="primary"
+              (click)="saveChanges()">
         Сохранить изменения
       </button>
     </div>
@@ -147,33 +148,76 @@
     <p class="mat-h2">Проекты</p>
     <mat-selection-list [multiple]="false">
       <mat-list-option *ngFor="let project of loadedUser.projects"
-                       [value]="project"
-                       matTooltip="Нажмите для перехода"
-                       [matTooltipPosition]="'above'"
-                       matTooltipHideDelay="1000"
-                       (click)="toProject(project.projectId)">
-        {{project.projectName}}
+                       [value]="project">
+        <span>
+          <span class="project-name-span">{{project.projectName}}</span>
+          <button mat-raised-button color="primary"
+                  class="user-projects-list"
+                  matTooltip="Нажмите для перехода"
+                  [matTooltipPosition]="'above'"
+                  matTooltipHideDelay="1000"
+                  (click)="toProject(project.projectId)">
+        Перейти
+      </button>
+          <button mat-raised-button
+                  class="user-projects-list"
+                  (click)="removeProject(project)">
+        Снять с проекта
+      </button>
+        </span>
       </mat-list-option>
     </mat-selection-list>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Проект</mat-label>
+        <mat-select (selectionChange)="addProjectSelectChange($event)"
+                    [(ngModel)]="addProject">
+          <mat-option *ngFor="let project of projects"
+                      [value]="project">{{project.projectName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary"
+              class="user-projects-list"
+              [disabled]="canAddProject"
+              (click)="addProjectToUser(addProject)">
+        Добавить
+      </button>
+    </div>
   </div>
 </ng-template>
 
 <ng-template #taskCards>
   <p class="mat-h2">Задачи</p>
+  <button mat-icon-button
+          (click)="dialogService.openCreateTaskDialog()"
+          matTooltip="Создать задачу"
+          [matTooltipPosition]="'below'"
+          matTooltipHideDelay="1000"
+          color="primary">
+    <mat-icon>add_task</mat-icon>
+  </button>
+  <button mat-icon-button
+          (click)="loadTasksByExecutor(userId)"
+          matTooltip="Обновить задачи пользователя"
+          [matTooltipPosition]="'above'"
+          matTooltipHideDelay="1000"
+          color="primary">
+    <mat-icon>cached</mat-icon>
+  </button>
   <div class="container">
     <div class="content" fxLayout="row wrap" fxLayoutGap="16px grid">
-      <div fxFlex="25%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let task of tasks; let i = index">
-        <mat-card class="mat-elevation-z4">
+      <div *ngFor="let task of tasks; let i = index">
+        <mat-card class="task-card">
           <mat-card-header>
             <mat-card-title>{{task.taskCode}}</mat-card-title>
           </mat-card-header>
-          <img mat-card-image [src]="getImageUrlByTaskType(task.type)">
+          <img mat-card-image [src]="getImageUrlByTaskType(task?.type)">
           <mat-card-content>
-            <p>
+            <h4>
               {{task.taskName}}
-            </p>
+            </h4>
             <p>
-              {{task.created}}
+              {{task.created | date}}
             </p>
           </mat-card-content>
           <mat-card-actions>
@@ -183,16 +227,18 @@
       </div>
     </div>
   </div>
+  <h3 *ngIf="tasks?.length<=0">Нет задач</h3>
 </ng-template>
 
 
 <ng-template #commandsData>
   <div>
     <p class="mat-h2">Команды</p>
-    <mat-selection-list #shoes [multiple]="false">
-      <mat-list-option *ngFor="let shoe of typesOfShoes" [value]="shoe" (click)="true">
-        {{shoe}}
+    <mat-selection-list *ngIf="loadedUser.commands?.length>0" [multiple]="false">
+      <mat-list-option *ngFor="let command of loadedUser.commands" [value]="command" (click)="true">
+        {{command.commandName}}
       </mat-list-option>
     </mat-selection-list>
+    <span *ngIf="!loadedUser.commands?.length>0">Нет добавленных команд</span>
   </div>
 </ng-template>

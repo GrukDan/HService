@@ -10,8 +10,8 @@ export class User {
   email:string;
   password:string;
   role:Role;
-  commands:Set<Command>;
-  projects:Set<Project>;
+  commands:Command[];
+  projects:Project[];
   position:string;
   department:string;
   placeOfResidence:string;

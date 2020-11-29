@@ -7,7 +7,6 @@ import com.hservice.services.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Collection;
 
 @RestController
@@ -18,7 +17,7 @@ public class TaskController {
     private final TaskService taskService;
 
     @PostMapping
-    public Task save(@Valid @RequestBody Task task) throws AlreadyExistsException {
+    public Task save(@RequestBody Task task) throws AlreadyExistsException {
         return taskService.save(task);
     }
 

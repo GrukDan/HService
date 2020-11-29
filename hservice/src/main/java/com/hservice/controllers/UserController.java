@@ -53,7 +53,7 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public User update(@RequestBody @Valid User user) throws AlreadyExistsException, NotFoundException {
+    public User update(@RequestBody User user) throws AlreadyExistsException, NotFoundException {
         return userService.update(user);
     }
 

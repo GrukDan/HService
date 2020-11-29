@@ -34,6 +34,7 @@ export class FormGroupBuilderService {
       project: new FormControl(['', Validators.required]),
       type: new FormControl(['', Validators.required]),
       priority: new FormControl(['', Validators.required]),
+      status: new FormControl(['', Validators.required]),
       dueDate: new FormControl(['', Validators.required]),
       descriptionContent: new FormControl(['', Validators.minLength(2), Validators.maxLength(250)])
     });

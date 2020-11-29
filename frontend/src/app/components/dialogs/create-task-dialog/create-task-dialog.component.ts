@@ -32,11 +32,11 @@ export class CreateTaskDialogComponent implements OnInit, OnDestroy {
   executors: UserShortDto[] = [];
   description = new Description();
 
-  createdTask:Task = new Task();
+  createdTask: Task = new Task();
 
   startDate: Date = new Date();
   subscriptions: Subscription[] = [];
-  taskFormGroup:FormGroup;
+  taskFormGroup: FormGroup;
 
   constructor(private projectService: ProjectService,
               private taskService: TaskService,
@@ -44,13 +44,13 @@ export class CreateTaskDialogComponent implements OnInit, OnDestroy {
               private statusService: StatusService,
               private typeService: TypeService,
               private userService: UserService,
-              private snackBarService:SnackBarService,
+              private snackBarService: SnackBarService,
               private dialogRef: MatDialogRef<CreateTaskDialogComponent>,
-              private formGroupBuilderService:FormGroupBuilderService) {
+              private formGroupBuilderService: FormGroupBuilderService) {
   }
 
   ngOnInit(): void {
-    this.taskFormGroup= this.formGroupBuilderService.buildCreateTaskDialogFormGroup();
+    this.taskFormGroup = this.formGroupBuilderService.buildCreateTaskDialogFormGroup();
     this.loadProjectDtos();
     this.loadPriorities();
     this.loadStatuses();
@@ -91,14 +91,21 @@ export class CreateTaskDialogComponent implements OnInit, OnDestroy {
   }
 
   submitForm() {
-    // if (this.taskFormGroup.valid) {
-    //   if (this.description.content?.length > 0)
-    //     this.createdProject.description = this.description;
-    //   this.subscriptions.push(this.projectService.save(this.createdProject)
-    //     .subscribe(project => {
-    //       this.snackBarService.openSnackBar(`Проект ${project.projectName} создан! 🍕`, 5);
-    //       this.dialogRef.close();
-    //     }))
-    // }
+    if (this.taskFormGroup.valid) {
+      this.createdTask.taskCreator = this.userService.getAuthUserId();
+
+      if (this.description.content?.length > 0) {
+        this.createdTask.description = this.description;
+      }
+
+      if (this.createdTask.taskExecutor == null) {
+        this.createdTask.taskExecutor = this.createdTask.taskCreator;
+      }
+      this.subscriptions.push(this.taskService.save(this.createdTask)
+        .subscribe(task => {
+          this.snackBarService.openSnackBar(`Задача ${task.taskName} создана! 🍕`, 5);
+          this.dialogRef.close();
+        }))
+    }
   }
 }

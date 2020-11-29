@@ -46,4 +46,8 @@ export class ProjectService {
         params: new HttpParams().set('projectCode', projectCode)
       });
   }
+
+  getAll():Observable<Project[]>{
+    return this.http.get<Project[]>(this.url + '/all/data');
+  }
 }

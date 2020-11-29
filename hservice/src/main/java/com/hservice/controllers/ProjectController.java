@@ -28,7 +28,7 @@ public class ProjectController {
         return projectService.findById(id);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/all/data")
     public Collection<Project> getAll() {
         return projectService.findAll();
     }

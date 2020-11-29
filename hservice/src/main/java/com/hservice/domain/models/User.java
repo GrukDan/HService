@@ -96,7 +96,6 @@ public class User {
     }
 
     public void update(User user) {
-        userId = user.userId;
         userName = user.userName;
         firstName = user.firstName;
         lastName = user.lastName;
@@ -107,9 +106,11 @@ public class User {
         position = user.position;
         department = user.department;
         placeOfResidence = user.placeOfResidence;
+        avatarUrl = user.avatarUrl;
+        expirationTime = user.expirationTime;
     }
 
-    public void checkStatus(){
+    public void checkStatus() {
         if (!status.equals(UserStatus.CREATED)) {
             status = expirationTime.after(new Date()) ? UserStatus.INVITED : UserStatus.EXPIRED;
         }

@@ -59,6 +59,18 @@
         </p>
         <p>
           <mat-form-field appearance="fill">
+            <mat-label>Статус задачи</mat-label>
+            <mat-select formControlName="status"
+                        [(ngModel)]="createdTask.status">
+              <mat-option *ngFor="let status of statuses"
+                          [value]="status">{{status.statusName}}</mat-option>
+            </mat-select>
+            <mat-hint align="end">Выберите статус задачи</mat-hint>
+            <mat-error *ngIf="hasError('status', 'required')">Task's status is required</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill">
             <mat-label>Дата готовности</mat-label>
             <input matInput
                    formControlName="dueDate"
@@ -99,5 +111,8 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Закрыть</button>
-  <button mat-raised-button color="primary">Создать</button>
+  <button mat-raised-button
+          color="primary"
+          [disabled]="!taskFormGroup.valid"
+          (click)="submitForm()">Создать</button>
 </mat-dialog-actions>

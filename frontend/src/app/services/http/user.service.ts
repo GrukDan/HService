@@ -20,6 +20,10 @@ export class UserService {
 
   set authResponse(authResponse:AuthResponse){this._authResponse = authResponse};
 
+  public getAuthUserId():number{
+    return this._authResponse.user.userId;
+  }
+
   public clearRegistrationData(){
     this._authResponse.user.password = "";
     this._authResponse.user.userName = "";
@@ -70,4 +74,6 @@ export class UserService {
   auth(authRequest:AuthRequest):Observable<AuthResponse>{
     return this.http.post<AuthResponse>(this.url + '/auth',authRequest);
   }
+
+
 }
