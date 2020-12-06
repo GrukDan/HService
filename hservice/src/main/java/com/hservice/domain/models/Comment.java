@@ -3,10 +3,7 @@ package com.hservice.domain.models;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
@@ -28,5 +25,7 @@ public class Comment {
 
     private long task;
 
-    private long commentator;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "commentator", nullable = false)
+    private User commentator;
 }

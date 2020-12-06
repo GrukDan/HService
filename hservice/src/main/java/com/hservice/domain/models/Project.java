@@ -40,6 +40,8 @@ public class Project {
 
     private long lead;
 
+    private Date sprintTime;
+
     @Transient
     private int membersAmount;
 

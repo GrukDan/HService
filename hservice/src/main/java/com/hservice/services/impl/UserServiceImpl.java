@@ -5,7 +5,6 @@ import com.hservice.domain.dtos.AuthResponse;
 import com.hservice.domain.dtos.UserLongDto;
 import com.hservice.domain.dtos.UserShortDto;
 import com.hservice.domain.models.User;
-import com.hservice.domain.models.UserStatus;
 import com.hservice.email.EmailService;
 import com.hservice.exceptions.AlreadyExistsException;
 import com.hservice.exceptions.NotFoundException;
@@ -23,6 +22,8 @@ import java.util.Comparator;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.hservice.domain.models.UserStatus.CREATED;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -33,11 +34,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User entity) throws AlreadyExistsException {
-        entity.checkStatus();
         if (userRepository.existsByUserNameAndPassword(entity.getUserName(), entity.getPassword())) {
             throw new AlreadyExistsException(String.format("User with user name: %s already exists", entity.getUserName()));
         }
-        entity.setStatus(UserStatus.CREATED);
+        if(!entity.isExpired() && !entity.isInvited())
+            entity.setStatus(CREATED);
         return userRepository.save(entity);
     }
 
@@ -120,14 +121,14 @@ public class UserServiceImpl implements UserService {
             user.setPassword(passayGenerator.generatePassword());
         } while (userRepository.existsByEmailAndPassword(user.getEmail(), user.getPassword()));
 
-        user.setStatus(UserStatus.INVITED);
+        user.checkStatus();
         user.setUserName(user.getEmail());
         //emailService.sendEmailToUser(user);
         return save(user);
     }
 
     @Override
-    public User update(User updatedUser) throws NotFoundException, AlreadyExistsException {
+    public User update(User updatedUser) throws NotFoundException {
         User user = findById(updatedUser.getUserId());
         user.update(updatedUser);
         return userRepository.save(user);

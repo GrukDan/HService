@@ -74,12 +74,12 @@
       <mat-icon>account_circle</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item routerLink="/people/test">
+      <button mat-menu-item (click)="toUserPage()">
         <mat-icon>contact_mail</mat-icon>
         <span>Мои данные</span>
       </button>
       <mat-divider></mat-divider>
-      <button mat-menu-item>
+      <button mat-menu-item (click)="exit()">
         <mat-icon>exit_to_app</mat-icon>
         <span>Выйти</span>
       </button>

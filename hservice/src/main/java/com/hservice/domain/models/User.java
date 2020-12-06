@@ -15,6 +15,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import static com.hservice.domain.models.UserStatus.*;
+import static java.util.Objects.isNull;
+
 @Entity
 @Getter
 @Setter
@@ -111,20 +114,20 @@ public class User {
     }
 
     public void checkStatus() {
-        if (!status.equals(UserStatus.CREATED)) {
-            status = expirationTime.after(new Date()) ? UserStatus.INVITED : UserStatus.EXPIRED;
+        if (isNull(status) || !status.equals(CREATED)) {
+            status = expirationTime.after(new Date()) ? INVITED : EXPIRED;
         }
     }
 
     @JsonIgnore
     public boolean isExpired() {
         checkStatus();
-        return status.equals(UserStatus.EXPIRED);
+        return status.equals(EXPIRED);
     }
 
     @JsonIgnore
     public boolean isInvited() {
         checkStatus();
-        return status.equals(UserStatus.INVITED);
+        return status.equals(INVITED);
     }
 }

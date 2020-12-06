@@ -1,0 +1,160 @@
+<app-header [header]="task.taskName"></app-header>
+<div class="container">
+  <div class="main-content-container">
+    <ng-container *ngTemplateOutlet="mainContentTemplate"></ng-container>
+    <ng-container *ngTemplateOutlet="logTimeTemplate"></ng-container>
+    <mat-tab-group mat-align-tabs="start">
+      <mat-tab label="Комментарии">
+        <ng-container *ngTemplateOutlet="commentsTemplate"></ng-container>
+      </mat-tab>
+      <mat-tab label="История">
+        <ng-container *ngTemplateOutlet="historyTemplate"></ng-container>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <div class="task-data-container">
+    <ng-container *ngTemplateOutlet="taskDataTemplate"></ng-container>
+  </div>
+</div>
+
+
+<ng-template #mainContentTemplate>
+  <h2>Описание</h2>
+  <mat-divider></mat-divider>
+  <p class="mat-h3" *ngIf="task.description?.content">{{task.description.content}}</p>
+</ng-template>
+
+<ng-template #logTimeTemplate>
+  <div class="log-time-container">
+    <h2>Отслеживание времени</h2>
+    <mat-divider></mat-divider>
+    <div class="log-time-content">
+      <h2>Затрачено: </h2>
+      <button mat-raised-button color="primary">Отметить время</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #taskDataTemplate>
+  <span class="mat-h2">
+    <span>Данные задачи  </span>
+  <button mat-icon-button
+          (click)="editTask(edit)"
+          matTooltip="Редактировать"
+          [matTooltipPosition]="'right'"
+          matTooltipHideDelay="500"
+          color="primary">
+          <mat-icon>edit</mat-icon>
+        </button>
+  </span>
+  <div>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Название задачи</mat-label>
+        <input matInput placeholder="Введите название задачи"
+               [readonly]="!edit"
+               [(ngModel)]="task.taskName">
+        <mat-icon matSuffix>article</mat-icon>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="outline">
+        <mat-label>Код задачи</mat-label>
+        <input matInput [value]="task.taskCode" [readonly]="'true'">
+        <mat-icon matSuffix>info</mat-icon>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Исполнитель задачи</mat-label>
+        <mat-select [(ngModel)]="task.taskExecutor">
+          <mat-option *ngFor="let executor of executors" [value]="executor.userId">
+            {{executor.lastName}} {{executor.firstName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Тип задачи</mat-label>
+        <mat-select [(ngModel)]="task.type"
+                    [compareWith]="typeComparator">
+          <mat-option *ngFor="let type of types" [value]="type">
+            {{type.typeName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Приоритет задачи</mat-label>
+        <mat-select [(ngModel)]="task.priority"
+                    [disabled]="!edit"
+                    [compareWith]="priorityComparator">
+          <mat-option *ngFor="let priority of priorities" [value]="priority">
+            {{priority.priorityName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Статус задачи</mat-label>
+        <mat-select [(ngModel)]="task.status"
+                    [compareWith]="statusComparator">
+          <mat-option *ngFor="let status of statuses" [value]="status">
+            {{status.statusName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="fill">
+        <mat-label>Дата готовности</mat-label>
+        <input matInput [matDatepicker]="datePicker" [value]="task.dueDate">
+        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker touchUi></mat-datepicker>
+      </mat-form-field>
+    </p>
+    <div class="buttons-container">
+      <button mat-raised-button
+              *ngIf="edit"
+              (click)="editTask(edit)">
+        Отменить
+      </button>
+      <button mat-raised-button
+              *ngIf="edit"
+              color="primary"
+              (click)="saveChanges()">
+        Сохранить изменения
+      </button>
+    </div>
+    <p>
+      <span class="mat-h2">Создатель задачи: </span>
+      <a class="mat-h4"
+         [routerLink]="['/people/', taskCreator?.userId?.toString()]">{{taskCreator?.lastName}} {{taskCreator?.firstName}}</a>
+    </p>
+    <p>
+      <span class="mat-h2">Дата создания: </span>
+      <span class="mat-h4">{{task.created | date:'medium':'UTC'}}</span>
+    </p>
+    <p>
+      <span class="mat-h2">Обновлено: </span>
+      <span class="mat-h4">{{task.updated | date:'medium':'UTC'}}</span>
+    </p>
+  </div>
+</ng-template>
+
+<ng-template #commentsTemplate>
+  <div class="comments-container">
+    <div class="comments-content" *ngIf="comments?.length>0">
+    </div>
+    <span class="mat-h2" *ngIf="comments?.length<=0">Нет комментариев</span>
+  </div>
+</ng-template>
+
+<ng-template #historyTemplate>
+  <div class="comments-container">
+    <div class="comments-content"></div>
+  </div>
+</ng-template>

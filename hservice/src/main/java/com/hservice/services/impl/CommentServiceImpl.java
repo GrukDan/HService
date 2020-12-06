@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +34,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Collection<Comment> findAll() {
         return commentRepository.findAll();
+    }
+
+    @Override
+    public List<Comment> findAllByTask(long task) {
+        return commentRepository.findAllByTask(task);
     }
 }

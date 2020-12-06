@@ -7,15 +7,14 @@
   margin-bottom: 5%;
 }
 
-.personal-data-container{
-  width: 40%;
+.main-content-container{
+  width: 65%;
   margin-right: 3%;
 }
-.projects-data-container{
-  width: 60%;
+.task-data-container{
+  width: 30%;
   padding: 2%;
   border: 1px groove rgba(0, 0, 0, 0.12);
-  overflow-y: scroll;
 }
 
 .content {
@@ -35,17 +34,25 @@ mat-divider{
 .buttons-container{
   display: flex;
   justify-content: space-around;
+  margin-top: 3%;
 }
 
-.user-projects-list{
-  margin-left: 15%;
+.comments-container{
 }
 
-.project-name-span{
-  width: 300px;
+.comments-content{
+  overflow-y: scroll;
 }
 
-.task-card {
-  width: 160px;
-  height: 400px;
+mat-tab-group{
+  margin-top: 7%;
 }
+
+.log-time-container{
+  margin-top: 7%;
+}
+
+.log-time-content{
+
+}
+

@@ -52,4 +52,8 @@ export class TaskService {
           .set('parameter', parameter)
       });
   }
+
+  getTaskById(taskId:number):Observable<Task> {
+    return this.http.get<Task>(this.url + `/${taskId}`);
+  }
 }

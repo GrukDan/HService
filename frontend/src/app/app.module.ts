@@ -28,6 +28,7 @@ import {ProjectsPageComponent} from './components/projects/projects-page/project
 import {MembersTableComponent} from './components/projects/members-table/members-table.component';
 import {HeaderComponent} from './components/navigation/header/header/header.component';
 import {LoginDialogComponent} from './components/dialogs/login-dialog/login-dialog.component';
+import {TaskPageComponent} from './components/tasks/task-page/task-page.component';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import {LoginDialogComponent} from './components/dialogs/login-dialog/login-dial
     MembersTableComponent,
     HeaderComponent,
     LoginDialogComponent,
+    TaskPageComponent,
   ],
   imports: [
     BrowserModule,

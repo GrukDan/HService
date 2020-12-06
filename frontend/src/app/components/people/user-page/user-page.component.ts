@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../../services/http/user.service";
 import {ProjectService} from "../../../services/http/project.service";
@@ -17,7 +17,7 @@ import {DialogService} from "../../../services/view-services/dialog.service";
   templateUrl: './user-page.component.html',
   styleUrls: ['./user-page.component.css']
 })
-export class UserPageComponent implements OnInit {
+export class UserPageComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
   userId: number;
@@ -36,7 +36,7 @@ export class UserPageComponent implements OnInit {
               private projectService: ProjectService,
               private taskService: TaskService,
               private commandService: CommandService,
-              public dialogService:DialogService) {
+              public dialogService: DialogService) {
     this.subscriptions.push(activateRoute.params.subscribe(params => {
       this.userId = params['id'];
     }));
@@ -48,7 +48,7 @@ export class UserPageComponent implements OnInit {
     this.loadTasksByExecutor(this.userId);
   }
 
-  getImageUrlByTaskType(type: Type):string {
+  getImageUrlByTaskType(type: Type): string {
     switch (type?.typeName) {
       case 'Разработка спецификации':
         return `/assets/images/task-types-svg/SPECIFICATION_DEVELOPMENT.svg`;
@@ -128,5 +128,13 @@ export class UserPageComponent implements OnInit {
         this.projects = this.filterProjects(this.projects);
       }))
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  toTask(taskId: number) {
+    this.router.navigateByUrl(`/tasks/${taskId}`);
   }
 }

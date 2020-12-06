@@ -75,5 +75,7 @@ export class UserService {
     return this.http.post<AuthResponse>(this.url + '/auth',authRequest);
   }
 
-
+  exit() {
+    this._authResponse = null;
+  }
 }

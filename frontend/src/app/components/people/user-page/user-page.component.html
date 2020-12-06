@@ -34,7 +34,7 @@
           <input matInput
                  #inputUserName
                  [(ngModel)]="loadedUser.userName"
-                 [disabled]="!edit"
+                 [readonly]="!edit"
                  maxlength="40"
                  name="userName"
                  placeholder="Введите имя пользователя">
@@ -48,7 +48,7 @@
           <input matInput
                  #inputFirstName
                  [(ngModel)]="loadedUser.firstName"
-                 [disabled]="!edit"
+                 [readonly]="!edit"
                  maxlength="40"
                  name="firstName"
                  placeholder="Введите полное имя пользователя">
@@ -62,7 +62,7 @@
           <input matInput
                  #inputLastName
                  [(ngModel)]="loadedUser.lastName"
-                 [disabled]="!edit"
+                 [readonly]="!edit"
                  maxlength="40"
                  name="lastName"
                  placeholder="Введите фамилию пользователя">
@@ -76,7 +76,7 @@
           <input matInput
                  #inputLastName
                  [(ngModel)]="loadedUser.email"
-                 [disabled]="!edit"
+                 [readonly]="!edit"
                  maxlength="40"
                  name="email"
                  placeholder="Введите email">
@@ -90,7 +90,7 @@
           <input matInput
                  #inputPosition
                  [(ngModel)]="loadedUser.position"
-                 [disabled]="!edit"
+                 [readonly]="!edit"
                  maxlength="40"
                  name="position"
                  placeholder="Введите Вашу должность">
@@ -104,7 +104,7 @@
           <input matInput
                  #inputDepartment
                  [(ngModel)]="loadedUser.department"
-                 [disabled]="!edit"
+                 [readonly]="!edit"
                  maxlength="40"
                  name="department"
                  placeholder="Введите название Вашего отдела">
@@ -118,7 +118,7 @@
           <input matInput
                  #inputPlace
                  [(ngModel)]="loadedUser.placeOfResidence"
-                 [disabled]="!edit"
+                 [readonly]="!edit"
                  maxlength="40"
                  name="placeOfResidence"
                  placeholder="Введите Ваше местоположение">
@@ -221,7 +221,11 @@
             </p>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-raised-button color="primary">Подробнее</button>
+            <button mat-raised-button
+                    color="primary"
+                    (click)="toTask(task.taskId)">
+              Подробнее
+            </button>
           </mat-card-actions>
         </mat-card>
       </div>
