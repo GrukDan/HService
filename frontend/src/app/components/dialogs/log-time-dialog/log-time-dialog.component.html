@@ -1,0 +1,56 @@
+<h1 mat-dialog-title>Время работы над задачей</h1>
+<mat-dialog-content class="mat-typography">
+  <div class="form-field-container">
+    <form [formGroup]="logTimeFormGroup" (ngSubmit)="submitForm()" novalidate>
+      <div>
+        <div class="timepicker-container">
+          <h3>Затраченное время</h3>
+          <div>
+            <ngx-timepicker-field formControlName="workTime"
+                                  [format]="24"
+                                  [defaultTime]="'4:15'"
+                                  (timeChanged)="timeChanged($event)">
+            </ngx-timepicker-field>
+            <mat-error *ngIf="hasError('workTime', 'required')">Work time is required</mat-error>
+          </div>
+        </div>
+        <p>
+          <mat-form-field appearance="fill">
+            <mat-label>Тип деятельности</mat-label>
+            <mat-select formControlName="activityType"
+                        [(ngModel)]="logTime.activityType"
+                        [compareWith]="typeComparator">
+              <mat-option *ngFor="let type of data.activityTypes" [value]="type">
+                {{type.typeName}}
+              </mat-option>
+            </mat-select>
+            <mat-hint align="end">Выберите тип деятельности</mat-hint>
+            <mat-error *ngIf="hasError('activityType', 'required')">Activity type is required</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill" class="form-field-textarea">
+            <mat-label>Описание задачи...</mat-label>
+            <textarea matInput
+                      formControlName="descriptionContent"
+                      [(ngModel)]="description.content"
+                      #inputDescription>
+          </textarea>
+            <mat-hint align="end">{{inputDescription.value?.length || 0}}/250</mat-hint>
+            <mat-error *ngIf="hasError('descriptionContent', 'maxLength')">Description max length is 250
+              symbols
+            </mat-error>
+          </mat-form-field>
+        </p>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Закрыть</button>
+  <button mat-raised-button
+          (click)="submitForm()"
+          [disabled]="!logTimeFormGroup.valid"
+          color="primary">Отметить
+  </button>
+</mat-dialog-actions>

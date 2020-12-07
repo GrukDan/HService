@@ -30,7 +30,11 @@
     <mat-divider></mat-divider>
     <div class="log-time-content">
       <h2>Затрачено: </h2>
-      <button mat-raised-button color="primary">Отметить время</button>
+      <button mat-raised-button
+              color="primary"
+              (click)="dialogService.openLogTimeDialog(types,taskId)">
+        Отметить время
+      </button>
     </div>
   </div>
 </ng-template>
@@ -67,7 +71,8 @@
     <p>
       <mat-form-field appearance="fill">
         <mat-label>Исполнитель задачи</mat-label>
-        <mat-select [(ngModel)]="task.taskExecutor">
+        <mat-select [(ngModel)]="task.taskExecutor"
+                    [disabled]="!edit">
           <mat-option *ngFor="let executor of executors" [value]="executor.userId">
             {{executor.lastName}} {{executor.firstName}}
           </mat-option>
@@ -78,6 +83,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Тип задачи</mat-label>
         <mat-select [(ngModel)]="task.type"
+                    [disabled]="!edit"
                     [compareWith]="typeComparator">
           <mat-option *ngFor="let type of types" [value]="type">
             {{type.typeName}}
@@ -101,6 +107,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Статус задачи</mat-label>
         <mat-select [(ngModel)]="task.status"
+                    [disabled]="!edit"
                     [compareWith]="statusComparator">
           <mat-option *ngFor="let status of statuses" [value]="status">
             {{status.statusName}}
@@ -111,9 +118,11 @@
     <p>
       <mat-form-field appearance="fill">
         <mat-label>Дата готовности</mat-label>
-        <input matInput [matDatepicker]="datePicker" [value]="task.dueDate">
-        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
-        <mat-datepicker #datePicker touchUi></mat-datepicker>
+        <input matInput [matDatepicker]="datePicker"
+               [readonly]="!edit"
+               [value]="task.dueDate">
+        <mat-datepicker-toggle matSuffix [disabled]="!edit" [for]="datePicker"></mat-datepicker-toggle>
+        <mat-datepicker #datePicker [disabled]="!edit" touchUi></mat-datepicker>
       </mat-form-field>
     </p>
     <div class="buttons-container">

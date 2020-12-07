@@ -56,3 +56,14 @@ mat-tab-group{
 
 }
 
+.mat-select::ng-deep .mat-select-content {
+  width: 100%;
+}
+.mat-select::ng-deep .mat-select-value {
+  color: green;
+}
+
+.mat-select-disabled::ng-deep .mat-select-value {
+  color: black;
+}
+

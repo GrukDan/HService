@@ -45,5 +45,6 @@
   <button mat-button mat-dialog-close>Закрыть</button>
   <button mat-raised-button
           (click)="submitForm()"
+          [disabled]="!authFormGroup.valid"
           color="primary">Войти</button>
 </mat-dialog-actions>

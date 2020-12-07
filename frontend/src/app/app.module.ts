@@ -29,6 +29,8 @@ import {MembersTableComponent} from './components/projects/members-table/members
 import {HeaderComponent} from './components/navigation/header/header/header.component';
 import {LoginDialogComponent} from './components/dialogs/login-dialog/login-dialog.component';
 import {TaskPageComponent} from './components/tasks/task-page/task-page.component';
+import {LogTimeDialogComponent} from './components/dialogs/log-time-dialog/log-time-dialog.component';
+import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
 
 
 @NgModule({
@@ -54,6 +56,7 @@ import {TaskPageComponent} from './components/tasks/task-page/task-page.componen
     HeaderComponent,
     LoginDialogComponent,
     TaskPageComponent,
+    LogTimeDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +66,8 @@ import {TaskPageComponent} from './components/tasks/task-page/task-page.componen
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxMaterialTimepickerModule
   ],
   providers: [DialogService],
   bootstrap: [AppComponent]

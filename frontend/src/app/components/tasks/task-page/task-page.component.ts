@@ -17,6 +17,7 @@ import {User} from "../../../dto/models/user";
 import {LogTimeService} from "../../../services/http/log-time.service";
 import {CommentService} from "../../../services/http/comment.service";
 import {LogTime} from "../../../dto/models/log-time";
+import {DialogService} from "../../../services/view-services/dialog.service";
 
 @Component({
   selector: 'app-task-page',
@@ -47,7 +48,8 @@ export class TaskPageComponent implements OnInit, OnDestroy {
               private typeService: TypeService,
               private priorityService: PriorityService,
               private commentService: CommentService,
-              private logTimeService: LogTimeService) {
+              private logTimeService: LogTimeService,
+              public dialogService: DialogService) {
     this.subscriptions.push(activateRoute.params.subscribe(params => {
       this.taskId = params['id'];
     }));
