@@ -18,6 +18,8 @@ import {LogTimeService} from "../../../services/http/log-time.service";
 import {CommentService} from "../../../services/http/comment.service";
 import {LogTime} from "../../../dto/models/log-time";
 import {DialogService} from "../../../services/view-services/dialog.service";
+import {getStatusNameByTaskStatusEnum, TaskStatusesEnum} from "../../../dto/enums/task-statuses.enum";
+import {Description} from "../../../dto/models/description";
 
 @Component({
   selector: 'app-task-page',
@@ -37,7 +39,10 @@ export class TaskPageComponent implements OnInit, OnDestroy {
   comments: Comment[] = [];
   logTimes: LogTime[] = [];
   taskCreator: User = new User();
+  description: Description = new Description();
   edit: boolean = false;
+  hours: number;
+  minutes: number;
 
   constructor(private activateRoute: ActivatedRoute,
               private router: Router,
@@ -72,6 +77,9 @@ export class TaskPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.taskService.getTaskById(taskId)
       .subscribe(task => {
         this.task = task;
+        if (this.task.description != null) {
+          this.description = this.task.description;
+        }
         this.loadExecutorsByProject(this.task.project);
         this.loadTaskCreator(task.taskCreator);
       }));
@@ -103,7 +111,10 @@ export class TaskPageComponent implements OnInit, OnDestroy {
   }
 
   loadLogTimesByTask(taskId: number) {
-    this.subscriptions.push(this.logTimeService.getLogTimesByTask(taskId).subscribe(logTimes => this.logTimes = logTimes));
+    this.subscriptions.push(this.logTimeService.getLogTimesByTask(taskId).subscribe(logTimes => {
+      this.logTimes = logTimes;
+      logTimes.forEach(time => this.calculateTime(time.workTime));
+    }));
   }
 
   public typeComparator = function (option, value): boolean {
@@ -124,5 +135,39 @@ export class TaskPageComponent implements OnInit, OnDestroy {
 
   saveChanges() {
 
+  }
+
+  isTaskAwaiting(): boolean {
+    return this.task?.status?.statusName === getStatusNameByTaskStatusEnum(TaskStatusesEnum.AWAITING);
+  }
+
+  isTaskSelectForDevelopment(): boolean {
+    return this.task?.status?.statusName === getStatusNameByTaskStatusEnum(TaskStatusesEnum.SELECT_FOR_DEVELOPMENT);
+  }
+
+  isTaskInDevelopment(): boolean {
+    return this.task?.status?.statusName === getStatusNameByTaskStatusEnum(TaskStatusesEnum.IN_DEVELOPMENT);
+  }
+
+  isTaskReadyForTest(): boolean {
+    return this.task?.status?.statusName === getStatusNameByTaskStatusEnum(TaskStatusesEnum.READY_FOR_TESTING);
+  }
+
+  isTaskInTesting(): boolean {
+    return this.task?.status?.statusName === getStatusNameByTaskStatusEnum(TaskStatusesEnum.IN_TESTING);
+  }
+
+  isTaskClosed(): boolean {
+    return this.task?.status?.statusName === getStatusNameByTaskStatusEnum(TaskStatusesEnum.CLOSED);
+  }
+
+  isTaskReady(): boolean {
+    return this.task?.status?.statusName === getStatusNameByTaskStatusEnum(TaskStatusesEnum.READY);
+  }
+
+  calculateTime(workTime: string) {
+    const times = workTime.split(':');
+    this.hours += Number(times[0]);
+    this.minutes += Number(times[1]);
   }
 }

@@ -12,7 +12,7 @@
               [(ngModel)]="auth.username"
               formControlName="username"
               maxlength="20"
-              minlength="5"
+              minlength="4"
               placeholder="Введите имя пользователя">
             <mat-hint align="end">{{inputLogin.value?.length || 0}}/20</mat-hint>
             <mat-error *ngIf="hasError('username', 'required')">username is required</mat-error>
@@ -29,7 +29,7 @@
               [(ngModel)]="auth.password"
               formControlName="password"
               maxlength="20"
-              minlength="7"
+              minlength="6"
               placeholder="Введите пароль">
             <mat-hint align="end">{{inputPassword.value?.length || 0}}/20</mat-hint>
             <mat-error *ngIf="hasError('password', 'required')">password is required</mat-error>

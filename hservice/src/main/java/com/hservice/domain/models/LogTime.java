@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -24,7 +23,6 @@ public class LogTime {
     private String workTime;
     private long task;
     private long executor;
-    @CreationTimestamp
     private Timestamp loggingTime;
     @ManyToOne
     @JoinColumn(name = "activity_type", nullable = false)

@@ -1,6 +1,7 @@
 <app-header [header]="task.taskName"></app-header>
 <div class="container">
   <div class="main-content-container">
+    <ng-container *ngTemplateOutlet="buttonsToolbarTemplate"></ng-container>
     <ng-container *ngTemplateOutlet="mainContentTemplate"></ng-container>
     <ng-container *ngTemplateOutlet="logTimeTemplate"></ng-container>
     <mat-tab-group mat-align-tabs="start">
@@ -17,25 +18,66 @@
   </div>
 </div>
 
-
-<ng-template #mainContentTemplate>
-  <h2>Описание</h2>
-  <mat-divider></mat-divider>
-  <p class="mat-h3" *ngIf="task.description?.content">{{task.description.content}}</p>
-</ng-template>
-
 <ng-template #logTimeTemplate>
   <div class="log-time-container">
-    <h2>Отслеживание времени</h2>
+    <div>
+      <span class="mat-h2">Отслеживание времени  </span>
+      <button mat-icon-button
+              (click)="loadLogTimesByTask(taskId)"
+              matTooltip="Обновить затраченное время"
+              [matTooltipPosition]="'right'"
+              matTooltipHideDelay="1000"
+              color="primary">
+        <mat-icon>cached</mat-icon>
+      </button>
+    </div>
     <mat-divider></mat-divider>
     <div class="log-time-content">
-      <h2>Затрачено: </h2>
+      <div class="progress-bar-container">
+      <span class="mat-h2">Затрачено: </span>
+        <div class="progress-bar">
+          <div class="times-container">
+            <h3>{{hours}}h:{{minutes}}m</h3>
+          </div>
+        </div>
+      </div>
       <button mat-raised-button
               color="primary"
               (click)="dialogService.openLogTimeDialog(types,taskId)">
         Отметить время
       </button>
     </div>
+  </div>
+</ng-template>
+
+<ng-template #mainContentTemplate>
+  <h2>Описание</h2>
+  <mat-divider></mat-divider>
+  <p *ngIf="task.description?.content">{{task.description.content}}</p>
+  <p>
+    <mat-form-field appearance="fill" class="form-field-textarea">
+      <mat-label>Описание задачи...</mat-label>
+      <textarea matInput
+                maxlength="250"
+                class="mat-h2"
+                [(ngModel)]="description.content"
+                #inputTaskDescription>
+          </textarea>
+      <mat-hint align="end">{{inputTaskDescription.value?.length || 0}}/250</mat-hint>
+    </mat-form-field>
+  </p>
+  <div class="description-buttons">
+    <button mat-raised-button
+            *ngIf="description?.content?.length>0"
+            (click)="editTask(edit)">
+      Отменить
+    </button>
+    <button mat-raised-button
+            *ngIf="description?.content?.length>0"
+            color="primary"
+            (click)="saveChanges()">
+      Сохранить
+    </button>
   </div>
 </ng-template>
 
@@ -165,5 +207,35 @@
 <ng-template #historyTemplate>
   <div class="comments-container">
     <div class="comments-content"></div>
+  </div>
+</ng-template>
+
+
+<ng-template #buttonsToolbarTemplate>
+  <div class="buttons-toolbar">
+    <button *ngIf="isTaskAwaiting()" mat-stroked-button color="primary">
+      Отметить для разработки
+    </button>
+    <button *ngIf="isTaskAwaiting() || isTaskSelectForDevelopment()" mat-stroked-button color="primary">
+      Начать разработку
+    </button>
+    <button *ngIf="isTaskAwaiting() || isTaskSelectForDevelopment()" mat-stroked-button color="accent">
+      Закрыть задачу
+    </button>
+    <button *ngIf="isTaskInDevelopment()" mat-stroked-button color="primary">
+      Готова для тестирования
+    </button>
+    <button *ngIf="isTaskInDevelopment() || isTaskInTesting()" mat-stroked-button color="primary">
+      Готова
+    </button>
+    <button *ngIf="isTaskReadyForTest()" mat-stroked-button color="accent">
+      Тестируется
+    </button>
+    <button *ngIf="isTaskReady()" mat-stroked-button color="accent">
+      Закрыть задачу
+    </button>
+    <button *ngIf="isTaskClosed()" mat-stroked-button color="primary">
+      Отметить для разработки
+    </button>
   </div>
 </ng-template>

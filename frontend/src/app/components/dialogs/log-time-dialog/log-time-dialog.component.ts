@@ -37,6 +37,7 @@ export class LogTimeDialogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.logTimeFormGroup = this.formGroupBuilderService.buildLogTimeFormGroup();
     this.logTime.task = this.data.taskId;
+    this.logTime.loggingTime = new Date();
     this.logTime.executor = this.userService.getAuthUserId();
   }
 

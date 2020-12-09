@@ -69,11 +69,11 @@ export class FormGroupBuilderService {
     return this.formBuilder.group({
       username: new FormControl('',
         [Validators.required,
-          Validators.minLength(7),
+          Validators.minLength(4),
           Validators.maxLength(20)]),
       password: new FormControl('',
         [Validators.required,
-          Validators.minLength(7),
+          Validators.minLength(6),
           Validators.maxLength(20)]),
     });
   }
@@ -121,6 +121,9 @@ export class FormGroupBuilderService {
       workTime: new FormControl('',
         [Validators.required]),
       activityType: new FormControl(
+        '',
+        [Validators.required]),
+      loggingTime: new FormControl(
         '',
         [Validators.required]),
       descriptionContent: new FormControl(

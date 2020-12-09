@@ -29,9 +29,22 @@
           </mat-form-field>
         </p>
         <p>
+          <mat-form-field appearance="fill">
+            <mat-label>Дата работы</mat-label>
+            <input matInput
+                   formControlName="loggingTime"
+                   [(ngModel)]="logTime.loggingTime"
+                   [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker startView="month" color="primary" ></mat-datepicker>
+            <mat-error *ngIf="hasError('loggingTime', 'required')">logging time is required</mat-error>
+          </mat-form-field>
+        </p>
+        <p>
           <mat-form-field appearance="fill" class="form-field-textarea">
             <mat-label>Описание задачи...</mat-label>
             <textarea matInput
+                      maxlength="250"
                       formControlName="descriptionContent"
                       [(ngModel)]="description.content"
                       #inputDescription>
