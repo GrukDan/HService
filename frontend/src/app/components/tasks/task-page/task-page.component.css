@@ -112,3 +112,7 @@ textarea{
   justify-content: center;
   align-items: center;
 }
+
+.comment-block{
+  margin-top: 25px;
+}

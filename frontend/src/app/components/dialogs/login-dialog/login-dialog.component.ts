@@ -38,8 +38,6 @@ export class LoginDialogComponent implements OnInit, OnDestroy {
 
   submitForm() {
     this.userService.auth(this.auth).subscribe(res => {
-        this.userService.authResponse = res;
-
         //todo if if expired
           if (res.mustRegister) {
             this.userService.clearRegistrationData();

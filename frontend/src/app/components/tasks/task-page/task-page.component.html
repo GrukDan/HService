@@ -34,7 +34,7 @@
     <mat-divider></mat-divider>
     <div class="log-time-content">
       <div class="progress-bar-container">
-      <span class="mat-h2">Затрачено: </span>
+        <span class="mat-h2">Затрачено: </span>
         <div class="progress-bar">
           <div class="times-container">
             <h3>{{hours}}h:{{minutes}}m</h3>
@@ -199,8 +199,51 @@
 <ng-template #commentsTemplate>
   <div class="comments-container">
     <div class="comments-content" *ngIf="comments?.length>0">
+      <ng-container *ngTemplateOutlet="showCommentTemplate"></ng-container>
     </div>
     <span class="mat-h2" *ngIf="comments?.length<=0">Нет комментариев</span>
+    <ng-container *ngTemplateOutlet="writeCommentTemplate"></ng-container>
+  </div>
+</ng-template>
+
+<ng-template #showCommentTemplate>
+  <div class="comment-block">
+    <div *ngFor="let comment of comments">
+      <div>
+        <span class="mat-h3"><b>{{comment?.commentator?.lastName}} {{comment?.commentator?.firstName}}</b></span>
+        <span class="mat-h3">  {{comment?.creationTime | date}}</span>
+      </div>
+      <p>{{comment?.content}}</p>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #writeCommentTemplate>
+  <mat-divider></mat-divider>
+  <p>
+    <mat-form-field appearance="fill" class="form-field-textarea">
+      <mat-label>Ваш комментарий</mat-label>
+      <textarea matInput
+                maxlength="250"
+                class="mat-h2"
+                [(ngModel)]="comment.content"
+                #inputTaskComment>
+          </textarea>
+      <mat-hint align="end">{{inputTaskComment.value?.length || 0}}/250</mat-hint>
+    </mat-form-field>
+  </p>
+  <div class="description-buttons">
+    <button mat-raised-button
+            *ngIf="comment?.content?.length>0"
+            (click)="clearComment()">
+      Очистить
+    </button>
+    <button mat-raised-button
+            *ngIf="comment?.content?.length>0"
+            color="primary"
+            (click)="addComment()">
+      Добавить
+    </button>
   </div>
 </ng-template>
 

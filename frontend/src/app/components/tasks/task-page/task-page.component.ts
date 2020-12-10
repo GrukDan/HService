@@ -41,8 +41,9 @@ export class TaskPageComponent implements OnInit, OnDestroy {
   taskCreator: User = new User();
   description: Description = new Description();
   edit: boolean = false;
-  hours: number;
-  minutes: number;
+  hours: number = 0;
+  minutes: number = 0;
+  comment: Comment = new Comment();
 
   constructor(private activateRoute: ActivatedRoute,
               private router: Router,
@@ -113,6 +114,8 @@ export class TaskPageComponent implements OnInit, OnDestroy {
   loadLogTimesByTask(taskId: number) {
     this.subscriptions.push(this.logTimeService.getLogTimesByTask(taskId).subscribe(logTimes => {
       this.logTimes = logTimes;
+      this.hours = 0;
+      this.minutes = 0;
       logTimes.forEach(time => this.calculateTime(time.workTime));
     }));
   }
@@ -169,5 +172,24 @@ export class TaskPageComponent implements OnInit, OnDestroy {
     const times = workTime.split(':');
     this.hours += Number(times[0]);
     this.minutes += Number(times[1]);
+  }
+
+  addComment() {
+    if (this.comment?.content?.length > 0) {
+      this.comment.task = this.taskId;
+      this.comment.commentator = this.userService.getAuthResponse().user;
+      this.saveComment(this.comment)
+    }
+  }
+
+  saveComment(comment: Comment) {
+    this.subscriptions.push(this.commentService.save(comment).subscribe(comment => {
+      this.clearComment();
+      this.loadCommentsByTask(this.taskId);
+    }));
+  }
+
+  clearComment() {
+    this.comment = new Comment();
   }
 }

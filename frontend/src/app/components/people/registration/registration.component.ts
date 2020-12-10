@@ -22,7 +22,7 @@ export class RegistrationComponent implements OnInit {
   constructor(private formGroupBuilderService:FormGroupBuilderService,
               private userService:UserService,
               private router: Router) {
-    this.registrationUser = userService.authResponse.user;
+    this.registrationUser = userService.getAuthResponse().user;
   }
 
   ngOnInit() {
@@ -33,10 +33,8 @@ export class RegistrationComponent implements OnInit {
 
   submitForm() {
     this.userService.registration(this.registrationUser)
-      .subscribe(registeredUser=>{
-        this.userService.authResponse.mustRegister = false;
-        this.userService.authResponse.user = registeredUser;
-        this.router.navigateByUrl(`/people/${registeredUser.userId}`);
+      .subscribe(authResponse=>{
+        this.router.navigateByUrl(`/people/${authResponse.user.userId}`);
       })
   }
 }

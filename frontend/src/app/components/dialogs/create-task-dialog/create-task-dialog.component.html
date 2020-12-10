@@ -85,6 +85,7 @@
           <mat-form-field appearance="fill" class="form-field-textarea">
             <mat-label>Описание задачи...</mat-label>
             <textarea matInput
+                      maxlength="250"
                       formControlName="descriptionContent"
                       [(ngModel)]="description.content"
                       #inputTaskDescription>
