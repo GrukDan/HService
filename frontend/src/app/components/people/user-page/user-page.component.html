@@ -149,25 +149,25 @@
     <mat-selection-list [multiple]="false">
       <mat-list-option *ngFor="let project of loadedUser.projects"
                        [value]="project">
-        <span>
-          <span class="project-name-span">{{project.projectName}}</span>
+        <div class="project">
+          <div class="project-name"><b>{{project.projectName}}</b></div>
           <button mat-raised-button color="primary"
                   class="user-projects-list"
                   matTooltip="Нажмите для перехода"
                   [matTooltipPosition]="'above'"
                   matTooltipHideDelay="1000"
                   (click)="toProject(project.projectId)">
-        Перейти
-      </button>
+            Перейти
+          </button>
           <button mat-raised-button
                   class="user-projects-list"
                   (click)="removeProject(project)">
-        Снять с проекта
-      </button>
-        </span>
+            Снять с проекта
+          </button>
+        </div>
       </mat-list-option>
     </mat-selection-list>
-    <div>
+    <div *ngIf="projects?.length>0" class="project-select">
       <mat-form-field appearance="fill">
         <mat-label>Проект</mat-label>
         <mat-select (selectionChange)="addProjectSelectChange($event)"
@@ -214,10 +214,12 @@
           <img mat-card-image [src]="getImageUrlByTaskType(task?.type)">
           <mat-card-content>
             <h4>
-              {{task.taskName}}
+              <b>
+                {{task.taskName}}
+              </b>
             </h4>
             <p>
-              {{task.created | date}}
+              Обновлено: {{task.updated | date}}
             </p>
           </mat-card-content>
           <mat-card-actions>

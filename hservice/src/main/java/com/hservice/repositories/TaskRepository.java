@@ -23,5 +23,5 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     int countTasksByProject(long project);
 
-    Page<Task> findAllByProject(long project,Pageable pageable);
+    Page<Task> findAllByProject(long project, Pageable pageable);
 }

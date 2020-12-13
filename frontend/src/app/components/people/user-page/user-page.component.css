@@ -38,14 +38,23 @@ mat-divider{
 }
 
 .user-projects-list{
-  margin-left: 15%;
+  margin-right: 30px;
 }
 
-.project-name-span{
-  width: 300px;
+.project-name{
+  width: 250px;
+  display: inline-block;
+}
+
+.project{
+  height: 40px;
 }
 
 .task-card {
   width: 160px;
   height: 400px;
+}
+
+.project-select{
+  margin-top: 20px;
 }

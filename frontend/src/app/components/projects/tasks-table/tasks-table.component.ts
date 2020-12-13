@@ -6,6 +6,7 @@ import {TaskDataSource} from "../../../dto/table-data-sources/task-data-source";
 import {merge} from "rxjs";
 import {tap} from "rxjs/operators";
 import {TaskService} from "../../../services/http/task.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-tasks-table',
@@ -30,7 +31,8 @@ export class TasksTableComponent implements AfterViewInit, OnInit {
     'dueDate'];
 
   constructor(public dialogService: DialogService,
-              private taskService: TaskService) {
+              private taskService: TaskService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -51,5 +53,9 @@ export class TasksTableComponent implements AfterViewInit, OnInit {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(tap(() => this.loadTasksByProjectId())).subscribe();
+  }
+
+  toTask(taskId: any) {
+    this.router.navigateByUrl(`/tasks/${taskId}`);
   }
 }

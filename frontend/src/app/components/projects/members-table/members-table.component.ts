@@ -5,6 +5,7 @@ import {UsersDataSource} from "../../../dto/table-data-sources/users-data-source
 import {MatPaginator} from "@angular/material/paginator";
 import {tap} from "rxjs/operators";
 import {MatSort} from "@angular/material/sort";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-members-table',
@@ -28,7 +29,8 @@ export class MembersTableComponent implements AfterViewInit, OnInit {
     'department',
     'placeOfResidence'];
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private router: Router) {
   };
 
   ngOnInit(): void {
@@ -53,5 +55,9 @@ export class MembersTableComponent implements AfterViewInit, OnInit {
 
   getDefaultValue(value: string): string {
     return value === null ? '━' : value;
+  }
+
+  toUser(userId: any) {
+    this.router.navigateByUrl(`/people/${userId}`);
   }
 }

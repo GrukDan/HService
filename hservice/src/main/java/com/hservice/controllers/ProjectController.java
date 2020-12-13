@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/projects")
@@ -29,12 +29,12 @@ public class ProjectController {
     }
 
     @GetMapping("/all/data")
-    public Collection<Project> getAll() {
-        return projectService.findAll();
+    public List<Project> getAll() {
+        return (List<Project>) projectService.findAll();
     }
 
     @GetMapping("/all/dtos")
-    public Collection<ProjectShortDto> getAllDtos() {
+    public List<ProjectShortDto> getAllDtos() {
         return projectService.getAllDtos();
     }
 
@@ -49,7 +49,20 @@ public class ProjectController {
     }
 
     @GetMapping("/exists")
-    public boolean existsByProjectCode(@RequestParam("projectCode") String projectCode){
+    public boolean existsByProjectCode(@RequestParam("projectCode") String projectCode) {
         return projectService.existsByProjectCode(projectCode);
+    }
+
+    @GetMapping("/project-table")
+    public List<Project> getProjectsPage(@RequestParam("page") int page,
+                                               @RequestParam("size") int size,
+                                               @RequestParam("order") boolean order,
+                                               @RequestParam("parameter") String parameter) {
+        return projectService.getProjectsPage(page, size, order, parameter);
+    }
+
+    @GetMapping("/amount")
+    public Long getAllProjectsAmount() {
+        return projectService.getAllProjectsAmount();
     }
 }

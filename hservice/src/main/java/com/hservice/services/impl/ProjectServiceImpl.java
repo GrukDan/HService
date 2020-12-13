@@ -10,9 +10,11 @@ import com.hservice.services.ProjectService;
 import com.hservice.services.UserService;
 import com.hservice.util.StringHandler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,12 +47,12 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Collection<Project> findAll() {
+    public List<Project> findAll() {
         return projectRepository.findAll();
     }
 
     @Override
-    public Collection<ProjectShortDto> getAllDtos() {
+    public List<ProjectShortDto> getAllDtos() {
         return projectRepository
                 .findAll().stream()
                 .map(ProjectShortDto::new)
@@ -59,16 +61,36 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public ProjectShortDto generateProjectShortDtoByProjectName(String projectName) throws AlreadyExistsException {
-        if(projectRepository.existsByProjectName(projectName))
+        if (projectRepository.existsByProjectName(projectName))
             throw new AlreadyExistsException("Project with project name" + projectName + "already exists");
         String generatedCode = stringHandler.generateProjectCodeByProjectName(projectName);
-        if(projectRepository.existsByProjectCode(generatedCode))
+        if (projectRepository.existsByProjectCode(generatedCode))
             throw new AlreadyExistsException("Project with project code" + generatedCode + "already exists");
-        return new ProjectShortDto(projectName,generatedCode);
+        return new ProjectShortDto(projectName, generatedCode);
     }
 
     @Override
     public boolean existsByProjectCode(String projectCode) {
         return projectRepository.existsByProjectCode(projectCode);
+    }
+
+    @Override
+    public List<Project> getProjectsPage(int page, int size, boolean order, String parameter) {
+        return projectRepository.findAll(
+                PageRequest.of(
+                        page,
+                        size,
+                        Sort.by(
+                                order ? Sort.Direction.ASC : Sort.Direction.DESC,
+                                parameter)))
+                .getContent().stream()
+                .peek(project -> project.setMembersAmount(userService.countUsersByProjectId(project.getProjectId())))
+                .peek(project -> project.setTasksAmount(taskRepository.countTasksByProject(project.getProjectId())))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Long getAllProjectsAmount() {
+        return projectRepository.count();
     }
 }

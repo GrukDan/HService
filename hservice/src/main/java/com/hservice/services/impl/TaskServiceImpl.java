@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -60,15 +61,19 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Collection<Task> findAlByExecutor(long executor) {
-        return taskRepository.findAllByTaskExecutor(executor);
+    public List<Task> findAlByExecutor(long executor) {
+        return (List<Task>) taskRepository.findAllByTaskExecutor(executor);
     }
 
     @Override
-    public Collection<Task> findTasksByProjectId(Long projectId, int page, int size, boolean order, String parameter) {
+    public List<Task> findTasksByProjectId(Long projectId, int page, int size, boolean order, String parameter) {
         return taskRepository.findAllByProject(
-                        projectId,
-                        PageRequest.of(page, size, Sort.by(order ? Sort.Direction.ASC : Sort.Direction.DESC, parameter)))
+                projectId,
+                PageRequest.of(
+                        page,
+                        size,
+                        Sort.by(order ? Sort.Direction.ASC : Sort.Direction.DESC,
+                                parameter)))
                 .getContent();
     }
 }

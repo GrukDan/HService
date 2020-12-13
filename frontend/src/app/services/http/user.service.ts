@@ -14,16 +14,18 @@ import {map} from "rxjs/operators";
 export class UserService {
 
   private url: string = '/api/users';
-  private localStorageKey:string = 'authUser';
+  private localStorageKey: string = 'authUser';
 
-  getAuthResponse():AuthResponse{return this.getAuthFromLocalStorage()};
+  getAuthResponse(): AuthResponse {
+    return this.getAuthFromLocalStorage()
+  };
 
-  public getAuthUserId():number{
+  public getAuthUserId(): number {
     return this.getAuthFromLocalStorage().user.userId;
   }
 
-  public clearRegistrationData(){
-    let auth:AuthResponse = this.getAuthFromLocalStorage();
+  public clearRegistrationData() {
+    let auth: AuthResponse = this.getAuthFromLocalStorage();
     auth.user.password = "";
     auth.user.userName = "";
     this.setAuthInLocalStorage(auth);
@@ -61,7 +63,7 @@ export class UserService {
 
   registration(user: User): Observable<AuthResponse> {
     this.http.post<User>(this.url + '/registration', user)
-      .subscribe(registeredUser=>{
+      .subscribe(registeredUser => {
         let authResponse = this.getAuthFromLocalStorage();
         authResponse.user = registeredUser;
         authResponse.mustRegister = false;
@@ -78,30 +80,34 @@ export class UserService {
     return this.http.post<User>(this.url + '/invite', user);
   }
 
-  sendAuth(authRequest:AuthRequest){
-    this.http.post<AuthResponse>(this.url + '/auth',authRequest)
-      .subscribe(auth=>{
+  sendAuth(authRequest: AuthRequest) {
+    this.http.post<AuthResponse>(this.url + '/auth', authRequest)
+      .subscribe(auth => {
         this.setAuthInLocalStorage(auth);
-    });
+      });
   }
 
-  auth(authRequest:AuthRequest):Observable<AuthResponse>{
-    return this.http.post<AuthResponse>(this.url + '/auth',authRequest)
-      .pipe(map(auth=> {
+  auth(authRequest: AuthRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(this.url + '/auth', authRequest)
+      .pipe(map(auth => {
         this.setAuthInLocalStorage(auth);
         return this.getAuthFromLocalStorage();
       }));
   }
 
-  private setAuthInLocalStorage(auth:AuthResponse){
-    localStorage.setItem(this.localStorageKey,JSON.stringify(auth));
+  private setAuthInLocalStorage(auth: AuthResponse) {
+    localStorage.setItem(this.localStorageKey, JSON.stringify(auth));
   }
 
-  private getAuthFromLocalStorage():AuthResponse{
+  private getAuthFromLocalStorage(): AuthResponse {
     return <AuthResponse>JSON.parse(localStorage.getItem(this.localStorageKey));
   }
 
   exit() {
     localStorage.removeItem(this.localStorageKey);
+  }
+
+  isUserAuth(): boolean {
+    return this.getAuthFromLocalStorage() != null;
   }
 }

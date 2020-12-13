@@ -50,4 +50,18 @@ export class ProjectService {
   getAll():Observable<Project[]>{
     return this.http.get<Project[]>(this.url + '/all/data');
   }
+
+  getProjectsPage(page: number, size: number, order: boolean, parameter: string):Observable<Project[]> {
+    return this.http.get<Project[]>(this.url + '/project-table',{
+      params: new HttpParams()
+        .set('page', page.toString())
+        .set('size', size.toString())
+        .set('order', order.toString())
+        .set('parameter', parameter)
+    });
+  }
+
+  getAllProjectsAmount():Observable<number> {
+    return this.http.get<number>(this.url + '/amount');
+  }
 }

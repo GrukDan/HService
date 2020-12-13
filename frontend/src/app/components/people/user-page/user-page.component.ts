@@ -114,7 +114,10 @@ export class UserPageComponent implements OnInit, OnDestroy {
 
   private update() {
     this.subscriptions.push(this.userService.update(this.loadedUser)
-      .subscribe(updatedUser => this.loadedUser = updatedUser));
+      .subscribe(updatedUser => {
+        this.loadedUser = updatedUser;
+        this.loadProjects();
+      }));
   }
 
   addProjectSelectChange($event: any) {

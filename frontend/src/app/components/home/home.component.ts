@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {DialogService} from "../../services/view-services/dialog.service";
 import {Router} from "@angular/router";
+import {UserService} from "../../services/http/user.service";
 
 @Component({
   selector: 'app-home',
@@ -9,8 +10,13 @@ import {Router} from "@angular/router";
 })
 export class HomeComponent implements OnInit {
 
+  isUserAuth:boolean = false;
+
   constructor(public dialogService:DialogService,
-              private router: Router) { }
+              private userService:UserService,
+              private router: Router) {
+    this.isUserAuth = userService.isUserAuth();
+  }
 
   ngOnInit(): void {
   }

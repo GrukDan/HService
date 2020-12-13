@@ -13,8 +13,8 @@ import {TaskPageComponent} from "../../components/tasks/task-page/task-page.comp
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
-  {path: 'projects', component: ProjectsPageComponent},
-  {path: 'project/:id', component: ProjectPageComponent},
+  {path: 'projects', component: ProjectsPageComponent , pathMatch: 'full'},
+  {path: 'project/:id', component: ProjectPageComponent, pathMatch: 'full'},
   {path: 'people', component: UsersCommandsComponent , pathMatch: 'full'},
   {path: 'people/:id', component: UserPageComponent , pathMatch: 'full'},
   {path: 'tasks/:id', component: TaskPageComponent , pathMatch: 'full'},

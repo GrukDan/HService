@@ -1,5 +1,5 @@
 <app-header [header]="'WELCOME'"></app-header>
-<div class="sticky-sidenav">
+<div *ngIf="!isUserAuth" class="sticky-sidenav">
   <p>
     <button mat-raised-button
             (click)="dialogService.openLoginDialog()"

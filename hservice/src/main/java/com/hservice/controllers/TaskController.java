@@ -7,7 +7,7 @@ import com.hservice.services.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -27,16 +27,16 @@ public class TaskController {
     }
 
     @GetMapping("/by-executor")
-    public Collection<Task> getTasksByExecutor(@RequestParam("executor") long executor) {
+    public List<Task> getTasksByExecutor(@RequestParam("executor") long executor) {
         return taskService.findAlByExecutor(executor);
     }
 
     @GetMapping("/project-table/{projectId}")
-    public Collection<Task> getTasksByProjectId(@PathVariable("projectId") Long projectId,
-                                                @RequestParam("page") int page,
-                                                @RequestParam("size") int size,
-                                                @RequestParam("order") boolean order,
-                                                @RequestParam("parameter") String parameter) {
+    public List<Task> getTasksByProjectId(@PathVariable("projectId") Long projectId,
+                                          @RequestParam("page") int page,
+                                          @RequestParam("size") int size,
+                                          @RequestParam("order") boolean order,
+                                          @RequestParam("parameter") String parameter) {
         return taskService.findTasksByProjectId(projectId, page, size, order, parameter);
     }
 }

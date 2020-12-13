@@ -1,8 +1,4 @@
 <div class="button-field-container">
-<!--  <mat-form-field>-->
-<!--    <mat-label>Поиск</mat-label>-->
-<!--    <input matInput (keyup)="applyFilter($event)" placeholder="Имя задачи" #input>-->
-<!--  </mat-form-field>-->
   <button mat-icon-button
           (click)="dialogService.openCreateTaskDialog()"
           matTooltip="Создать задачу"
@@ -21,8 +17,8 @@
 
   <table mat-table
          matSort
-         matSortActive = "taskName"
-         matSortDirection = "asc"
+         matSortActive="taskName"
+         matSortDirection="asc"
          matSortDisableClear
          [dataSource]="dataSource">
     <!-- taskCode Column -->
@@ -34,7 +30,7 @@
     <!-- taskName Column -->
     <ng-container matColumnDef="taskName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Название задачи</th>
-      <td mat-cell *matCellDef="let row"> {{row.taskName}} </td>
+      <td mat-cell *matCellDef="let row"><a class="link" (click)="toTask(row.taskId)"> {{row.taskName}} </a></td>
     </ng-container>
 
     <!-- type Column -->
