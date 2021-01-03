@@ -140,4 +140,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
   toTask(taskId: number) {
     this.router.navigateByUrl(`/tasks/${taskId}`);
   }
+
+  addToCommand() {
+    this.dialogService.openAddToCommandDialog(this.userId);
+  }
 }

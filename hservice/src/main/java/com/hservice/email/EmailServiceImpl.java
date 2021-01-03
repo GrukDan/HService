@@ -29,10 +29,11 @@ public class EmailServiceImpl implements EmailService {
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
 
         String htmlMsg = "<h2>You are invited to the system HService</h3>"
+                + String.format("<h4>Your login: %s</h4>", user.getUserName())
                 + String.format("<h4>Your password: %s</h4>", user.getPassword())
                 + String.format("<h4>Term expires: %s</h4>", user.getExpirationTime())
                 + String.format("<a url='%s'>Click to start:</a>", homePageUrl)
-                + "<img src='http://i.zaxis.su/u/pic/91/e0149088ee11e3b85b420b4019a22d/-/Лого%20металл.jpg'>";
+                + "<img src='https://churchillsquareconsulting.com/wp-content/uploads/2017/06/Project-Management-Fundamentals.jpg'>";
 
         message.setContent(htmlMsg, "text/html");
         message.setFrom(from);

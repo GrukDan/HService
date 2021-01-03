@@ -6,6 +6,8 @@ import {CreateProjectDialogComponent} from "../../components/dialogs/create-proj
 import {LoginDialogComponent} from "../../components/dialogs/login-dialog/login-dialog.component";
 import {LogTimeDialogComponent} from "../../components/dialogs/log-time-dialog/log-time-dialog.component";
 import {Type} from "../../dto/models/type";
+import {AddToCommandDialogComponent} from "../../components/dialogs/add-to-command-dialog/add-to-command-dialog.component";
+import {CreateCommandDialogComponent} from "../../components/dialogs/create-command-dialog/create-command-dialog.component";
 
 @Injectable({
   providedIn: 'root'
@@ -36,12 +38,26 @@ export class DialogService {
     this.dialog.open(LoginDialogComponent);
   }
 
+  openAddToCommandDialog(addedUserId: number) {
+    this.dialog.open(AddToCommandDialogComponent,
+      {
+        data: {
+          userId: addedUserId
+        }
+      });
+  }
+
+  openCreateCommandDialog() {
+    this.dialog.open(CreateCommandDialogComponent);
+  }
+
   openLogTimeDialog(activityTypes: Type[], taskId: number) {
-    this.dialog.open(LogTimeDialogComponent, {
-      data: {
-        activityTypes: activityTypes,
-        taskId: taskId
-      },
-    });
+    this.dialog.open(LogTimeDialogComponent,
+      {
+        data: {
+          activityTypes: activityTypes,
+          taskId: taskId
+        },
+      });
   }
 }

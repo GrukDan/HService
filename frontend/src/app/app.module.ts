@@ -32,6 +32,8 @@ import {TaskPageComponent} from './components/tasks/task-page/task-page.componen
 import {LogTimeDialogComponent} from './components/dialogs/log-time-dialog/log-time-dialog.component';
 import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
 import {ProjectsTableComponent} from './components/projects/projects-table/projects-table.component';
+import {CreateCommandDialogComponent} from './components/dialogs/create-command-dialog/create-command-dialog.component';
+import {AddToCommandDialogComponent} from './components/dialogs/add-to-command-dialog/add-to-command-dialog.component';
 
 
 @NgModule({
@@ -59,6 +61,8 @@ import {ProjectsTableComponent} from './components/projects/projects-table/proje
     TaskPageComponent,
     LogTimeDialogComponent,
     ProjectsTableComponent,
+    CreateCommandDialogComponent,
+    AddToCommandDialogComponent,
   ],
   imports: [
     BrowserModule,

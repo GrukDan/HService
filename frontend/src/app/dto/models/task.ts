@@ -2,7 +2,6 @@ import {Type} from "./type";
 import {Priority} from "./priority";
 import {Status} from "./status";
 import {Description} from "./description";
-import {UserShortDto} from "../dtos/user-short-dto";
 
 export class Task {
   taskId: number;
@@ -18,7 +17,4 @@ export class Task {
   project: number;
   taskCreator: number;
   taskExecutor: number;
-
-  creator:UserShortDto;
-  executor:UserShortDto;
 }

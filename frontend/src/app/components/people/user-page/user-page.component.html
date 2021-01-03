@@ -239,7 +239,19 @@
 
 <ng-template #commandsData>
   <div>
-    <p class="mat-h2">Команды</p>
+    <div class="commands-inline">
+    <span class="mat-h2">Команды</span>
+    <span>
+    <button mat-raised-button color="primary"
+            matTooltip="Добавить пользователя в команду"
+            [matTooltipPosition]="'above'"
+            matTooltipHideDelay="1000"
+            (click)="addToCommand()">
+      Добавить в команду
+      <mat-icon>group_add</mat-icon>
+    </button>
+    </span>
+    </div>
     <mat-selection-list *ngIf="loadedUser.commands?.length>0" [multiple]="false">
       <mat-list-option *ngFor="let command of loadedUser.commands" [value]="command" (click)="true">
         {{command.commandName}}

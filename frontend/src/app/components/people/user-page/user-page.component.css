@@ -52,9 +52,14 @@ mat-divider{
 
 .task-card {
   width: 160px;
-  height: 400px;
+  height: 450px;
 }
 
 .project-select{
   margin-top: 20px;
+}
+
+.commands-inline{
+  display: flex;
+  justify-content: space-between;
 }
