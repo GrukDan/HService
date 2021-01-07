@@ -46,7 +46,7 @@
           <mat-icon>person_add</mat-icon>
           Пригласить пользователя
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="dialogService.openCreateCommandDialog()">
           <mat-icon>group_add</mat-icon>
           Создать команду
         </button>

@@ -1,1 +1,37 @@
-<p>create-command-dialog works!</p>
+<h1 mat-dialog-title>Создание команды</h1>
+<mat-dialog-content class="mat-typography">
+  <p>
+    Создайте команду пользователей портала <b>HService</b>, выполняющих совместную работу, для лучшего управления
+    сотрудниками.
+  </p>
+  <form [formGroup]="createCommandFormGroup" (ngSubmit)="submitForm()" novalidate>
+    <div class="form-field-container">
+      <p>
+        <mat-form-field appearance="standard">
+          <mat-label>Название команды</mat-label>
+          <input matInput
+                 #inputCommandName
+                 [(ngModel)]="command.commandName"
+                 maxlength="50"
+                 formControlName="commandName"
+                 placeholder="Введите название команды">
+          <mat-hint align="end">{{inputCommandName.value?.length || 0}}/50</mat-hint>
+          <mat-error *ngIf="hasError('commandName', 'required')">Command's name is required</mat-error>
+          <mat-error *ngIf="hasError('commandName', 'minLength')">Command name's min length is 2 symbols</mat-error>
+          <mat-error *ngIf="hasError('commandName', 'maxLength')">Command name's max length is 50 symbols</mat-error>
+        </mat-form-field>
+      </p>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Закрыть</button>
+  <button mat-raised-button color="primary"
+          matTooltip="Вы будете перенаправлены на страницу созданной команды"
+          [matTooltipPosition]="'above'"
+          matTooltipHideDelay="1000"
+          [disabled]="!createCommandFormGroup.valid"
+          (click)="submitForm()">
+    Создать команду
+  </button>
+</mat-dialog-actions>

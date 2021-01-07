@@ -34,6 +34,7 @@ import {NgxMaterialTimepickerModule} from "ngx-material-timepicker";
 import {ProjectsTableComponent} from './components/projects/projects-table/projects-table.component';
 import {CreateCommandDialogComponent} from './components/dialogs/create-command-dialog/create-command-dialog.component';
 import {AddToCommandDialogComponent} from './components/dialogs/add-to-command-dialog/add-to-command-dialog.component';
+import { CommandComponent } from './components/people/command/command.component';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import {AddToCommandDialogComponent} from './components/dialogs/add-to-command-d
     ProjectsTableComponent,
     CreateCommandDialogComponent,
     AddToCommandDialogComponent,
+    CommandComponent,
   ],
   imports: [
     BrowserModule,

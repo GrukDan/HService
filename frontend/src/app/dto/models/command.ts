@@ -4,5 +4,5 @@ export class Command {
   commandId:number;
   commandName:string;
   creationDate:Date;
-  users:Set<User>;
+  users:User[];
 }

@@ -10,6 +10,7 @@ import {NotFoundComponent} from "../../components/details/error-pages/not-found/
 import {ServerErrorComponent} from "../../components/details/error-pages/server-error/server-error.component";
 import {ProjectsPageComponent} from "../../components/projects/projects-page/projects-page.component";
 import {TaskPageComponent} from "../../components/tasks/task-page/task-page.component";
+import {CommandComponent} from "../../components/people/command/command.component";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'project/:id', component: ProjectPageComponent, pathMatch: 'full'},
   {path: 'people', component: UsersCommandsComponent , pathMatch: 'full'},
   {path: 'people/:id', component: UserPageComponent , pathMatch: 'full'},
+  {path: 'commands/:id', component: CommandComponent , pathMatch: 'full'},
   {path: 'tasks/:id', component: TaskPageComponent , pathMatch: 'full'},
   {path: 'registration', component: RegistrationComponent},
   {path: '404', component: NotFoundComponent},

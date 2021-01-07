@@ -33,9 +33,19 @@
         </p>
       </div>
       <mat-divider></mat-divider>
-      <p class="mat-h2">
-        Команды
-      </p>
+      <div class="commands-inline">
+        <span class="mat-h2">Команды</span>
+        <span>
+    <button mat-raised-button color="primary"
+            matTooltip="Добавить пользователя в команду"
+            [matTooltipPosition]="'above'"
+            matTooltipHideDelay="1000"
+            (click)="dialogService.openCreateCommandDialog()">
+      Создать команду
+      <mat-icon>group_add</mat-icon>
+    </button>
+    </span>
+      </div>
       <p *ngIf="commandDtos.length>0" class="card-container">
         <ng-container *ngTemplateOutlet="commandCards"></ng-container>
       </p>

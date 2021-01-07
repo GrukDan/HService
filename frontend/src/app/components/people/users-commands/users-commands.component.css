@@ -37,7 +37,6 @@ mat-form-field{
   background-size: cover;
 }
 
-
 .projects-select{
   margin-top: 5%;
   margin-bottom: 5%;
@@ -47,4 +46,10 @@ mat-form-field{
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
+}
+
+.commands-inline{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
 }

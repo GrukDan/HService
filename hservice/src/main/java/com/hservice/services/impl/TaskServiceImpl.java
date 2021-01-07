@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.List;
 
+import static java.util.Objects.nonNull;
+
 @Service
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
@@ -53,7 +55,7 @@ public class TaskServiceImpl implements TaskService {
     private String generateTaskShortDtoByProject(long projectId) throws NotFoundException {
         Task task = taskRepository.getOneByMaxTaskId(projectId).orElseGet(Task::new);
 
-        int numberCode = task.getTaskCode() != null
+        int numberCode = nonNull(task.getTaskCode())
                 ? Integer.parseInt(stringHandler.getNumberFromTaskCode(task.getTaskCode())) + 1
                 : 1;
         String projectCode = projectService.findById(projectId).getProjectCode();

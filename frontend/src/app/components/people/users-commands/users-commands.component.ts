@@ -105,4 +105,8 @@ export class UsersCommandsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.commandService.getAllDtos()
       .subscribe(commandDtos => this.commandDtos = commandDtos));
   }
+
+  createCommand() {
+    this.dialogService.openCreateCommandDialog();
+  }
 }
