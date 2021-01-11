@@ -109,4 +109,8 @@ export class UsersCommandsComponent implements OnInit, OnDestroy {
   createCommand() {
     this.dialogService.openCreateCommandDialog();
   }
+
+  toCommandPage(commandId: number) {
+    this.router.navigateByUrl(`/commands/${commandId}`);
+  }
 }

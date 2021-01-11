@@ -94,7 +94,11 @@
         <mat-card-title>{{command.commandName}}</mat-card-title>
       </mat-card-header>
       <mat-card-actions>
-        <button mat-raised-button color="primary">Подробнее</button>
+        <button mat-raised-button
+                color="primary"
+                (click)="toCommandPage(command.commandId)">
+          Подробнее
+        </button>
       </mat-card-actions>
     </mat-card>
   </div>

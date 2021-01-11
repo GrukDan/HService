@@ -17,13 +17,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.hservice.util.StringHandler.generateProjectCodeByProjectName;
+
 @Service
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
-    private final StringHandler stringHandler;
     private final UserService userService;
 
     @Override
@@ -63,7 +64,7 @@ public class ProjectServiceImpl implements ProjectService {
     public ProjectShortDto generateProjectShortDtoByProjectName(String projectName) throws AlreadyExistsException {
         if (projectRepository.existsByProjectName(projectName))
             throw new AlreadyExistsException("Project with project name" + projectName + "already exists");
-        String generatedCode = stringHandler.generateProjectCodeByProjectName(projectName);
+        String generatedCode = generateProjectCodeByProjectName(projectName);
         if (projectRepository.existsByProjectCode(generatedCode))
             throw new AlreadyExistsException("Project with project code" + generatedCode + "already exists");
         return new ProjectShortDto(projectName, generatedCode);

@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.List;
 
+import static com.hservice.util.StringHandler.generateTaskCode;
+import static com.hservice.util.StringHandler.getNumberFromTaskCode;
 import static java.util.Objects.nonNull;
 
 @Service
@@ -23,7 +25,6 @@ public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
     private final ProjectService projectService;
-    private final StringHandler stringHandler;
 
     @Override
     public Task save(Task entity) throws AlreadyExistsException {
@@ -56,10 +57,10 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskRepository.getOneByMaxTaskId(projectId).orElseGet(Task::new);
 
         int numberCode = nonNull(task.getTaskCode())
-                ? Integer.parseInt(stringHandler.getNumberFromTaskCode(task.getTaskCode())) + 1
+                ? Integer.parseInt(getNumberFromTaskCode(task.getTaskCode())) + 1
                 : 1;
         String projectCode = projectService.findById(projectId).getProjectCode();
-        return stringHandler.generateTaskCode(projectCode, numberCode);
+        return generateTaskCode(projectCode, numberCode);
     }
 
     @Override

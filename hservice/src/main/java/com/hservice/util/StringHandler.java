@@ -4,12 +4,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
-@Component
 public class StringHandler {
 
-    private final String codeSeparator = "-";
+    private final static String codeSeparator = "-";
 
-    public String generateProjectCodeByProjectName(String projectName) {
+    public static String generateProjectCodeByProjectName(String projectName) {
         StringBuilder stringBuilder = new StringBuilder();
         Arrays.stream(projectName
                 .trim()
@@ -20,13 +19,13 @@ public class StringHandler {
         return stringBuilder.toString();
     }
 
-    public String generateTaskCode(String projectCode, int number) {
+    public static String generateTaskCode(String projectCode, int number) {
         return projectCode +
                 codeSeparator +
                 number;
     }
 
-    public String getNumberFromTaskCode(String taskCode) {
+    public static String getNumberFromTaskCode(String taskCode) {
         String[] words = taskCode.split(codeSeparator);
         return words[words.length - 1];
     }
