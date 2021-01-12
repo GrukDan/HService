@@ -142,4 +142,12 @@ export class FormGroupBuilderService {
           Validators.maxLength(50)]),
     });
   }
+
+  buildAddToCommandFormGroup() {
+    return this.formBuilder.group({
+      requiredCommand: new FormControl(
+        '',
+        [Validators.required]),
+    });
+  }
 }

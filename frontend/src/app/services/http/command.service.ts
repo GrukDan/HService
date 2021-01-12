@@ -21,4 +21,8 @@ export class CommandService {
   save(command: Command): Observable<Command> {
     return this.http.post<Command>(this.url, command);
   }
+
+  getAll():Observable<Command[]> {
+    return this.http.get<Command[]>(this.url + '/all');
+  }
 }
